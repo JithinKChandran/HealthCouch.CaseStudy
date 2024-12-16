@@ -25,4 +25,10 @@
         <Setter Property="BorderThickness" Value="1"></Setter>
         <Setter Property="FontSize" Value="{StaticResource FontNormal}"></Setter>
     </Style>
+
+    <Style x:Name="Label" TargetType="Label">
+        <Setter Property="FontSize" Value="{StaticResource FontNormal}"></Setter>
+        <Setter Property="FontWeight" Value="Normal"></Setter>
+    </Style>
+    
 </ResourceDictionary>
