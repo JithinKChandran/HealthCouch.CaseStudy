@@ -108,6 +108,7 @@
     <Folder Include="Common\Validator\" />
     <Folder Include="DataLayer\DataAccessLayer\" />
     <Folder Include="DataLayer\Entities\" />
+    <Folder Include="Resources\Assets\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
