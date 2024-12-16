@@ -102,5 +102,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\Commands\" />
+    <Folder Include="Common\Converters\" />
+    <Folder Include="Common\Validator\" />
+    <Folder Include="DataLayer\DataAccessLayer\" />
+    <Folder Include="DataLayer\Entities\" />
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
