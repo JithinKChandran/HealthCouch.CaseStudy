@@ -64,8 +64,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataLayer\Entities\Appointment.cs" />
-    <Compile Include="DataLayer\Entities\doctor.cs" />
+    <Compile Include="DataLayer\Entities\Doctor.cs" />
     <Compile Include="DataLayer\Entities\Patient.cs" />
+    <Compile Include="DataLayer\Repositories\AppointmentRepository.cs" />
+    <Compile Include="DataLayer\Repositories\DoctorRepository.cs" />
+    <Compile Include="DataLayer\Repositories\PatientRepository.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -109,7 +112,6 @@
     <Folder Include="Common\Commands\" />
     <Folder Include="Common\Converters\" />
     <Folder Include="Common\Validator\" />
-    <Folder Include="DataLayer\Repositories\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
