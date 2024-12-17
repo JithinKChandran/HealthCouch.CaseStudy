@@ -55,6 +55,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Validator\AppointmentValidator.cs" />
+    <Compile Include="Common\Validator\DoctorValidator.cs" />
+    <Compile Include="Common\Validator\PatientValidator.cs" />
+    <Compile Include="ViewModel\AppointmentViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\DoctorViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\PatientViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -132,8 +140,6 @@
   <ItemGroup>
     <Folder Include="Common\Commands\" />
     <Folder Include="Common\Converters\" />
-    <Folder Include="Common\Validator\" />
-    <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Assets\logo.png" />

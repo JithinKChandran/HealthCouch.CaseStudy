@@ -15,7 +15,9 @@
         </Grid.RowDefinitions>
 
         <DataGrid x:Name="patientDataGrid" Grid.Row="0" ColumnWidth="*" AutoGenerateColumns="False" SelectionChanged="patientDataGrid_SelectionChanged">
-            <DataGrid.Columns>
+            <DataGrid.Columns 
+                SelectedItem="{Binding SelectedItem}" 
+                ItemsSource="{Binding Patient}">
                 <DataGridTextColumn Header="ID" Binding="{Binding PatientID}" Width="40"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="65"/>
@@ -23,7 +25,16 @@
                 <DataGridTextColumn Header="Blood" Binding="{Binding BloodGroup}" Width="70"/>
                 <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor}" />
                 <DataGridTextColumn Header="Symptoms" Binding="{Binding Symptoms}" />
-                <DataGridTextColumn Header="Action" />
+                <DataGridTemplateColumn Header="Actions">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Edit" Margin="2,0"></Button>
+                                <Button Content="Delete" Margin="2,0"></Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="1" >
@@ -48,7 +59,6 @@
                     <WrapPanel>
                         <Label>Gender</Label>
                         <ComboBox Width="310" Height="34">
-
                         </ComboBox>
                     </WrapPanel>
                     <WrapPanel>
