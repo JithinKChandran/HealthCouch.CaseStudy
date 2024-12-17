@@ -1,0 +1,85 @@
+﻿<Page x:Class="HealthCouch.CaseStudy.Pages.ManagePatientsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HealthCouch.CaseStudy.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManagePatientsPage">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="10">
+            <StackPanel Orientation="Horizontal" Margin="5" Width="348">
+                <TextBlock Text="Name:" VerticalAlignment="Center" Margin="0, 0, 5, 0"></TextBlock>
+                <TextBox Width="295" Name="NameTextBox"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Address:" VerticalAlignment="Center" Margin="0, 0, 5, 0"></TextBlock>
+                <TextBox Width="295" Name="AddressTextBox"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Contact:" VerticalAlignment="Center" Margin="0, 0, 5, 0"></TextBlock>
+                <TextBox Width="296" Name="ContactTextBox"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Emergency Contact:" VerticalAlignment="Center" Margin="0, 0, 5, 0"></TextBlock>
+                <TextBox Width="232" Name="EmergencyContactTextBox"></TextBox>
+            </StackPanel>
+        </StackPanel>
+
+        
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
+            <StackPanel Orientation="Horizontal" Margin="5" Height="41" Width="339">
+                <TextBlock Text="Gender:"></TextBlock>
+                <StackPanel Orientation="Horizontal" >
+                    <RadioButton Content="Male" GroupName="Gender" Height="28" ></RadioButton>
+                    <RadioButton Content="Female" GroupName="Gender" Height="31" ></RadioButton>
+                    <RadioButton Content="Other" GroupName="Gender" Height="25" Width="64" ></RadioButton>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="34">
+                <TextBlock Text="Blood Group:"></TextBlock>
+                <ComboBox Width="213" Name="BloodGroupComboBox" Height="23"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Width="299" Height="43">
+                <TextBlock Text="Age:"/>
+                <TextBox Width="215" x:Name="AgeTextBox"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="84" Width="369">
+                <TextBlock Text="Symptoms:" Width="66" ></TextBlock>
+                <RichTextBox Height="80" Width="210" ></RichTextBox>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="10">
+            <StackPanel Orientation="Horizontal" Width="763">
+                <TextBlock Text=" Speciality:" Height="34" Width="69" ></TextBlock>
+                <ComboBox Width="279" x:Name="SpecialityComboBox" Height="26"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text=" Doctor Name:" Height="34" ></TextBlock>
+                <ComboBox Width="279" x:Name="DoctorNameComboBox" Height="26"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text=" Date Of Appointment:" Height="34" ></TextBlock>
+                <DatePicker SelectedDate="{Binding SelectedDate}" Width="234"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="20" Width="220">
+                <Button Height="30" Width="100" Content="Back"></Button>
+                <Button Height="30" Width="100" Content="Save"></Button>
+            </StackPanel>
+            
+            
+           
+        </StackPanel>
+    </Grid>
+</Page>
