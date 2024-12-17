@@ -68,6 +68,7 @@
     <Style TargetType="TextBlock">
         <Setter Property="Margin" Value="5"/>
         <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="FontSize" Value="{StaticResource FontNormal}"></Setter>
     </Style>
 
 </ResourceDictionary>
