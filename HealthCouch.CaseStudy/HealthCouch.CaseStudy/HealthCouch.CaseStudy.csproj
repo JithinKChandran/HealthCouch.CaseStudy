@@ -113,5 +113,17 @@
   <ItemGroup>
     <Resource Include="Resources\Assets\logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Assets\circle-xmark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Assets\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Assets\stethoscope.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Assets\user.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
