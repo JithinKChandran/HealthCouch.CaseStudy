@@ -8,5 +8,4 @@
     <sys:Double x:Key="FontNormal">18</sys:Double>
     <sys:Double x:Key="FontS">14</sys:Double>
     <sys:Double x:Key="FontM">16</sys:Double>
-
 </ResourceDictionary>

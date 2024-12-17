@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:HealthCouch.CaseStudy.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ManagePatientsPage">
+      Title="ManagePatientsPage"
+      DataContext="{StaticResource PatientViewModel}">
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,44 +20,43 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="10">
             <StackPanel Orientation="Horizontal" Margin="5" Width="348">
-                <TextBlock Text="Name:" VerticalAlignment="Center" Margin="0, 0, 5, 0"></TextBlock>
-                <TextBox Width="271" Name="NameTextBox"></TextBox>
+                <TextBlock Text="Name:" VerticalAlignment="Center" Margin="0, 0, 5, 0"/>
+                <TextBox Width="271" Text="{Binding Name}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Address:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="84"></TextBlock>
-                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="72" Width="249" />
+                <TextBlock Text="Address:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="84"/>
+                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="72" Width="249" Text="{Binding Address}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Contact:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="85"></TextBlock>
-                <TextBox Width="253" Name="ContactTextBox"></TextBox>
+                <TextBlock Text="Contact:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="85"/>
+                <TextBox Width="253" Text="{Binding Contact}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Emergency Contact:" VerticalAlignment="Center" Margin="0, 0, 5, 0"></TextBlock>
-                <TextBox Width="181" Name="EmergencyContactTextBox"></TextBox>
+                <TextBlock Text="Emergency Contact:" VerticalAlignment="Center" Margin="0, 0, 5, 0"/>
+                <TextBox Width="181" Text="{Binding EmergencyContact}"/>
             </StackPanel>
         </StackPanel>
 
-
         <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
             <StackPanel Orientation="Horizontal" Margin="5" Height="44" Width="332">
-                <TextBlock Text="Gender:"></TextBlock>
-                <StackPanel Orientation="Horizontal" >
-                    <RadioButton Content="Male" GroupName="Gender" Height="28" ></RadioButton>
-                    <RadioButton Content="Female" GroupName="Gender" Height="31" ></RadioButton>
-                    <RadioButton Content="Other" GroupName="Gender" Height="28" Width="77"></RadioButton>
+                <TextBlock Text="Gender:"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="Male" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Male}" Height="28"/>
+                    <RadioButton Content="Female" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Female}" Height="31"/>
+                    <RadioButton Content="Other" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Other}" Height="28" Width="77"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="34">
-                <TextBlock Text="Blood Group:"></TextBlock>
-                <ComboBox Width="213" Name="BloodGroupComboBox" Height="23"></ComboBox>
+                <TextBlock Text="Blood Group:"/>
+                <ComboBox Width="213" ItemsSource="{Binding BloodGroups}" SelectedItem="{Binding BloodGroup}" Height="23"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Width="299" Height="43">
                 <TextBlock Text="Age:" Width="59"/>
-                <TextBox Width="215" x:Name="AgeTextBox"/>
+                <TextBox Width="215" Text="{Binding Age}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="84" Width="369">
-                <TextBlock Text="Symptoms:" Width="95" ></TextBlock>
-                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="72" Width="221" ></TextBox>
+                <TextBlock Text="Symptoms:" Width="95"/>
+                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="72" Width="221" Text="{Binding Symptoms}"/>
             </StackPanel>
         </StackPanel>
 
@@ -67,63 +67,29 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal"
-                    Grid.Row="0" 
-                    Grid.Column="0"
-                    Margin="5">
-                <TextBlock Text="Doctor ID:"
-                       VerticalAlignment="Center"
-                       Margin="0, 0, 5, 0">
-                </TextBlock>
-                <TextBox x:Name="SearchDoctorIdTextBox" 
-                     Width="264">
-                </TextBox>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="5">
+                <TextBlock Text="Doctor ID:" VerticalAlignment="Center" Margin="0, 0, 5, 0"/>
+                <TextBox Width="264" Text="{Binding SearchDoctorId}"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal"
-                    Grid.Row="0" 
-                    Grid.Column="1"
-                    Margin="5">
-                <TextBlock Text="Doctor Name:"
-                       VerticalAlignment="Center"
-                       Margin="0, 0, 5, 0">
-                </TextBlock>
-                <TextBox x:Name="SearchDoctorNameTextBox" 
-                     Width="246">
-                </TextBox>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="5">
+                <TextBlock Text="Doctor Name:" VerticalAlignment="Center" Margin="0, 0, 5, 0"/>
+                <TextBox Width="246" Text="{Binding SearchDoctorName}"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal"
-                    Grid.Row="1" 
-                    Grid.ColumnSpan="2"
-                    Margin="0,5,0,5"
-                    HorizontalAlignment="Center" Width="350">
-                <TextBlock Text="Speciality:"
-                       VerticalAlignment="Center"
-                       Margin="0, 0, 5, 0">
-                </TextBlock>
-                <ComboBox x:Name="SearchSpecialityTextBox" 
-                     Width="252">
-                </ComboBox>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,5" HorizontalAlignment="Center" Width="350">
+                <TextBlock Text="Speciality:" VerticalAlignment="Center" Margin="0, 0, 5, 0"/>
+                <ComboBox Width="252" ItemsSource="{Binding Specialities}" SelectedItem="{Binding SearchSpeciality}"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Center"
-                        Margin="10"
-                        Grid.Row="2"
-                        Grid.ColumnSpan="2">
-                <Button x:Name="SearchButton"
-                        Content="Search">
-                </Button>
-                <Button x:Name="BackButton"
-                        Content="Back">
-                </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="2" Grid.ColumnSpan="2">
+                <Button x:Name="SearchButton" Content="Search" Command="{Binding SearchCommand}"/>
+                <Button x:Name="BackButton" Content="Back" Command="{Binding BackCommand}"/>
             </StackPanel>
         </Grid>
-        
     </Grid>
 </Page>

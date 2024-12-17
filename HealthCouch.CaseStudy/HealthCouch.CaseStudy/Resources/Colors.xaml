@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Colors -->
+    <Color x:Key="WindowBackgroundColor">#f7f7f7</Color>
+    <Color x:Key="ButtonBackgroundColor">#007ACC</Color>
+    <Color x:Key="ButtonBorderColor">#007ACC</Color>
+    <Color x:Key="ButtonHoverBackgroundColor">#005a9e</Color>
+    <Color x:Key="ButtonHoverBorderColor">#005a9e</Color>
+    <Color x:Key="ButtonPressedBackgroundColor">#003e73</Color>
+    <Color x:Key="ButtonPressedBorderColor">#003e73</Color>
+    <Color x:Key="PrimaryButtonBackgroundColor">DodgerBlue</Color>
+    <Color x:Key="DangerButtonBackgroundColor">Red</Color>
+
+    <!-- SolidColorBrushes -->
+    <SolidColorBrush x:Key="WindowBackground" Color="{StaticResource WindowBackgroundColor}"/>
+    <SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="ButtonBorder" Color="{StaticResource ButtonBorderColor}"/>
+    <SolidColorBrush x:Key="ButtonHoverBackground" Color="{StaticResource ButtonHoverBackgroundColor}"/>
+    <SolidColorBrush x:Key="ButtonHoverBorder" Color="{StaticResource ButtonHoverBorderColor}"/>
+    <SolidColorBrush x:Key="ButtonPressedBackground" Color="{StaticResource ButtonPressedBackgroundColor}"/>
+    <SolidColorBrush x:Key="ButtonPressedBorder" Color="{StaticResource ButtonPressedBorderColor}"/>
+    <SolidColorBrush x:Key="PrimaryButtonBackground" Color="{StaticResource PrimaryButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="DangerButtonBackground" Color="{StaticResource DangerButtonBackgroundColor}"/>
+</ResourceDictionary>
