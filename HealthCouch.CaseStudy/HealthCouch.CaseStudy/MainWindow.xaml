@@ -22,10 +22,11 @@
                 </Grid.RowDefinitions>
 
                 <Button x:Name="PatientButton"
-                    Margin="15"
-                    Grid.Row="0" 
-                    Background="Transparent" 
-                    BorderThickness="0">
+                                Margin="15"
+                                Grid.Row="0" 
+                                Background="Transparent" 
+                                BorderThickness="0"
+                                BorderBrush="Transparent">
                     <Image Source="/Resources/Assets/user.png"></Image>
                 </Button>
 
@@ -33,7 +34,8 @@
                             Margin="15"
                             Grid.Row="1"
                             Background="Transparent"
-                            BorderThickness="0">
+                            BorderThickness="0"
+                            BorderBrush="Transparent">
                     <Image Source="/Resources/Assets/stethoscope.png"></Image>
                 </Button>
 
@@ -41,7 +43,8 @@
                         Margin="15,184,15,15"
                         Grid.Row="3"
                         Background="Transparent"
-                        BorderThickness="0">
+                        BorderThickness="0"
+                        BorderBrush="Transparent">
                     <Image Source="/Resources/Assets/circle-xmark.png"></Image>
                 </Button>
             </Grid>
