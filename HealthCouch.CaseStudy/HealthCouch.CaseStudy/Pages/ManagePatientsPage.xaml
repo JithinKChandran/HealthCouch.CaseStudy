@@ -20,30 +20,30 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="10">
             <StackPanel Orientation="Horizontal" Margin="5" Width="348">
                 <TextBlock Text="Name:" VerticalAlignment="Center" Margin="0, 0, 5, 0"></TextBlock>
-                <TextBox Width="295" Name="NameTextBox"></TextBox>
+                <TextBox Width="271" Name="NameTextBox"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Address:" VerticalAlignment="Center" Margin="0, 0, 5, 0"></TextBlock>
-                <TextBox Width="295" Name="AddressTextBox"></TextBox>
+                <TextBlock Text="Address:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="84"></TextBlock>
+                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="72" Width="249" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Contact:" VerticalAlignment="Center" Margin="0, 0, 5, 0"></TextBlock>
-                <TextBox Width="296" Name="ContactTextBox"></TextBox>
+                <TextBlock Text="Contact:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="85"></TextBlock>
+                <TextBox Width="253" Name="ContactTextBox"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Emergency Contact:" VerticalAlignment="Center" Margin="0, 0, 5, 0"></TextBlock>
-                <TextBox Width="232" Name="EmergencyContactTextBox"></TextBox>
+                <TextBox Width="181" Name="EmergencyContactTextBox"></TextBox>
             </StackPanel>
         </StackPanel>
 
-        
+
         <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
-            <StackPanel Orientation="Horizontal" Margin="5" Height="41" Width="339">
+            <StackPanel Orientation="Horizontal" Margin="5" Height="44" Width="332">
                 <TextBlock Text="Gender:"></TextBlock>
                 <StackPanel Orientation="Horizontal" >
                     <RadioButton Content="Male" GroupName="Gender" Height="28" ></RadioButton>
                     <RadioButton Content="Female" GroupName="Gender" Height="31" ></RadioButton>
-                    <RadioButton Content="Other" GroupName="Gender" Height="25" Width="64" ></RadioButton>
+                    <RadioButton Content="Other" GroupName="Gender" Height="28" Width="77"></RadioButton>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="34">
@@ -51,35 +51,79 @@
                 <ComboBox Width="213" Name="BloodGroupComboBox" Height="23"></ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Width="299" Height="43">
-                <TextBlock Text="Age:"/>
+                <TextBlock Text="Age:" Width="59"/>
                 <TextBox Width="215" x:Name="AgeTextBox"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="84" Width="369">
-                <TextBlock Text="Symptoms:" Width="66" ></TextBlock>
-                <RichTextBox Height="80" Width="210" ></RichTextBox>
+                <TextBlock Text="Symptoms:" Width="95" ></TextBlock>
+                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="72" Width="221" ></TextBox>
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="10">
-            <StackPanel Orientation="Horizontal" Width="763">
-                <TextBlock Text=" Speciality:" Height="34" Width="69" ></TextBlock>
-                <ComboBox Width="279" x:Name="SpecialityComboBox" Height="26"/>
+        <Grid Margin="10, 0" Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal"
+                    Grid.Row="0" 
+                    Grid.Column="0"
+                    Margin="5">
+                <TextBlock Text="Doctor ID:"
+                       VerticalAlignment="Center"
+                       Margin="0, 0, 5, 0">
+                </TextBlock>
+                <TextBox x:Name="SearchDoctorIdTextBox" 
+                     Width="264">
+                </TextBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text=" Doctor Name:" Height="34" ></TextBlock>
-                <ComboBox Width="279" x:Name="DoctorNameComboBox" Height="26"/>
+
+            <StackPanel Orientation="Horizontal"
+                    Grid.Row="0" 
+                    Grid.Column="1"
+                    Margin="5">
+                <TextBlock Text="Doctor Name:"
+                       VerticalAlignment="Center"
+                       Margin="0, 0, 5, 0">
+                </TextBlock>
+                <TextBox x:Name="SearchDoctorNameTextBox" 
+                     Width="246">
+                </TextBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text=" Date Of Appointment:" Height="34" ></TextBlock>
-                <DatePicker SelectedDate="{Binding SelectedDate}" Width="234"/>
+
+            <StackPanel Orientation="Horizontal"
+                    Grid.Row="1" 
+                    Grid.ColumnSpan="2"
+                    Margin="0,5,0,5"
+                    HorizontalAlignment="Center" Width="350">
+                <TextBlock Text="Speciality:"
+                       VerticalAlignment="Center"
+                       Margin="0, 0, 5, 0">
+                </TextBlock>
+                <ComboBox x:Name="SearchSpecialityTextBox" 
+                     Width="252">
+                </ComboBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="20" Width="220">
-                <Button Height="30" Width="100" Content="Back"></Button>
-                <Button Height="30" Width="100" Content="Save"></Button>
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="10"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2">
+                <Button x:Name="SearchButton"
+                        Content="Search">
+                </Button>
+                <Button x:Name="BackButton"
+                        Content="Back">
+                </Button>
             </StackPanel>
-            
-            
-           
-        </StackPanel>
+        </Grid>
+        
     </Grid>
 </Page>
