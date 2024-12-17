@@ -37,20 +37,24 @@
         </Style.Triggers>
     </Style>
 
+    <!-- ButtonBase Style -->
     <Style x:Key="ButtonBase" TargetType="Button">
         <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="FontSize" Value="{StaticResource FontNormal}"></Setter>
         <Setter Property="Padding" Value="5"></Setter>
     </Style>
 
+    <!-- ButtonPrimary Style -->
     <Style x:Key="ButtonPrimary" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
         <Setter Property="Background" Value="DodgerBlue"></Setter>
     </Style>
 
+    <!-- ButtonDanger Style -->
     <Style x:Key="ButtonDanger" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
         <Setter Property="Background" Value="Red"></Setter>
     </Style>
-    
+
+    <!-- TextBox Style -->
     <Style x:Name="TextBox" TargetType="TextBox">
         <Setter Property="Margin" Value="5"></Setter>
         <Setter Property="Padding" Value="5"></Setter>
@@ -59,6 +63,7 @@
         <Setter Property="FontSize" Value="{StaticResource FontNormal}"></Setter>
     </Style>
 
+    <!-- Label Style -->
     <Style x:Name="Label" TargetType="Label">
         <Setter Property="FontSize" Value="{StaticResource FontNormal}"></Setter>
         <Setter Property="FontWeight" Value="Normal"></Setter>
