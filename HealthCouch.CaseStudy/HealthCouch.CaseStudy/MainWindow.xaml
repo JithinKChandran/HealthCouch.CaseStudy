@@ -45,14 +45,14 @@
                         Background="Transparent"
                         BorderThickness="0"
                         BorderBrush="Transparent">
-                    <Image Source="/Resources/Assets/circle-xmark.png"></Image>
+                    <Image Source="/Resources/Assets/exit.png"></Image>
                 </Button>
             </Grid>
 
             <Border BorderBrush="#86D293"
                 BorderThickness="1"
                 Margin="10">
-
+                
             </Border>
         </DockPanel>
     </Grid>

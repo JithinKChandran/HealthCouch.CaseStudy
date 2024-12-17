@@ -16,11 +16,11 @@
 
         <DataGrid x:Name="patientDataGrid" Grid.Row="0" ColumnWidth="*" AutoGenerateColumns="False" SelectionChanged="patientDataGrid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Patient ID" Binding="{Binding PatientID}" />
+                <DataGridTextColumn Header="ID" Binding="{Binding PatientID}" Width="40"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Age" Binding="{Binding Age}" />
-                <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" />
-                <DataGridTextColumn Header="Blood Group" Binding="{Binding BloodGroup}" />
+                <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="65"/>
+                <DataGridTextColumn Header="Gender" Binding="{Binding Gender}"/>
+                <DataGridTextColumn Header="Blood" Binding="{Binding BloodGroup}" Width="70"/>
                 <DataGridTextColumn Header="Doctor" Binding="{Binding Doctor}" />
                 <DataGridTextColumn Header="Symptoms" Binding="{Binding Symptoms}" />
                 <DataGridTextColumn Header="Action" />
@@ -57,9 +57,9 @@
                     </WrapPanel>
                 </StackPanel>
             </Grid>
-            <WrapPanel HorizontalAlignment="Center" Height="43" RenderTransformOrigin="0.558,1.005" Width="108">
-                <Button Content="Search"></Button>
-                <Button Content="Back"></Button>
+            <WrapPanel HorizontalAlignment="Center" Height="85" RenderTransformOrigin="0.558,1.005" Width="156">
+                <Button Margin="10" Content="Search"></Button>
+                <Button Margin="10" Content="Back"></Button>
             </WrapPanel>
         </StackPanel>
     </Grid>
