@@ -12,12 +12,14 @@
         <TabControl Margin="10">
             <TabItem Header="Manage Patients">
                 <StackPanel Margin="10">
-                   
+                    <Frame x:Name="ManagePatient" Source="pack://application:,,,/Pages/ManagePatientsPage.xaml"></Frame>
                 </StackPanel>
             </TabItem>
             
             <TabItem Header="All Patients">
-                
+                <StackPanel Margin="10">
+                    <Frame x:Name="AllPatient" Source="pack://application:,,,/Pages/AllPatients.xaml"></Frame>
+                </StackPanel>
             </TabItem>
         </TabControl>
     </Grid>

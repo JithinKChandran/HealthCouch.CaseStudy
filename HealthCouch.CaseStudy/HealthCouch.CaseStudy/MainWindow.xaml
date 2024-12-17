@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HealthCouch.CaseStudy"
         mc:Ignorable="d"
-        Title="HealthCouch" Height="450" Width="800">
+        Title="HealthCouch" Height="450" Width="800" Icon="/logo.png">
     <Window.Resources>
         
     </Window.Resources>
@@ -45,14 +45,14 @@
                         Background="Transparent"
                         BorderThickness="0"
                         BorderBrush="Transparent">
-                    <Image Source="/Resources/Assets/circle-xmark.png"></Image>
+                    <Image Source="/Resources/Assets/exit.png"></Image>
                 </Button>
             </Grid>
 
             <Border BorderBrush="#86D293"
                 BorderThickness="1"
                 Margin="10">
-
+                
             </Border>
         </DockPanel>
     </Grid>

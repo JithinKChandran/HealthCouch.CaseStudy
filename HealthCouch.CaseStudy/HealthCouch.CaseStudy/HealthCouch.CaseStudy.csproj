@@ -55,6 +55,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Validator\AppointmentValidator.cs" />
+    <Compile Include="Common\Validator\DoctorValidator.cs" />
+    <Compile Include="Common\Validator\PatientValidator.cs" />
+    <Compile Include="ViewModel\AppointmentViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\DoctorViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\PatientViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,6 +82,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\ManagePatientsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\AllPatients.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\DoctorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -93,6 +109,12 @@
   <ItemGroup>
     <Compile Include="Pages\ManagePatientsPage.xaml.cs">
       <DependentUpon>ManagePatientsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AllPatients.xaml.cs">
+      <DependentUpon>AllPatients.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DoctorPage.xaml.cs">
+      <DependentUpon>DoctorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PatientPage.xaml.cs">
       <DependentUpon>PatientPage.xaml</DependentUpon>
@@ -125,8 +147,6 @@
   <ItemGroup>
     <Folder Include="Common\Commands\" />
     <Folder Include="Common\Converters\" />
-    <Folder Include="Common\Validator\" />
-    <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Assets\logo.png" />
