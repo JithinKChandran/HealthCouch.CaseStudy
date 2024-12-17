@@ -8,14 +8,14 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
 {
     public class Patient
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int PatientId { get; set; }
+        public string PatientName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string ContactNumber { get; set; }
-        public Patient(int id, string name, DateTime dateOfBirth, string contactNumber)
+        public Patient(int patientId, string patientName, DateTime dateOfBirth, string contactNumber)
         {
-            Id = id;
-            Name = name;
+            PatientId = patientId;
+            PatientName = patientName;
             DateOfBirth = dateOfBirth;
             ContactNumber = contactNumber;
         }

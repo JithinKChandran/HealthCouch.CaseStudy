@@ -8,13 +8,13 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
 {
     public class Doctor
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int DoctorId { get; set; }
+        public string DoctorName { get; set; }
         public string Speciality { get; set; }
-        public Doctor(int id, string name, string speciality)
+        public Doctor(int doctorId, string doctorName, string speciality)
         {
-            Id = id;
-            Name = name;
+            DoctorId = doctorId;
+            DoctorName = doctorName;
             Speciality = speciality;
         }
     }
