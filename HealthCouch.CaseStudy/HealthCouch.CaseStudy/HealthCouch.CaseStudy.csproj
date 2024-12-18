@@ -75,6 +75,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\Commands\RelayCommand.cs" />
+    <Compile Include="Common\Converters\GenderConverter.cs" />
     <Compile Include="Common\Validator\AppointmentValidator.cs" />
     <Compile Include="Common\Validator\DoctorValidator.cs" />
     <Compile Include="Common\Validator\PatientValidator.cs" />
@@ -170,9 +171,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Assets\logo.png" />
   </ItemGroup>

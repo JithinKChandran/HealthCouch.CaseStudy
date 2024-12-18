@@ -19,7 +19,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding PatientId}" Width="40"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding PatientName}" />
-                <DataGridTextColumn Header="Age" Binding="{Binding DateOfBirth, Converter={StaticResource AgeConverter}}" Width="65"/>
+                <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="65"/>
                 <DataGridTextColumn Header="Gender" Binding="{Binding Gender}"/>
                 <DataGridTextColumn Header="Blood" Binding="{Binding BloodGroup}" Width="70"/>
                 <DataGridTextColumn Header="Doctor" Binding="{Binding DoctorName}" />

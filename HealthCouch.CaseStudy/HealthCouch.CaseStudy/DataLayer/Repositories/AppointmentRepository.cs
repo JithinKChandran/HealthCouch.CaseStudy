@@ -17,10 +17,6 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             if (appointment == null)
                 throw new ArgumentNullException(nameof(appointment));
 
-            // Check if the time slot is available before adding
-            if (!IsTimeSlotAvailable(appointment.TimeSlot, appointment.EndTime))
-                throw new InvalidOperationException("The time slot is not available.");
-
             _appointments.Add(appointment);
         }
 
@@ -28,12 +24,6 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
         public List<Appointment> GetAll()
         {
             return new List<Appointment>(_appointments);
-        }
-
-        // Check if a time slot is available
-        public bool IsTimeSlotAvailable(DateTime startTime, DateTime endTime)
-        {
-            return !_appointments.Any(a => a.TimeSlot < endTime && a.EndTime > startTime);
         }
 
         // Update an existing appointment's information
@@ -45,13 +35,10 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             var existingAppointment = _appointments.FirstOrDefault(a => a.Id == updatedAppointment.Id);
             if (existingAppointment != null)
             {
-                // Check if the new time slot is available
-                if (!IsTimeSlotAvailable(updatedAppointment.TimeSlot, updatedAppointment.EndTime))
-                    throw new InvalidOperationException("The time slot is not available.");
+                //
 
                 existingAppointment.PatientName = updatedAppointment.PatientName;
                 existingAppointment.TimeSlot = updatedAppointment.TimeSlot;
-                existingAppointment.EndTime = updatedAppointment.EndTime;
                 existingAppointment.DoctorName = updatedAppointment.DoctorName;
                 existingAppointment.Speciality = updatedAppointment.Speciality;
                 existingAppointment.Symptoms = updatedAppointment.Symptoms;

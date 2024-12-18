@@ -9,10 +9,6 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DoctorPage">
 
-    <Page.DataContext>
-        <vm:DoctorViewModel/>
-    </Page.DataContext>
-
     <Grid Background="White">
         <StackPanel>
             <TextBlock Text="List of Doctors"

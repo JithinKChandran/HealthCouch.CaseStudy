@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using HealthCouch.CaseStudy.Common.Commands;
 using HealthCouch.CaseStudy.DataLayer.Entities;
-using HealthCouch.CaseStudy.Common.Command;
 
 namespace HealthCouch.CaseStudy.ViewModel
 {
@@ -11,8 +11,7 @@ namespace HealthCouch.CaseStudy.ViewModel
     {
         private int _id;
         private string _patientName;
-        private DateTime _startTime;
-        private DateTime _endTime;
+        private string _timeSlot;
         private string _doctorName;
         private string _speciality;
         private string _symptoms;
@@ -37,25 +36,16 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
         }
 
-        public DateTime StartTime
+        public string TimeSlot
         {
-            get { return _startTime; }
+            get { return _timeSlot; }
             set
             {
-                _startTime = value;
+                _timeSlot = value;
                 OnPropertyChanged();
             }
         }
 
-        public DateTime EndTime
-        {
-            get { return _endTime; }
-            set
-            {
-                _endTime = value;
-                OnPropertyChanged();
-            }
-        }
 
         public string DoctorName
         {
@@ -104,12 +94,11 @@ namespace HealthCouch.CaseStudy.ViewModel
 
         private void SaveAppointment(object parameter)
         {
-            var newAppointment = new Appointment(Id, PatientName, StartTime, EndTime, DoctorName, Speciality, Symptoms)
+            var newAppointment = new Appointment(Id, PatientName,TimeSlot, DoctorName, Speciality, Symptoms)
             {
                 Id = this.Id,
                 PatientName = this.PatientName,
-                TimeSlot = this.StartTime,
-                EndTime = this.EndTime,
+                TimeSlot = this.TimeSlot,
                 DoctorName = this.DoctorName,
                 Speciality = this.Speciality,
                 Symptoms = this.Symptoms
@@ -161,8 +150,7 @@ namespace HealthCouch.CaseStudy.ViewModel
         {
             Id = 0;
             PatientName = string.Empty;
-            StartTime = DateTime.Now;
-            EndTime = DateTime.Now;
+            TimeSlot = string.Empty;
             DoctorName = string.Empty;
             Speciality = string.Empty;
             Symptoms = string.Empty;

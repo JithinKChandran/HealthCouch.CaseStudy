@@ -2,13 +2,14 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using HealthCouch.CaseStudy.Common.Commands;
 using HealthCouch.CaseStudy.DataLayer.Entities;
-using HealthCouch.CaseStudy.Common.Command;
 
 namespace HealthCouch.CaseStudy.ViewModel
 {
     public class PatientViewModel : BaseViewModel
     {
+        private int _patientId;
         private string _patientName;
         private DateTime _dateOfBirth;
         private string _contactNumber;
@@ -16,6 +17,15 @@ namespace HealthCouch.CaseStudy.ViewModel
         private string _bloodGroup;
         private string _symptoms;
 
+        public int PatientId
+        {
+            get { return _patientId; }
+            set
+            {
+                _patientId = value;
+                OnPropertyChanged();
+            }
+        }
         public string PatientName
         {
             get { return _patientName; }
@@ -93,7 +103,7 @@ namespace HealthCouch.CaseStudy.ViewModel
 
         private void SavePatient(object parameter)
         {
-            var newPatient = new Patient(patientId,PatientName,DateOfBirth, ContactNumber, Gender, BloodGroup, Symptoms)
+            var newPatient = new Patient(PatientId,PatientName,DateOfBirth, ContactNumber, Gender, BloodGroup, Symptoms)
             {
                 PatientId = (SelectedPatient != null) ? SelectedPatient.PatientId : Patients.Count + 1,
                 PatientName = this.PatientName,
