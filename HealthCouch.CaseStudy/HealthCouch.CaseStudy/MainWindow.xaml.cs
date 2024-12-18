@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HealthCouch.CaseStudy.Pages;
 
 namespace HealthCouch.CaseStudy
 {
@@ -23,6 +24,16 @@ namespace HealthCouch.CaseStudy
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void PatientButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new PatientPage();
         }
     }
 }

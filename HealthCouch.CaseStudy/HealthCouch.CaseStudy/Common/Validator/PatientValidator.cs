@@ -18,8 +18,8 @@ namespace HealthCouch.CaseStudy.Common.Validator
                 errors.Add("Patient Name is required.");
 
             // Validate DateOfBirth
-            if (patient.DateOfBirth == default)
-                errors.Add("Date of Birth is required.");
+            if (patient.Age == default)
+                errors.Add("Age is required.");
 
             // Validate ContactNumber
             if (string.IsNullOrWhiteSpace(patient.ContactNumber))

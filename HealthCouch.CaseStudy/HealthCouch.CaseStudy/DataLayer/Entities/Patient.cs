@@ -7,6 +7,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
     public class Patient
     {
         [Key]
+        [Display(Name = "Patient Id")]
         public int PatientId { get; set; }
 
         [Required]
@@ -15,8 +16,8 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
         public string PatientName { get; set; }
 
         [Required]
-        [Display(Name = "Date of Birth")]
-        public DateTime DateOfBirth { get; set; }
+        [Display(Name = "Age")]
+        public int Age { get; set; }
 
         [Required]
         [StringLength(15)]
@@ -35,20 +36,23 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
         [Display(Name = "Symptoms")]
         public string Symptoms { get; set; }
 
-        public Patient(int patientId, string patientName, DateTime dateOfBirth, string contactNumber, string gender, string bloodGroup, string symptoms)
+        public Patient(int patientId, string patientName, int age, string contactNumber, string gender, string bloodGroup, string symptoms)
         {
             PatientId = patientId;
             PatientName = patientName;
-            DateOfBirth = dateOfBirth;
+            Age = age;
             ContactNumber = contactNumber;
             Gender = gender;
             BloodGroup = bloodGroup;
             Symptoms = symptoms;
         }
-
+        public Patient()
+        {
+            
+        }
         public override string ToString()
         {
-            return $"Patient [PatientId={PatientId}, PatientName={PatientName}, DateOfBirth={DateOfBirth}, ContactNumber={ContactNumber}, Gender={Gender}, BloodGroup={BloodGroup}, Symptoms={Symptoms}]";
+            return $"Patient [PatientId={PatientId}, PatientName={PatientName}, DateOfBirth={Age}, ContactNumber={ContactNumber}, Gender={Gender}, BloodGroup={BloodGroup}, Symptoms={Symptoms}]";
         }
     }
 }

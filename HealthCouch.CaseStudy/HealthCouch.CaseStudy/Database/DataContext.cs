@@ -8,25 +8,42 @@ using System.Threading.Tasks;
 
 namespace HealthCouch.CaseStudy.Database
 {
-    internal class DataContext
+    public class DataContext
     {
+        private static DataContext _instance;
+        private static readonly object _lock = new object(); 
+
         private readonly SQLiteConnection _connection;
-        private readonly string _dbName = "data.db";
-        private readonly string _systemAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        private readonly string _appDataPath;
         private readonly string _dbPath;
-
-        public DataContext()
+        private DataContext()
         {
-            _appDataPath = Path.Combine(_systemAppDataPath, "HealthCouch");
-            _dbPath = Path.Combine(_appDataPath,_dbPath);
+            string systemAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string appDataPath = Path.Combine(systemAppDataPath, "HealthCouch");
+            _dbPath = Path.Combine(appDataPath, "data.db");
 
-            Directory.CreateDirectory(_appDataPath);
-            _connection = new SQLiteConnection($"Data Source = {_dbPath}");
+            Directory.CreateDirectory(appDataPath);
+
+            _connection = new SQLiteConnection($"Data Source={_dbPath}");
         }
+
+        public static DataContext Instance
+        {
+            get
+            {
+                lock (_lock) 
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new DataContext();
+                    }
+                    return _instance;
+                }
+            }
+        }
+
         public SQLiteConnection GetConnection()
         {
-            if(_connection.State == System.Data.ConnectionState.Closed)
+            if (_connection.State == System.Data.ConnectionState.Closed)
             {
                 _connection.Open();
             }

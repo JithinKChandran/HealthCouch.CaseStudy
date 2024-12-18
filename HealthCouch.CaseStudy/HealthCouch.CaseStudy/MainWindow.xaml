@@ -26,10 +26,13 @@
                                 Grid.Row="0" 
                                 Background="Transparent" 
                                 BorderThickness="0"
-                                BorderBrush="Transparent">
+                                BorderBrush="Transparent" 
+                                Click="PatientButton_Click">
                     <Image Source="/Resources/Assets/user.png"></Image>
                 </Button>
 
+                <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"></Frame>    
+                
                 <Button x:Name="DoctorButton"
                             Margin="15"
                             Grid.Row="1"
@@ -44,7 +47,7 @@
                         Grid.Row="3"
                         Background="Transparent"
                         BorderThickness="0"
-                        BorderBrush="Transparent">
+                        BorderBrush="Transparent" Click="ExitButton_Click">
                     <Image Source="/Resources/Assets/exit.png"></Image>
                 </Button>
             </Grid>
@@ -52,7 +55,21 @@
             <Border BorderBrush="#86D293"
                 BorderThickness="1"
                 Margin="10">
-                
+                <StackPanel>
+                    <TextBlock Text="Appointments" HorizontalAlignment="Center" FontSize="{StaticResource FontL}"></TextBlock>
+                <DataGrid x:Name="patientDataGrid" Grid.Row="0" ColumnWidth="*" AutoGenerateColumns="False"
+          ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient}">
+                        <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding PatientId}" Width="40"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding PatientName}" />
+                        <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="60"/>
+                        <DataGridTextColumn Header="Sex" Binding="{Binding Gender}" Width="60"/>
+                        <DataGridTextColumn Header="Doctor" Binding="{Binding DoctorName}" />
+                        <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
+                        <DataGridTextColumn Header="Time Slot" Binding="{Binding TimeSlot}" />
+                        </DataGrid.Columns>
+                </DataGrid>
+                </StackPanel>
             </Border>
         </DockPanel>
         <Grid/>

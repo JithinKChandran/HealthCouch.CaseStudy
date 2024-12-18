@@ -19,16 +19,15 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
 
         public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 
+        public Doctor()
+        {
+            
+        }
         public Doctor(int doctorId, string doctorName, string speciality)
         {
             DoctorId = doctorId;
             DoctorName = doctorName;
             Speciality = speciality;
-        }
-
-        public override string ToString()
-        {
-            return $"Doctor [DoctorId={DoctorId}, DoctorName={DoctorName}, Speciality={Speciality}]";
         }
     }
 }

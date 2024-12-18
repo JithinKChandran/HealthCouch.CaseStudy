@@ -11,7 +11,7 @@ namespace HealthCouch.CaseStudy.ViewModel
     {
         private int _patientId;
         private string _patientName;
-        private DateTime _dateOfBirth;
+        private int _age;
         private string _contactNumber;
         private string _gender;
         private string _bloodGroup;
@@ -36,12 +36,12 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
         }
 
-        public DateTime DateOfBirth
+        public int Age
         {
-            get { return _dateOfBirth; }
+            get { return _age; }
             set
             {
-                _dateOfBirth = value;
+                _age = value;
                 OnPropertyChanged();
             }
         }
@@ -103,11 +103,11 @@ namespace HealthCouch.CaseStudy.ViewModel
 
         private void SavePatient(object parameter)
         {
-            var newPatient = new Patient(PatientId,PatientName,DateOfBirth, ContactNumber, Gender, BloodGroup, Symptoms)
+            var newPatient = new Patient(PatientId,PatientName,Age, ContactNumber, Gender, BloodGroup, Symptoms)
             {
                 PatientId = (SelectedPatient != null) ? SelectedPatient.PatientId : Patients.Count + 1,
                 PatientName = this.PatientName,
-                DateOfBirth = this.DateOfBirth,
+                Age = this.Age,
                 ContactNumber = this.ContactNumber,
                 Gender = this.Gender,
                 BloodGroup = this.BloodGroup,
@@ -168,7 +168,7 @@ namespace HealthCouch.CaseStudy.ViewModel
         private void ClearFields()
         {
             PatientName = string.Empty;
-            DateOfBirth = DateTime.Now;
+            Age = default;
             ContactNumber = string.Empty;
             Gender = string.Empty;
             BloodGroup = string.Empty;

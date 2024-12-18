@@ -23,11 +23,7 @@ namespace HealthCouch.CaseStudy.Common.Validator
 
             // Validate StartTime and EndTime
             if (appointment.TimeSlot == default)
-                errors.Add("Start Time is required.");
-            if (appointment.EndTime == default)
-                errors.Add("End Time is required.");
-            if (appointment.TimeSlot >= appointment.EndTime)
-                errors.Add("Start Time must be before End Time.");
+                errors.Add("Time is required.");
 
             // Additional validation rules can be added here
 

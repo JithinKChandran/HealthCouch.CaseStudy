@@ -11,6 +11,7 @@ namespace HealthCouch.CaseStudy.ViewModel
     {
         private int _id;
         private string _patientName;
+        private DateTime _date;
         private string _timeSlot;
         private string _doctorName;
         private string _speciality;
@@ -32,6 +33,16 @@ namespace HealthCouch.CaseStudy.ViewModel
             set
             {
                 _patientName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime Date
+        {
+            get { return _date; }
+            set
+            {
+                _date = value;
                 OnPropertyChanged();
             }
         }
@@ -94,10 +105,11 @@ namespace HealthCouch.CaseStudy.ViewModel
 
         private void SaveAppointment(object parameter)
         {
-            var newAppointment = new Appointment(Id, PatientName,TimeSlot, DoctorName, Speciality, Symptoms)
+            var newAppointment = new Appointment(Id, PatientName, Date, TimeSlot, DoctorName, Speciality, Symptoms)
             {
                 Id = this.Id,
                 PatientName = this.PatientName,
+                Date = this.Date,
                 TimeSlot = this.TimeSlot,
                 DoctorName = this.DoctorName,
                 Speciality = this.Speciality,
