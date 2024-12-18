@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Commands\RelayCommands.cs" />
     <Compile Include="Common\Validator\AppointmentValidator.cs" />
     <Compile Include="Common\Validator\DoctorValidator.cs" />
     <Compile Include="Common\Validator\PatientValidator.cs" />
@@ -150,7 +151,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\Commands\" />
     <Folder Include="Common\Converters\" />
   </ItemGroup>
   <ItemGroup>
