@@ -108,7 +108,7 @@ namespace HealthCouch.CaseStudy.ViewModel
             {
                 Id = this.Id,
                 PatientName = this.PatientName,
-                StartTime = this.StartTime,
+                TimeSlot = this.StartTime,
                 EndTime = this.EndTime,
                 DoctorName = this.DoctorName,
                 Speciality = this.Speciality,

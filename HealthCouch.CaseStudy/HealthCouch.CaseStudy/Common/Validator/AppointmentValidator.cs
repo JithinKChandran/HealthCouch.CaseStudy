@@ -22,11 +22,11 @@ namespace HealthCouch.CaseStudy.Common.Validator
                 errors.Add("Doctor Name is required.");
 
             // Validate StartTime and EndTime
-            if (appointment.StartTime == default)
+            if (appointment.TimeSlot == default)
                 errors.Add("Start Time is required.");
             if (appointment.EndTime == default)
                 errors.Add("End Time is required.");
-            if (appointment.StartTime >= appointment.EndTime)
+            if (appointment.TimeSlot >= appointment.EndTime)
                 errors.Add("Start Time must be before End Time.");
 
             // Additional validation rules can be added here

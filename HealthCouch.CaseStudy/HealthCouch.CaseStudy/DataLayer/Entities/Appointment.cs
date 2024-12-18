@@ -15,11 +15,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
 
         [Required]
         [Display(Name = "Start Time")]
-        public DateTime StartTime { get; set; }
-
-        [Required]
-        [Display(Name = "End Time")]
-        public DateTime EndTime { get; set; }
+        public string TimeSlot { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -34,12 +30,11 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
         [Display(Name = "Symptoms")]
         public string Symptoms { get; set; }
 
-        public Appointment(int id, string patientName, DateTime startTime, DateTime endTime, string doctorName, string speciality, string symptoms)
+        public Appointment(int id, string patientName, string timeSlot, string doctorName, string speciality, string symptoms)
         {
             Id = id;
             PatientName = patientName;
-            StartTime = startTime;
-            EndTime = endTime;
+            TimeSlot = timeSlot;
             DoctorName = doctorName;
             Speciality = speciality;
             Symptoms = symptoms;
@@ -47,7 +42,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
 
         public override string ToString()
         {
-            return $"Appointment [Id={Id}, PatientName={PatientName}, DoctorName={DoctorName}, Speciality={Speciality}, StartTime={StartTime}, EndTime={EndTime}, Symptoms={Symptoms}]";
+            return $"Appointment [Id={Id}, PatientName={PatientName}, DoctorName={DoctorName}, Speciality={Speciality}, Time Slot={TimeSlot}, Symptoms={Symptoms}]";
         }
     }
 }

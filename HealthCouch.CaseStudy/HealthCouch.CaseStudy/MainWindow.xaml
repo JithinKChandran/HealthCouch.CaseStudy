@@ -55,5 +55,6 @@
                 
             </Border>
         </DockPanel>
+        <Grid/>
     </Grid>
 </Window>

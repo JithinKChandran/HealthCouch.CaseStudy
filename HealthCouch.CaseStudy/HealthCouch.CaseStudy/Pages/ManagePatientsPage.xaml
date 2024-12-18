@@ -73,7 +73,7 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="5">
                 <TextBlock Text="Date Of Appointment:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="186"/>
-                <DatePicker Width="151"></DatePicker>
+                <DatePicker Width="151"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="5">

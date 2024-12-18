@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using HealthCouch.CaseStudy.Common.Command;
+using HealthCouch.CaseStudy.Common.Commands;
 
 namespace HealthCouch.CaseStudy.ViewModel
 {
