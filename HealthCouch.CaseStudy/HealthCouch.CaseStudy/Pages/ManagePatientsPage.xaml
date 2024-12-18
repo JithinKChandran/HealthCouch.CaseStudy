@@ -48,15 +48,15 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="34">
                 <TextBlock Text="Blood Group:"/>
-                <ComboBox Width="213" ItemsSource="{Binding BloodGroups}" SelectedItem="{Binding BloodGroup}" Height="23"/>
+                <ComboBox Width="243" ItemsSource="{Binding BloodGroups}" SelectedItem="{Binding BloodGroup}" Height="22"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Width="299" Height="43">
-                <TextBlock Text="Age:" Width="59"/>
-                <TextBox Width="215" Text="{Binding Age}"/>
+            <StackPanel Orientation="Horizontal" Width="367" Height="43">
+                <TextBlock Text="Age:" Width="95"/>
+                <TextBox Width="246" Text="{Binding Age}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="84" Width="369">
                 <TextBlock Text="Symptoms:" Width="95"/>
-                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="72" Width="221" Text="{Binding Symptoms}"/>
+                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="72" Width="248" Text="{Binding Symptoms}"/>
             </StackPanel>
         </StackPanel>
 
@@ -72,22 +72,34 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="5">
-                <TextBlock Text="Doctor ID:" VerticalAlignment="Center" Margin="0, 0, 5, 0"/>
-                <TextBox Width="264" Text="{Binding SearchDoctorId}"/>
+                <TextBlock Text="Date Of Appointment:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="186"/>
+                <DatePicker Width="151"></DatePicker>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="5">
                 <TextBlock Text="Doctor Name:" VerticalAlignment="Center" Margin="0, 0, 5, 0"/>
-                <TextBox Width="246" Text="{Binding SearchDoctorName}"/>
+                <TextBox Width="249" Text="{Binding SearchDoctorName}"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,5" HorizontalAlignment="Center" Width="350">
-                <TextBlock Text="Speciality:" VerticalAlignment="Center" Margin="0, 0, 5, 0"/>
-                <ComboBox Width="252" ItemsSource="{Binding Specialities}" SelectedItem="{Binding SearchSpeciality}"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Margin="0,5,0,5" HorizontalAlignment="Center" Width="390">
+                <TextBlock Text="Speciality:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="84"/>
+                <ComboBox Width="261" ItemsSource="{Binding Specialities}" SelectedItem="{Binding SearchSpeciality}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" HorizontalAlignment="Center" Width="370">
+                <TextBlock Text="Time Slot:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="99"/>
+                <ComboBox x:Name="TimeSlotPicker" Width="253" Height="30"  VerticalAlignment="Center">
+                    <ComboBoxItem Content="10:00 AM - 11:00 AM"/>
+                    <ComboBoxItem Content="11:00 AM - 12:00 AM"/>
+                    <ComboBoxItem Content="12:00 AM - 01:00 PM"/>
+                    <ComboBoxItem Content="02:00 PM - 03:00 PM"/>
+                    <ComboBoxItem Content="03:00 PM - 04:00 PM"/>
+                    <ComboBoxItem Content="04:00 PM - 05:00 PM"/>
+                </ComboBox>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="2" Grid.ColumnSpan="2">
-                <Button x:Name="SearchButton" Content="Search" Command="{Binding SearchCommand}"/>
+                <Button x:Name="AddButton" Content="Add" Command="{Binding AddCommand}"/>
                 <Button x:Name="BackButton" Content="Back" Command="{Binding BackCommand}"/>
             </StackPanel>
         </Grid>

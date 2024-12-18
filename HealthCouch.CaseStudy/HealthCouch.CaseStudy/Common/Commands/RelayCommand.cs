@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace HealthCouch.CaseStudy.Common.Commands
 {
-    public class RelayCommands : ICommand
+    public class RelayCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
