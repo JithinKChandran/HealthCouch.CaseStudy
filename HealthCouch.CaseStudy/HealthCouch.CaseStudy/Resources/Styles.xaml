@@ -6,12 +6,59 @@
         <ResourceDictionary Source="Colors.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <!-- Window Style -->
-    <Style TargetType="Window">
-        <Setter Property="Background" Value="{StaticResource WindowBackground}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="{StaticResource FontNormal}"/>
-        <Setter Property="Padding" Value="10"/>
+    <!-- Font Sizes and Families -->
+    <Style x:Key="HeadingStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{StaticResource MainHeading}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontFamily" Value="Arial" />
+    </Style>
+
+    <Style x:Key="SubheadingStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{StaticResource SubHeading}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontFamily" Value="Calibri" />
+    </Style>
+
+    <Style x:Key="TextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{StaticResource Text}" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+    </Style>
+
+    <!-- TextBox Style -->
+    <Style TargetType="TextBox">
+        <Setter Property="FontSize" Value="{StaticResource Text}" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <!-- ComboBox Style -->
+    <Style TargetType="ComboBox">
+        <Setter Property="FontSize" Value="{StaticResource Text}" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <!-- RadioButton Style -->
+    <Style TargetType="RadioButton">
+        <Setter Property="FontSize" Value="{StaticResource Text}" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <!-- DatePicker Style -->
+    <Style TargetType="DatePicker">
+        <Setter Property="FontSize" Value="{StaticResource Text}" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <!-- DataGrid Style -->
+    <Style TargetType="DataGrid">
+        <Setter Property="FontSize" Value="{StaticResource Text}" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="RowBackground" Value="LightGray" />
+        <Setter Property="AlternatingRowBackground" Value="White" />
     </Style>
 
     <!-- Button Style -->
@@ -46,44 +93,5 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
-    <!-- ButtonBase Style -->
-    <Style x:Key="ButtonBase" TargetType="Button">
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="{StaticResource FontNormal}"/>
-        <Setter Property="Padding" Value="5"/>
-    </Style>
-
-    <!-- ButtonPrimary Style -->
-    <Style x:Key="ButtonPrimary" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
-        <Setter Property="Background" Value="{StaticResource PrimaryButtonBackground}"/>
-    </Style>
-
-    <!-- ButtonDanger Style -->
-    <Style x:Key="ButtonDanger" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
-        <Setter Property="Background" Value="{StaticResource DangerButtonBackground}"/>
-    </Style>
-
-    <!-- TextBox Style -->
-    <Style x:Key="TextBoxStyle" TargetType="TextBox">
-        <Setter Property="Margin" Value="5"/>
-        <Setter Property="Padding" Value="5"/>
-        <Setter Property="BorderBrush" Value="Gray"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontSize" Value="{StaticResource FontNormal}"/>
-    </Style>
-
-    <!-- Label Style -->
-    <Style x:Key="LabelStyle" TargetType="Label">
-        <Setter Property="FontSize" Value="{StaticResource FontNormal}"/>
-        <Setter Property="FontWeight" Value="Normal"/>
-    </Style>
-
-    <!-- TextBlock Style -->
-    <Style TargetType="TextBlock">
-        <Setter Property="Margin" Value="5"/>
-        <Setter Property="FontWeight" Value="Normal"/>
-        <Setter Property="FontSize" Value="{StaticResource FontNormal}"/>
-    </Style>
-
+    
 </ResourceDictionary>
