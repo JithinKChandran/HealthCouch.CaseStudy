@@ -34,78 +34,63 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Separator Height="2"
-                   Background="Gray"
-                   Margin="5, 10">
-            </Separator>
-
             <TextBlock Text="Search Options"
                    FontSize="{StaticResource FontL}"
                    TextAlignment="Center">
             </TextBlock>
 
-            <Grid Margin="10, 0">
+            <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal"
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Margin="5">
-                    <TextBlock Text="Doctor ID:"
-                           VerticalAlignment="Center"
-                           Margin="0, 0, 5, 0">
-                    </TextBlock>
+                <WrapPanel Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="10"
+                           HorizontalAlignment="Center">
+                    <Label Content="Doctor ID:"></Label>
                     <TextBox x:Name="SearchDoctorIdTextBox"
-                         Width="264"
+                         Width="250"
                          Text="{Binding SearchDoctorId, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
-                </StackPanel>
+                </WrapPanel>
 
-                <StackPanel Orientation="Horizontal"
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5">
-                    <TextBlock Text="Doctor Name:"
-                           VerticalAlignment="Center"
-                           Margin="0, 0, 5, 0">
-                    </TextBlock>
+                <WrapPanel Grid.Row="0"
+                           Grid.Column="1"
+                           Margin="10"
+                           HorizontalAlignment="Center">
+                    <Label Content="Doctor Name:"></Label>
                     <TextBox x:Name="SearchDoctorNameTextBox"
-                         Width="246"
-                         Text="{Binding SearchDoctorName, UpdateSourceTrigger=PropertyChanged}">
+                             Width="250"
+                             Text="{Binding SearchDoctorName, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
-                </StackPanel>
+                </WrapPanel>
 
-                <StackPanel Orientation="Horizontal"
-                        Grid.Row="1"
-                        Grid.ColumnSpan="2"
-                        Margin="0,5,0,5"
-                        HorizontalAlignment="Center" Width="350">
-                    <TextBlock Text="Speciality:"
-                           VerticalAlignment="Center"
-                           Margin="0, 0, 5, 0">
-                    </TextBlock>
+                <WrapPanel Grid.Row="1"
+                           Grid.ColumnSpan="2"
+                           Margin="10"
+                           HorizontalAlignment="Center">
+                    <Label Content="Speciality:"></Label>
                     <ComboBox x:Name="SearchSpecialityTextBox"
                          Width="252"
                          SelectedValue="{Binding SearchSpeciality, UpdateSourceTrigger=PropertyChanged}">
-                        <ComboBoxItem Content="Cardiology"/>
-                        <ComboBoxItem Content="Neurology"/>
-                        <ComboBoxItem Content="Orthopedics"/>
-                        <ComboBoxItem Content="Pediatrics"/>
-                        <!-- Add more specialities as needed -->
+                        <ComboBoxItem Content="Dermatology"></ComboBoxItem>
+                        <ComboBoxItem Content="ENT"></ComboBoxItem>
+                        <ComboBoxItem Content="Diet and Nutrition"></ComboBoxItem>
+                        <ComboBoxItem Content="General Medicine"></ComboBoxItem>
+                        <ComboBoxItem Content="Pediatrics"></ComboBoxItem>
+                        <ComboBoxItem Content="Gynecology"></ComboBoxItem>
                     </ComboBox>
-                </StackPanel>
+                </WrapPanel>
             </Grid>
 
-            <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    Margin="10">
+            <StackPanel HorizontalAlignment="Center"
+                        Margin="10">
                 <Button x:Name="SearchButton"
                     Content="Search"
                     Command="{Binding SearchCommand}">
