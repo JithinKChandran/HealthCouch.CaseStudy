@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
 using HealthCouch.CaseStudy.Database;
 using HealthCouch.CaseStudy.DataLayer.Entities;
 
@@ -9,201 +8,175 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
 {
     public class PatientRepository
     {
-        private readonly DataContext _dataContext;
+        private readonly DataContext _dataContext = new DataContext();
 
-        public PatientRepository(DataContext dataContext)
+        public PatientRepository()
         {
-            _dataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
+            CreatePatientTable();
         }
 
-        // Creating patient table.
-        public void CreatePatientTable()
+        private void CreatePatientTable()
         {
             string createTableQuery = @"
-                CREATE TABLE Patients (
-                PatientId INT PRIMARY KEY IDENTITY,
-                PatinetName VARCHAR(100) NOT NULL,
-                Age INT NOT NULL,
-                ContactNumber VARCHAR(20) NOT NULL,                
-                EmergencyContactNumber VARCHAR(20) NOT NULL,
-                Gender VARCHAR(15) NOT NULL,
-                BloodGroup VARCHAR(10) NOT NULL,
-                Symptoms VARCHAR(300) NOT NULL
+                CREATE TABLE IF NOT EXISTS Patients (
+                    PatientID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Name TEXT NOT NULL,
+                    Address TEXT,
+                    Age INTEGER NOT NULL,
+                    Gender TEXT NOT NULL,
+                    ContactNumber TEXT NOT NULL,
+                    EmergencyContact TEXT,
+                    BloodGroup TEXT,
+                    Symptoms TEXT,
+                    DoctorSpeciality TEXT NOT NULL,
+                    DoctorName TEXT NOT NULL,
+                    AppointmentDate TEXT NOT NULL,
+                    TimeSlot TEXT NOT NULL
                 );";
-
-            var connection = _dataContext.GetConnection();
-            SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
-            command.ExecuteNonQuery();
+                var connection = _dataContext.GetConnection();
+                using (var command = new SQLiteCommand(createTableQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            
         }
 
-        // Add a new patient to the repository.
         public void Add(Patient patient)
         {
             if (patient == null)
                 throw new ArgumentNullException(nameof(patient));
 
-            using (var connection = _dataContext.GetConnection())
-            {
-                var command = connection.CreateCommand();
-                command.CommandText = @"
-                    INSERT INTO Patients (PatientName, Age, ContactNumber, Gender, BloodGroup, Symptoms)
-                    VALUES (@PatientName, @Age, @ContactNumber, @Gender, @BloodGroup, @Symptoms)";
-                command.Parameters.AddWithValue("@PatientName", patient.PatientName);
-                command.Parameters.AddWithValue("@Age", patient.Age);
-                command.Parameters.AddWithValue("@ContactNumber", patient.ContactNumber);
-                command.Parameters.AddWithValue("@EmergencyContactNumber", patient.EmergencyContactNumber);
-                command.Parameters.AddWithValue("@Gender", patient.Gender);
-                command.Parameters.AddWithValue("@BloodGroup", patient.BloodGroup);
-                command.Parameters.AddWithValue("@Symptoms", patient.Symptoms);
+            var connection = _dataContext.GetConnection();
+            SQLiteCommand command = new SQLiteCommand("INSERT INTO Patients (Name, Address, Age, Gender, ContactNumber, EmergencyContact, BloodGroup, Symptoms, DoctorSpeciality, DoctorName, AppointmentDate, TimeSlot) " +
+                                                   "VALUES (@Name, @Address, @Age, @Gender, @ContactNumber, @EmergencyContact, @BloodGroup, @Symptoms, @DoctorSpeciality, @DoctorName, @AppointmentDate, @TimeSlot)", connection);
+                    command.Parameters.AddWithValue("@Name", patient.Name);
+                    command.Parameters.AddWithValue("@Address", patient.Address);
+                    command.Parameters.AddWithValue("@Age", patient.Age);
+                    command.Parameters.AddWithValue("@Gender", patient.Gender);
+                    command.Parameters.AddWithValue("@ContactNumber", patient.ContactNumber);
+                    command.Parameters.AddWithValue("@EmergencyContact", patient.EmergencyContact);
+                    command.Parameters.AddWithValue("@BloodGroup", patient.BloodGroup);
+                    command.Parameters.AddWithValue("@Symptoms", patient.Symptoms);
+                    command.Parameters.AddWithValue("@DoctorSpeciality", patient.DoctorSpeciality);
+                    command.Parameters.AddWithValue("@DoctorName", patient.DoctorName);
+                    command.Parameters.AddWithValue("@AppointmentDate", patient.AppointmentDate.ToString("yyyy-MM-dd HH:mm:ss"));
+                    command.Parameters.AddWithValue("@TimeSlot", patient.TimeSlot);
 
-                command.ExecuteNonQuery();
-            }
+                    command.ExecuteNonQuery();
+                
+            
         }
 
-        // Get all patients from the repository.
-        public List<Patient> GetAll()
+        public void Update(Patient patient)
         {
-            var patients = new List<Patient>();
-            using (var connection = _dataContext.GetConnection())
-            {
-                var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM Patients";
+            if (patient == null)
+                throw new ArgumentNullException(nameof(patient));
 
-                using (var reader = command.ExecuteReader())
+             var connection = _dataContext.GetConnection();
+
+            SQLiteCommand command = new SQLiteCommand("UPDATE Patients SET Name = @Name, Address = @Address, Age = @Age, Gender = @Gender, " +
+                                                   "ContactNumber = @ContactNumber, EmergencyContact = @EmergencyContact, BloodGroup = @BloodGroup, Symptoms = @Symptoms, " +
+                                                   "DoctorSpeciality = @DoctorSpeciality, DoctorName = @DoctorName, AppointmentDate = @AppointmentDate, TimeSlot = @TimeSlot " +
+                                                   "WHERE PatientID = @PatientID", connection);
                 {
-                    while (reader.Read())
-                    {
-                        var patient = new Patient
-                        {
-                            PatientId = reader.GetInt32(reader.GetOrdinal("PatientId")),
-                            PatientName = reader.GetString(reader.GetOrdinal("PatientName")),
-                            Age = reader.GetInt32(reader.GetOrdinal("Age")),
-                            ContactNumber = reader.GetString(reader.GetOrdinal("ContactNumber")),
-                            EmergencyContactNumber = reader.GetString(reader.GetOrdinal("EmergencyContactNumber")),
-                            Gender = reader.GetString(reader.GetOrdinal("Gender")),
-                            BloodGroup = reader.GetString(reader.GetOrdinal("BloodGroup")),
-                            Symptoms = reader.GetString(reader.GetOrdinal("Symptoms"))
-                        };
-                        patients.Add(patient);
-                    }
+                    command.Parameters.AddWithValue("@Name", patient.Name);
+                    command.Parameters.AddWithValue("@Address", patient.Address);
+                    command.Parameters.AddWithValue("@Age", patient.Age);
+                    command.Parameters.AddWithValue("@Gender", patient.Gender);
+                    command.Parameters.AddWithValue("@ContactNumber", patient.ContactNumber);
+                    command.Parameters.AddWithValue("@EmergencyContact", patient.EmergencyContact);
+                    command.Parameters.AddWithValue("@BloodGroup", patient.BloodGroup);
+                    command.Parameters.AddWithValue("@Symptoms", patient.Symptoms);
+                    command.Parameters.AddWithValue("@DoctorSpeciality", patient.DoctorSpeciality);
+                    command.Parameters.AddWithValue("@DoctorName", patient.DoctorName);
+                    command.Parameters.AddWithValue("@AppointmentDate", patient.AppointmentDate.ToString("yyyy-MM-dd HH:mm:ss"));
+                    command.Parameters.AddWithValue("@TimeSlot", patient.TimeSlot);
+                    command.Parameters.AddWithValue("@PatientID", patient.PatientID);
+
+                    command.ExecuteNonQuery();
                 }
-            }
+            
+        }
+
+        public void Delete(int patientID)
+        {
+             var connection = _dataContext.GetConnection();
+            SQLiteCommand command = new SQLiteCommand("DELETE FROM Patients WHERE PatientID = @PatientID", connection);
+                {
+                    command.Parameters.AddWithValue("@PatientID", patientID);
+                    command.ExecuteNonQuery();
+                }
+            
+        }
+
+        public List<Patient> GetAllPatients()
+        {
+            List<Patient> patients = new List<Patient>();
+            var connection = _dataContext.GetConnection();
+
+            SQLiteCommand command = new SQLiteCommand("SELECT * FROM Patients", connection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+                    {
+                        while (reader.Read())
+                        {
+                            patients.Add(new Patient
+                            {
+                                PatientID = Convert.ToInt32(reader["PatientID"]),
+                                Name = reader["Name"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                Age = Convert.ToInt32(reader["Age"]),
+                                Gender = reader["Gender"].ToString(),
+                                ContactNumber = reader["ContactNumber"].ToString(),
+                                EmergencyContact = reader["EmergencyContact"].ToString(),
+                                BloodGroup = reader["BloodGroup"].ToString(),
+                                Symptoms = reader["Symptoms"].ToString(),
+                                DoctorSpeciality = reader["DoctorSpeciality"].ToString(),
+                                DoctorName = reader["DoctorName"].ToString(),
+                                AppointmentDate = Convert.ToDateTime(reader["AppointmentDate"]),
+                                TimeSlot = reader["TimeSlot"].ToString()
+                            });
+                        }
+                    }
+
             return patients;
         }
 
-        // Update an existing patient's information.
-        public void Update(Patient updatedPatient)
+        public List<Patient> SearchPatients(string searchCriteria, string searchValue)
         {
-            if (updatedPatient == null)
-                throw new ArgumentNullException(nameof(updatedPatient));
+            List<Patient> patients = new List<Patient>();
 
-            using (var connection = _dataContext.GetConnection())
+            var connection = _dataContext.GetConnection();
             {
-                var command = connection.CreateCommand();
-                command.CommandText = @"
-                    UPDATE Patients
-                    SET PatientName = @PatientName,
-                        Age = @Age,
-                        ContactNumber = @ContactNumber,
-                        EmergencyContactNumber = @EmergencyContactNumber,
-                        Gender = @Gender,
-                        BloodGroup = @BloodGroup,
-                        Symptoms = @Symptoms
-                    WHERE PatientId = @PatientId";
+                SQLiteCommand command = new SQLiteCommand($"SELECT * FROM Patients WHERE {searchCriteria} LIKE @SearchValue", connection);
+                
+                    command.Parameters.AddWithValue("@SearchValue", $"%{searchValue}%");
 
-                command.Parameters.AddWithValue("@PatientId", updatedPatient.PatientId);
-                command.Parameters.AddWithValue("@PatientName", updatedPatient.PatientName);
-                command.Parameters.AddWithValue("@Age", updatedPatient.Age);
-                command.Parameters.AddWithValue("@ContactNumber", updatedPatient.ContactNumber);
-                command.Parameters.AddWithValue("@EmergencyContactNumber", updatedPatient.EmergencyContactNumber);
-                command.Parameters.AddWithValue("@Gender", updatedPatient.Gender);
-                command.Parameters.AddWithValue("@BloodGroup", updatedPatient.BloodGroup);
-                command.Parameters.AddWithValue("@Symptoms", updatedPatient.Symptoms);
-
-                var rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected == 0)
-                {
-                    throw new KeyNotFoundException("Patient not found.");
-                }
-            }
-        }
-
-        // Remove a patient from the repository.
-        public void Remove(int patientId)
-        {
-            using (var connection = _dataContext.GetConnection())
-            {
-                var command = connection.CreateCommand();
-                command.CommandText = "DELETE FROM Patients WHERE PatientId = @PatientId";
-                command.Parameters.AddWithValue("@PatientId", patientId);
-
-                var rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected == 0)
-                {
-                    throw new KeyNotFoundException("Patient not found.");
-                }
-            }
-        }
-
-        // Find a patient by ID.
-        public Patient FindById(int patientId)
-        {
-            using (var connection = _dataContext.GetConnection())
-            {
-                var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM Patients WHERE PatientId = @PatientId";
-                command.Parameters.AddWithValue("@PatientId", patientId);
-
-                using (var reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
+                SQLiteDataReader reader = command.ExecuteReader();
                     {
-                        return new Patient
+                        while (reader.Read())
                         {
-                            PatientId = reader.GetInt32(reader.GetOrdinal("PatientId")),
-                            PatientName = reader.GetString(reader.GetOrdinal("PatientName")),
-                            Age = reader.GetInt32(reader.GetOrdinal("Age")),
-                            ContactNumber = reader.GetString(reader.GetOrdinal("ContactNumber")),
-                            EmergencyContactNumber = reader.GetString(reader.GetOrdinal("EmergencyContactNumber")),
-                            Gender = reader.GetString(reader.GetOrdinal("Gender")),
-                            BloodGroup = reader.GetString(reader.GetOrdinal("BloodGroup")),
-                            Symptoms = reader.GetString(reader.GetOrdinal("Symptoms"))
-                        };
+                            patients.Add(new Patient
+                            {
+                                PatientID = Convert.ToInt32(reader["PatientID"]),
+                                Name = reader["Name"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                Age = Convert.ToInt32(reader["Age"]),
+                                Gender = reader["Gender"].ToString(),
+                                ContactNumber = reader["ContactNumber"].ToString(),
+                                EmergencyContact = reader["EmergencyContact"].ToString(),
+                                BloodGroup = reader["BloodGroup"].ToString(),
+                                Symptoms = reader["Symptoms"].ToString(),
+                                DoctorSpeciality = reader["DoctorSpeciality"].ToString(),
+                                DoctorName = reader["DoctorName"].ToString(),
+                                AppointmentDate = Convert.ToDateTime(reader["AppointmentDate"]),
+                                TimeSlot = reader["TimeSlot"].ToString()
+                            });
+                        }
                     }
-                }
+                
             }
-            return null;
-        }
 
-        // Find patients by name.
-        public List<Patient> FindByName(string patientName)
-        {
-            var patients = new List<Patient>();
-            using (var connection = _dataContext.GetConnection())
-            {
-                var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM Patients WHERE PatientName LIKE @PatientName";
-                command.Parameters.AddWithValue("@PatientName", "%" + patientName + "%");
-
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        var patient = new Patient
-                        {
-                            PatientId = reader.GetInt32(reader.GetOrdinal("PatientId")),
-                            PatientName = reader.GetString(reader.GetOrdinal("PatientName")),
-                            Age = reader.GetInt32(reader.GetOrdinal("Age")),
-                            ContactNumber = reader.GetString(reader.GetOrdinal("ContactNumber")),
-                            EmergencyContactNumber = reader.GetString(reader.GetOrdinal("EmergencyContactNumber")),
-                            Gender = reader.GetString(reader.GetOrdinal("Gender")),
-                            BloodGroup = reader.GetString(reader.GetOrdinal("BloodGroup")),
-                            Symptoms = reader.GetString(reader.GetOrdinal("Symptoms"))
-                        };
-                        patients.Add(patient);
-                    }
-                }
-            }
             return patients;
         }
     }

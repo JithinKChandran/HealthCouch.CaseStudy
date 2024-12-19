@@ -25,6 +25,7 @@ namespace HealthCouch.CaseStudy
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new HealthCouch.CaseStudy.ViewModel.PatientViewModel();
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)

@@ -76,14 +76,9 @@
     </ApplicationDefinition>
     <Compile Include="Common\Commands\RelayCommand.cs" />
     <Compile Include="Common\Converters\GenderConverter.cs" />
-    <Compile Include="Common\Validator\AppointmentValidator.cs" />
-    <Compile Include="Common\Validator\DoctorValidator.cs" />
-    <Compile Include="Common\Validator\PatientValidator.cs" />
     <Compile Include="Database\DataContext.cs" />
-    <Compile Include="ViewModel\AppointmentViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\DoctorViewModel.cs" />
-    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\PatientViewModel.cs" />
     <Compile Include="Windows\DoctorPage.xaml.cs">
       <DependentUpon>DoctorPage.xaml</DependentUpon>
@@ -99,10 +94,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataLayer\Entities\Appointment.cs" />
     <Compile Include="DataLayer\Entities\Doctor.cs" />
     <Compile Include="DataLayer\Entities\Patient.cs" />
-    <Compile Include="DataLayer\Repositories\AppointmentRepository.cs" />
     <Compile Include="DataLayer\Repositories\DoctorRepository.cs" />
     <Compile Include="DataLayer\Repositories\PatientRepository.cs" />
     <Compile Include="MainWindow.xaml.cs">

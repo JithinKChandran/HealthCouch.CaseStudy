@@ -1,50 +1,136 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
-using HealthCouch.CaseStudy.DataLayer.Entities;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows;
 using HealthCouch.CaseStudy.Common.Commands;
+using HealthCouch.CaseStudy.DataLayer.Entities;
+using HealthCouch.CaseStudy.DataLayer.Repositories;
 
 namespace HealthCouch.CaseStudy.ViewModel
 {
     public class DoctorViewModel : BaseViewModel
     {
-        public ObservableCollection<Doctor> Doctors { get; set; }
-        public Doctor SelectedDoctor { get; set; }
+        private readonly DoctorRepository _doctorRepository;
 
-        public string SearchDoctorId { get; set; }
+        private ObservableCollection<Doctor> _doctors;
+        public ObservableCollection<Doctor> Doctors
+        {
+            get { return _doctors; }
+            set
+            {
+                _doctors = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Doctor _selectedDoctor;
+        public Doctor SelectedDoctor
+        {
+            get { return _selectedDoctor; }
+            set
+            {
+                _selectedDoctor = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string SearchDoctorName { get; set; }
         public string SearchSpeciality { get; set; }
 
-        public ICommand SearchCommand { get; set; }
+        private string _doctorName;
+        public string DoctorName
+        {
+            get { return _doctorName; }
+            set
+            {
+                _doctorName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _speciality;
+        public string Speciality
+        {
+            get { return _speciality; }
+            set
+            {
+                _speciality = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public RelayCommand SearchCommand { get; private set; }
+        public RelayCommand AddDoctorCommand { get; private set; }
 
         public DoctorViewModel()
         {
-            Doctors = new ObservableCollection<Doctor>();
-            SearchCommand = new RelayCommand(SearchDoctors);
+            _doctorRepository = new DoctorRepository();
+            LoadDoctors();
+
+            SearchCommand = new RelayCommand(OnSearchExecute);
+            AddDoctorCommand = new RelayCommand(OnAddDoctorExecute);
+
+            DoctorName = string.Empty;
+            Speciality = string.Empty;
         }
 
-        private void SearchDoctors(object parameter)
+        private void LoadDoctors()
         {
-            var query = Doctors.AsQueryable();
+            try
+            {
+                Doctors = new ObservableCollection<Doctor>(_doctorRepository.GetDoctors());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading doctors: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
-            if (!string.IsNullOrEmpty(SearchDoctorId))
+        private void OnSearchExecute(object parameter)
+        {
+            try
             {
-                query = query.Where(d => d.DoctorId.ToString().Contains(SearchDoctorId));
+                var filteredDoctors = _doctorRepository.SearchDoctors(SearchDoctorName, SearchSpeciality);
+                Doctors = new ObservableCollection<Doctor>(filteredDoctors);
             }
-            if (!string.IsNullOrEmpty(SearchDoctorName))
+            catch (Exception ex)
             {
-                query = query.Where(d => d.DoctorName.Contains(SearchDoctorName));
+                MessageBox.Show("Error searching doctors: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            if (!string.IsNullOrEmpty(SearchSpeciality))
-            {
-                query = query.Where(d => d.DoctorName.Contains(SearchSpeciality));
-            }
+        }
 
-            var results = query.ToList();
-            Doctors.Clear();
-            foreach (var doctor in results)
+        private void OnAddDoctorExecute(object parameter)
+        {
+            try
             {
-                Doctors.Add(doctor);
+                // Validate input
+                if (string.IsNullOrEmpty(DoctorName) || string.IsNullOrEmpty(Speciality))
+                {
+                    MessageBox.Show("Please enter Doctor Name and Speciality.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Create a new Doctor object
+                var newDoctor = new Doctor
+                {
+                    DoctorName = DoctorName,
+                    Speciality = Speciality
+                };
+
+                // Add the new doctor to the database
+                _doctorRepository.AddDoctor(newDoctor);
+
+                // Refresh the Doctors collection
+                LoadDoctors();
+
+                // Clear the input fields
+                DoctorName = string.Empty;
+                Speciality = string.Empty;
+
+                MessageBox.Show("Doctor added successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding doctor: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
