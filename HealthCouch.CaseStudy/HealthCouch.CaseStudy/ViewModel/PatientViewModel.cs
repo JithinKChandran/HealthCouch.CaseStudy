@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -14,32 +13,22 @@ namespace HealthCouch.CaseStudy.ViewModel
         private readonly PatientRepository _patientRepository;
         private readonly DoctorRepository _doctorRepository;
 
-        // Parameterless constructor for XAML binding
         public PatientViewModel()
         {
-            // Initialize empty collections to avoid null reference issues
+            _patientRepository = new PatientRepository();
+            _doctorRepository = new DoctorRepository();
+
             AllPatients = new ObservableCollection<Patient>();
             DoctorNames = new ObservableCollection<string>();
             DoctorSpecialities = new ObservableCollection<string>();
 
-            // Initialize commands
             AddCommand = new RelayCommand(OnAddPatientExecute);
             EditCommand = new RelayCommand(OnEditPatientExecute, CanEditPatient);
             DeleteCommand = new RelayCommand(OnDeletePatientExecute, CanDeletePatient);
             SearchCommand = new RelayCommand(OnSearchExecute);
-        }
 
-        public PatientViewModel(PatientRepository patientRepository, DoctorRepository doctorRepository)
-        {
-            _patientRepository = patientRepository ?? throw new ArgumentNullException(nameof(patientRepository));
-            _doctorRepository = doctorRepository ?? throw new ArgumentNullException(nameof(doctorRepository));
             LoadAllPatients();
             LoadDoctorSpecialities();
-
-            AddCommand = new RelayCommand(OnAddPatientExecute);
-            EditCommand = new RelayCommand(OnEditPatientExecute, CanEditPatient);
-            DeleteCommand = new RelayCommand(OnDeletePatientExecute, CanDeletePatient);
-            SearchCommand = new RelayCommand(OnSearchExecute);
         }
 
         private ObservableCollection<Patient> _allPatients;
@@ -64,7 +53,6 @@ namespace HealthCouch.CaseStudy.ViewModel
 
                 if (_selectedPatient != null)
                 {
-                    // Update ViewModel properties when a patient is selected
                     PatientID = _selectedPatient.PatientID;
                     Name = _selectedPatient.Name;
                     Address = _selectedPatient.Address;
@@ -74,7 +62,7 @@ namespace HealthCouch.CaseStudy.ViewModel
                     EmergencyContact = _selectedPatient.EmergencyContact;
                     Symptoms = _selectedPatient.Symptoms;
                     DoctorSpeciality = _selectedPatient.DoctorSpeciality;
-                    LoadDoctorNamesBySpeciality(); // Load doctor names based on selected speciality
+                    LoadDoctorNamesBySpeciality();
                     DoctorName = _selectedPatient.DoctorName;
                     AppointmentDate = _selectedPatient.AppointmentDate;
                     TimeSlot = _selectedPatient.TimeSlot;
@@ -83,7 +71,6 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
         }
 
-        // Patient Properties
         public int PatientID { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
@@ -121,11 +108,15 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
         }
 
-        private void LoadDoctorSpecialities()
+        public void LoadDoctorSpecialities()
         {
             try
             {
-                DoctorSpecialities = new ObservableCollection<string>(_doctorRepository.GetAllDoctorSpecialities());
+                DoctorSpecialities.Clear();
+                foreach (var speciality in _doctorRepository.GetAllDoctorSpecialities())
+                {
+                    DoctorSpecialities.Add(speciality);
+                }
             }
             catch (Exception ex)
             {
@@ -133,7 +124,7 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
         }
 
-        private void LoadDoctorNamesBySpeciality()
+        public void LoadDoctorNamesBySpeciality()
         {
             try
             {
@@ -168,13 +159,22 @@ namespace HealthCouch.CaseStudy.ViewModel
             TimeSlot = string.Empty;
         }
 
+        private bool ValidateFields()
+        {
+            return !string.IsNullOrEmpty(Name) &&
+                   !string.IsNullOrEmpty(DoctorSpeciality) &&
+                   !string.IsNullOrEmpty(DoctorName) &&
+                   !string.IsNullOrEmpty(TimeSlot) &&
+                   AppointmentDate.HasValue;
+        }
+
         private void OnAddPatientExecute(object parameter)
         {
             try
             {
-                if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(DoctorSpeciality) || string.IsNullOrEmpty(DoctorName))
+                if (!ValidateFields())
                 {
-                    MessageBox.Show("Please fill in required fields: Name, Doctor Speciality, and Doctor Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Please fill in required fields: Name, Doctor Speciality, Doctor Name, Time Slot, and Appointment Date.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -196,7 +196,9 @@ namespace HealthCouch.CaseStudy.ViewModel
 
                 _patientRepository.Add(newPatient);
                 LoadAllPatients();
+                MessageBox.Show("Patient added successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 ClearFormFields();
+
             }
             catch (Exception ex)
             {
@@ -213,24 +215,27 @@ namespace HealthCouch.CaseStudy.ViewModel
         {
             try
             {
-                if (SelectedPatient != null && SelectedPatient.PatientID > 0)
+                if (!CanEditPatient(parameter) || !ValidateFields())
                 {
-                    SelectedPatient.Name = Name;
-                    SelectedPatient.Address = Address;
-                    SelectedPatient.Age = Age;
-                    SelectedPatient.Gender = Gender;
-                    SelectedPatient.ContactNumber = ContactNumber;
-                    SelectedPatient.EmergencyContact = EmergencyContact;
-                    SelectedPatient.Symptoms = Symptoms;
-                    SelectedPatient.BloodGroup = BloodGroup;
-                    SelectedPatient.DoctorSpeciality = DoctorSpeciality;
-                    SelectedPatient.DoctorName = DoctorName;
-                    SelectedPatient.AppointmentDate = (DateTime)AppointmentDate;
-                    SelectedPatient.TimeSlot = TimeSlot;
-
-                    _patientRepository.Update(SelectedPatient);
-                    LoadAllPatients();
+                    MessageBox.Show("Please fill in required fields: Name, Doctor Speciality, Doctor Name, Time Slot, and Appointment Date.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
+
+                SelectedPatient.Name = Name;
+                SelectedPatient.Address = Address;
+                SelectedPatient.Age = Age;
+                SelectedPatient.Gender = Gender;
+                SelectedPatient.ContactNumber = ContactNumber;
+                SelectedPatient.EmergencyContact = EmergencyContact;
+                SelectedPatient.Symptoms = Symptoms;
+                SelectedPatient.BloodGroup = BloodGroup;
+                SelectedPatient.DoctorSpeciality = DoctorSpeciality;
+                SelectedPatient.DoctorName = DoctorName;
+                SelectedPatient.AppointmentDate = (DateTime)AppointmentDate;
+                SelectedPatient.TimeSlot = TimeSlot;
+
+                _patientRepository.Update(SelectedPatient);
+                LoadAllPatients();
             }
             catch (Exception ex)
             {
@@ -247,12 +252,15 @@ namespace HealthCouch.CaseStudy.ViewModel
         {
             try
             {
-                if (SelectedPatient != null && SelectedPatient.PatientID > 0)
+                if (!CanDeletePatient(parameter))
                 {
-                    _patientRepository.Delete(SelectedPatient.PatientID);
-                    LoadAllPatients();
-                    SelectedPatient = null; // Clear the selection
+                    MessageBox.Show("Please select a valid patient to delete.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
+
+                _patientRepository.Delete(SelectedPatient.PatientID);
+                LoadAllPatients();
+                SelectedPatient = null;
             }
             catch (Exception ex)
             {

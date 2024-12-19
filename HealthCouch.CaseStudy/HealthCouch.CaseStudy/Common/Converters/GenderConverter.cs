@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace HealthCouch.CaseStudy.Common.Converters
@@ -14,15 +10,18 @@ namespace HealthCouch.CaseStudy.Common.Converters
         {
             if (value is string gender)
             {
-                return gender.Equals("M", StringComparison.OrdinalIgnoreCase) ? "Male" :
-                       gender.Equals("F", StringComparison.OrdinalIgnoreCase) ? "Female" : "Other";
+                return gender.Equals(parameter.ToString(), StringComparison.OrdinalIgnoreCase);
             }
-            return value;
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value is bool isChecked && isChecked)
+            {
+                return parameter.ToString();
+            }
+            return null;
         }
     }
 }

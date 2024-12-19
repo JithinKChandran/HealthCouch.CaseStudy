@@ -33,8 +33,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="Edit" Margin="2,0" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"></Button>
-                                    <Button Content="Delete" Margin="2,0" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Background="Red"></Button>
+                                    <Button Content="Edit" Margin="2,0" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"/>
+                                    <Button Content="Delete" Margin="2,0" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Background="Red"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -43,13 +43,12 @@
             </DataGrid>
         </StackPanel>
         <StackPanel Grid.Row="1">
-            <TextBlock Text="Search Options" HorizontalAlignment="Center" FontSize="{StaticResource SubHeading}"/>
+            <TextBlock Text="Search Options" HorizontalAlignment="Center" FontSize="16"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions></Grid.RowDefinitions>
                 <StackPanel Grid.Column="0">
                     <WrapPanel>
                         <Label Content="Patient Id"/>

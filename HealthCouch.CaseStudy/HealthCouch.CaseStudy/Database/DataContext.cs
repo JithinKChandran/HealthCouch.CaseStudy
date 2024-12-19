@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 
@@ -12,6 +11,7 @@ namespace HealthCouch.CaseStudy.Database
         private readonly string _systemAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private readonly string _appDataPath;
         private readonly string _dbPath;
+
         public DataContext()
         {
             _appDataPath = Path.Combine(_systemAppDataPath, "HealthCouch");

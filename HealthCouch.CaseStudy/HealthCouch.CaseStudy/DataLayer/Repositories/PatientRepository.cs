@@ -8,11 +8,10 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
 {
     public class PatientRepository
     {
-        private readonly DataContext _dataContext;
+        private readonly DataContext _dataContext = new DataContext();
 
-        public PatientRepository(DataContext dataContext)
+        public PatientRepository()
         {
-            _dataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
             CreatePatientTable();
         }
 
@@ -34,12 +33,12 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                     AppointmentDate TEXT NOT NULL,
                     TimeSlot TEXT NOT NULL
                 );";
-
-            using (var connection = _dataContext.GetConnection())
-            using (var command = new SQLiteCommand(createTableQuery, connection))
-            {
-                command.ExecuteNonQuery();
-            }
+                var connection = _dataContext.GetConnection();
+                using (var command = new SQLiteCommand(createTableQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            
         }
 
         public void Add(Patient patient)
@@ -47,25 +46,25 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             if (patient == null)
                 throw new ArgumentNullException(nameof(patient));
 
-            using (var connection = _dataContext.GetConnection())
-            using (var command = new SQLiteCommand("INSERT INTO Patients (Name, Address, Age, Gender, ContactNumber, EmergencyContact, BloodGroup, Symptoms, DoctorSpeciality, DoctorName, AppointmentDate, TimeSlot) " +
-                                                   "VALUES (@Name, @Address, @Age, @Gender, @ContactNumber, @EmergencyContact, @BloodGroup, @Symptoms, @DoctorSpeciality, @DoctorName, @AppointmentDate, @TimeSlot)", connection))
-            {
-                command.Parameters.AddWithValue("@Name", patient.Name);
-                command.Parameters.AddWithValue("@Address", patient.Address);
-                command.Parameters.AddWithValue("@Age", patient.Age);
-                command.Parameters.AddWithValue("@Gender", patient.Gender);
-                command.Parameters.AddWithValue("@ContactNumber", patient.ContactNumber);
-                command.Parameters.AddWithValue("@EmergencyContact", patient.EmergencyContact);
-                command.Parameters.AddWithValue("@BloodGroup", patient.BloodGroup);
-                command.Parameters.AddWithValue("@Symptoms", patient.Symptoms);
-                command.Parameters.AddWithValue("@DoctorSpeciality", patient.DoctorSpeciality);
-                command.Parameters.AddWithValue("@DoctorName", patient.DoctorName);
-                command.Parameters.AddWithValue("@AppointmentDate", patient.AppointmentDate.ToString("yyyy-MM-dd HH:mm:ss"));
-                command.Parameters.AddWithValue("@TimeSlot", patient.TimeSlot);
+            var connection = _dataContext.GetConnection();
+            SQLiteCommand command = new SQLiteCommand("INSERT INTO Patients (Name, Address, Age, Gender, ContactNumber, EmergencyContact, BloodGroup, Symptoms, DoctorSpeciality, DoctorName, AppointmentDate, TimeSlot) " +
+                                                   "VALUES (@Name, @Address, @Age, @Gender, @ContactNumber, @EmergencyContact, @BloodGroup, @Symptoms, @DoctorSpeciality, @DoctorName, @AppointmentDate, @TimeSlot)", connection);
+                    command.Parameters.AddWithValue("@Name", patient.Name);
+                    command.Parameters.AddWithValue("@Address", patient.Address);
+                    command.Parameters.AddWithValue("@Age", patient.Age);
+                    command.Parameters.AddWithValue("@Gender", patient.Gender);
+                    command.Parameters.AddWithValue("@ContactNumber", patient.ContactNumber);
+                    command.Parameters.AddWithValue("@EmergencyContact", patient.EmergencyContact);
+                    command.Parameters.AddWithValue("@BloodGroup", patient.BloodGroup);
+                    command.Parameters.AddWithValue("@Symptoms", patient.Symptoms);
+                    command.Parameters.AddWithValue("@DoctorSpeciality", patient.DoctorSpeciality);
+                    command.Parameters.AddWithValue("@DoctorName", patient.DoctorName);
+                    command.Parameters.AddWithValue("@AppointmentDate", patient.AppointmentDate.ToString("yyyy-MM-dd HH:mm:ss"));
+                    command.Parameters.AddWithValue("@TimeSlot", patient.TimeSlot);
 
-                command.ExecuteNonQuery();
-            }
+                    command.ExecuteNonQuery();
+                
+            
         }
 
         public void Update(Patient patient)
@@ -73,68 +72,72 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             if (patient == null)
                 throw new ArgumentNullException(nameof(patient));
 
-            using (var connection = _dataContext.GetConnection())
-            using (var command = new SQLiteCommand("UPDATE Patients SET Name = @Name, Address = @Address, Age = @Age, Gender = @Gender, " +
+             var connection = _dataContext.GetConnection();
+
+            SQLiteCommand command = new SQLiteCommand("UPDATE Patients SET Name = @Name, Address = @Address, Age = @Age, Gender = @Gender, " +
                                                    "ContactNumber = @ContactNumber, EmergencyContact = @EmergencyContact, BloodGroup = @BloodGroup, Symptoms = @Symptoms, " +
                                                    "DoctorSpeciality = @DoctorSpeciality, DoctorName = @DoctorName, AppointmentDate = @AppointmentDate, TimeSlot = @TimeSlot " +
-                                                   "WHERE PatientID = @PatientID", connection))
-            {
-                command.Parameters.AddWithValue("@Name", patient.Name);
-                command.Parameters.AddWithValue("@Address", patient.Address);
-                command.Parameters.AddWithValue("@Age", patient.Age);
-                command.Parameters.AddWithValue("@Gender", patient.Gender);
-                command.Parameters.AddWithValue("@ContactNumber", patient.ContactNumber);
-                command.Parameters.AddWithValue("@EmergencyContact", patient.EmergencyContact);
-                command.Parameters.AddWithValue("@BloodGroup", patient.BloodGroup);
-                command.Parameters.AddWithValue("@Symptoms", patient.Symptoms);
-                command.Parameters.AddWithValue("@DoctorSpeciality", patient.DoctorSpeciality);
-                command.Parameters.AddWithValue("@DoctorName", patient.DoctorName);
-                command.Parameters.AddWithValue("@AppointmentDate", patient.AppointmentDate.ToString("yyyy-MM-dd HH:mm:ss"));
-                command.Parameters.AddWithValue("@TimeSlot", patient.TimeSlot);
-                command.Parameters.AddWithValue("@PatientID", patient.PatientID);
+                                                   "WHERE PatientID = @PatientID", connection);
+                {
+                    command.Parameters.AddWithValue("@Name", patient.Name);
+                    command.Parameters.AddWithValue("@Address", patient.Address);
+                    command.Parameters.AddWithValue("@Age", patient.Age);
+                    command.Parameters.AddWithValue("@Gender", patient.Gender);
+                    command.Parameters.AddWithValue("@ContactNumber", patient.ContactNumber);
+                    command.Parameters.AddWithValue("@EmergencyContact", patient.EmergencyContact);
+                    command.Parameters.AddWithValue("@BloodGroup", patient.BloodGroup);
+                    command.Parameters.AddWithValue("@Symptoms", patient.Symptoms);
+                    command.Parameters.AddWithValue("@DoctorSpeciality", patient.DoctorSpeciality);
+                    command.Parameters.AddWithValue("@DoctorName", patient.DoctorName);
+                    command.Parameters.AddWithValue("@AppointmentDate", patient.AppointmentDate.ToString("yyyy-MM-dd HH:mm:ss"));
+                    command.Parameters.AddWithValue("@TimeSlot", patient.TimeSlot);
+                    command.Parameters.AddWithValue("@PatientID", patient.PatientID);
 
-                command.ExecuteNonQuery();
-            }
+                    command.ExecuteNonQuery();
+                }
+            
         }
 
         public void Delete(int patientID)
         {
-            using (var connection = _dataContext.GetConnection())
-            using (var command = new SQLiteCommand("DELETE FROM Patients WHERE PatientID = @PatientID", connection))
-            {
-                command.Parameters.AddWithValue("@PatientID", patientID);
-                command.ExecuteNonQuery();
-            }
+             var connection = _dataContext.GetConnection();
+            SQLiteCommand command = new SQLiteCommand("DELETE FROM Patients WHERE PatientID = @PatientID", connection);
+                {
+                    command.Parameters.AddWithValue("@PatientID", patientID);
+                    command.ExecuteNonQuery();
+                }
+            
         }
 
         public List<Patient> GetAllPatients()
         {
             List<Patient> patients = new List<Patient>();
+            var connection = _dataContext.GetConnection();
 
-            using (var connection = _dataContext.GetConnection())
-            using (var command = new SQLiteCommand("SELECT * FROM Patients", connection))
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    patients.Add(new Patient
+            SQLiteCommand command = new SQLiteCommand("SELECT * FROM Patients", connection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
                     {
-                        PatientID = Convert.ToInt32(reader["PatientID"]),
-                        Name = reader["Name"].ToString(),
-                        Address = reader["Address"].ToString(),
-                        Age = Convert.ToInt32(reader["Age"]),
-                        Gender = reader["Gender"].ToString(),
-                        ContactNumber = reader["ContactNumber"].ToString(),
-                        EmergencyContact = reader["EmergencyContact"].ToString(),
-                        BloodGroup = reader["BloodGroup"].ToString(),
-                        Symptoms = reader["Symptoms"].ToString(),
-                        DoctorSpeciality = reader["DoctorSpeciality"].ToString(),
-                        DoctorName = reader["DoctorName"].ToString(),
-                        AppointmentDate = Convert.ToDateTime(reader["AppointmentDate"]),
-                        TimeSlot = reader["TimeSlot"].ToString()
-                    });
-                }
-            }
+                        while (reader.Read())
+                        {
+                            patients.Add(new Patient
+                            {
+                                PatientID = Convert.ToInt32(reader["PatientID"]),
+                                Name = reader["Name"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                Age = Convert.ToInt32(reader["Age"]),
+                                Gender = reader["Gender"].ToString(),
+                                ContactNumber = reader["ContactNumber"].ToString(),
+                                EmergencyContact = reader["EmergencyContact"].ToString(),
+                                BloodGroup = reader["BloodGroup"].ToString(),
+                                Symptoms = reader["Symptoms"].ToString(),
+                                DoctorSpeciality = reader["DoctorSpeciality"].ToString(),
+                                DoctorName = reader["DoctorName"].ToString(),
+                                AppointmentDate = Convert.ToDateTime(reader["AppointmentDate"]),
+                                TimeSlot = reader["TimeSlot"].ToString()
+                            });
+                        }
+                    }
 
             return patients;
         }
@@ -143,33 +146,35 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
         {
             List<Patient> patients = new List<Patient>();
 
-            using (var connection = _dataContext.GetConnection())
-            using (var command = new SQLiteCommand($"SELECT * FROM Patients WHERE {searchCriteria} LIKE @SearchValue", connection))
+            var connection = _dataContext.GetConnection();
             {
-                command.Parameters.AddWithValue("@SearchValue", $"%{searchValue}%");
+                SQLiteCommand command = new SQLiteCommand($"SELECT * FROM Patients WHERE {searchCriteria} LIKE @SearchValue", connection);
+                
+                    command.Parameters.AddWithValue("@SearchValue", $"%{searchValue}%");
 
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
+                SQLiteDataReader reader = command.ExecuteReader();
                     {
-                        patients.Add(new Patient
+                        while (reader.Read())
                         {
-                            PatientID = Convert.ToInt32(reader["PatientID"]),
-                            Name = reader["Name"].ToString(),
-                            Address = reader["Address"].ToString(),
-                            Age = Convert.ToInt32(reader["Age"]),
-                            Gender = reader["Gender"].ToString(),
-                            ContactNumber = reader["ContactNumber"].ToString(),
-                            EmergencyContact = reader["EmergencyContact"].ToString(),
-                            BloodGroup = reader["BloodGroup"].ToString(),
-                            Symptoms = reader["Symptoms"].ToString(),
-                            DoctorSpeciality = reader["DoctorSpeciality"].ToString(),
-                            DoctorName = reader["DoctorName"].ToString(),
-                            AppointmentDate = Convert.ToDateTime(reader["AppointmentDate"]),
-                            TimeSlot = reader["TimeSlot"].ToString()
-                        });
+                            patients.Add(new Patient
+                            {
+                                PatientID = Convert.ToInt32(reader["PatientID"]),
+                                Name = reader["Name"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                Age = Convert.ToInt32(reader["Age"]),
+                                Gender = reader["Gender"].ToString(),
+                                ContactNumber = reader["ContactNumber"].ToString(),
+                                EmergencyContact = reader["EmergencyContact"].ToString(),
+                                BloodGroup = reader["BloodGroup"].ToString(),
+                                Symptoms = reader["Symptoms"].ToString(),
+                                DoctorSpeciality = reader["DoctorSpeciality"].ToString(),
+                                DoctorName = reader["DoctorName"].ToString(),
+                                AppointmentDate = Convert.ToDateTime(reader["AppointmentDate"]),
+                                TimeSlot = reader["TimeSlot"].ToString()
+                            });
+                        }
                     }
-                }
+                
             }
 
             return patients;
