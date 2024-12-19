@@ -18,5 +18,6 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
         public string DoctorName { get; set; }
         public DateTime AppointmentDate { get; set; }
         public string TimeSlot { get; set; }
+        public string BloodGroup { get; internal set; }
     }
 }

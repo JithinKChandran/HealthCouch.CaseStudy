@@ -75,6 +75,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\Commands\RelayCommand.cs" />
+    <Compile Include="Common\Converters\GenderConverter.cs" />
     <Compile Include="Database\DataContext.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\DoctorViewModel.cs" />

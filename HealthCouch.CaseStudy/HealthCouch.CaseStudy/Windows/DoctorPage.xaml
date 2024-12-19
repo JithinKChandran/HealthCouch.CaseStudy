@@ -23,7 +23,8 @@
                   SelectedItem="{Binding SelectedDoctor}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Doctor ID"
-                                    Binding="{Binding DoctorId}">
+                                    Binding="{Binding DoctorId}"
+                                    Width="100">
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="Name"
                                     Binding="{Binding DoctorName}">
@@ -34,7 +35,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <TextBlock Text="Search Options"
+            <TextBlock Text="Search | Add "
                    FontSize="{StaticResource SubHeading}"
                    TextAlignment="Center">
             </TextBlock>
@@ -89,11 +90,16 @@
                 </WrapPanel>
             </Grid>
 
-            <StackPanel HorizontalAlignment="Center"
-                        Margin="10">
+            <StackPanel HorizontalAlignment="Center" 
+                        Margin="10" Width="126"
+                        Orientation="Horizontal" Height="37">
                 <Button x:Name="SearchButton"
                     Content="Search"
-                    Command="{Binding SearchCommand}">
+                    Command="{Binding SearchCommand}" Width="51">
+                </Button>
+                <Button x:Name="AddButton"
+                        Content="Add"
+                        Command="{Binding AddCommand}" Width="56">      
                 </Button>
             </StackPanel>
         </StackPanel>
