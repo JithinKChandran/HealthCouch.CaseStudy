@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Input;
 using HealthCouch.CaseStudy.Common.Commands;
 using HealthCouch.CaseStudy.DataLayer.Entities;
 using HealthCouch.CaseStudy.DataLayer.Repositories;
@@ -17,8 +14,44 @@ namespace HealthCouch.CaseStudy.ViewModel
         private readonly PatientRepository _patientRepository;
         private readonly DoctorRepository _doctorRepository;
 
+        // Parameterless constructor for XAML binding
+        public PatientViewModel()
+        {
+            // Initialize empty collections to avoid null reference issues
+            AllPatients = new ObservableCollection<Patient>();
+            DoctorNames = new ObservableCollection<string>();
+            DoctorSpecialities = new ObservableCollection<string>();
+
+            // Initialize commands
+            AddCommand = new RelayCommand(OnAddPatientExecute);
+            EditCommand = new RelayCommand(OnEditPatientExecute, CanEditPatient);
+            DeleteCommand = new RelayCommand(OnDeletePatientExecute, CanDeletePatient);
+            SearchCommand = new RelayCommand(OnSearchExecute);
+        }
+
+        public PatientViewModel(PatientRepository patientRepository, DoctorRepository doctorRepository)
+        {
+            _patientRepository = patientRepository ?? throw new ArgumentNullException(nameof(patientRepository));
+            _doctorRepository = doctorRepository ?? throw new ArgumentNullException(nameof(doctorRepository));
+            LoadAllPatients();
+            LoadDoctorSpecialities();
+
+            AddCommand = new RelayCommand(OnAddPatientExecute);
+            EditCommand = new RelayCommand(OnEditPatientExecute, CanEditPatient);
+            DeleteCommand = new RelayCommand(OnDeletePatientExecute, CanDeletePatient);
+            SearchCommand = new RelayCommand(OnSearchExecute);
+        }
+
         private ObservableCollection<Patient> _allPatients;
-        public ObservableCollection<Patient> AllPatients { get; set; } = new ObservableCollection<Patient>();
+        public ObservableCollection<Patient> AllPatients
+        {
+            get { return _allPatients; }
+            set
+            {
+                _allPatients = value;
+                OnPropertyChanged();
+            }
+        }
 
         private Patient _selectedPatient;
         public Patient SelectedPatient
@@ -29,22 +62,23 @@ namespace HealthCouch.CaseStudy.ViewModel
                 _selectedPatient = value;
                 OnPropertyChanged();
 
-                if (SelectedPatient != null)
+                if (_selectedPatient != null)
                 {
                     // Update ViewModel properties when a patient is selected
-                    PatientID = SelectedPatient.PatientID;
-                    Name = SelectedPatient.Name;
-                    Address = SelectedPatient.Address;
-                    Age = SelectedPatient.Age;
-                    Gender = SelectedPatient.Gender;
-                    ContactNumber = SelectedPatient.ContactNumber;
-                    EmergencyContact = SelectedPatient.EmergencyContact;
-                    Symptoms = SelectedPatient.Symptoms;
-                    DoctorSpeciality = SelectedPatient.DoctorSpeciality;
+                    PatientID = _selectedPatient.PatientID;
+                    Name = _selectedPatient.Name;
+                    Address = _selectedPatient.Address;
+                    Age = _selectedPatient.Age;
+                    Gender = _selectedPatient.Gender;
+                    ContactNumber = _selectedPatient.ContactNumber;
+                    EmergencyContact = _selectedPatient.EmergencyContact;
+                    Symptoms = _selectedPatient.Symptoms;
+                    DoctorSpeciality = _selectedPatient.DoctorSpeciality;
                     LoadDoctorNamesBySpeciality(); // Load doctor names based on selected speciality
-                    DoctorName = SelectedPatient.DoctorName;
-                    AppointmentDate = SelectedPatient.AppointmentDate;
-                    TimeSlot = SelectedPatient.TimeSlot;
+                    DoctorName = _selectedPatient.DoctorName;
+                    AppointmentDate = _selectedPatient.AppointmentDate;
+                    TimeSlot = _selectedPatient.TimeSlot;
+                    BloodGroup = _selectedPatient.BloodGroup;
                 }
             }
         }
@@ -60,7 +94,7 @@ namespace HealthCouch.CaseStudy.ViewModel
         public string BloodGroup { get; set; }
         public string Symptoms { get; set; }
         public string DoctorSpeciality { get; set; }
-        public List<string> DoctorNames { get; set; } = new List<string>();
+        public ObservableCollection<string> DoctorNames { get; set; } = new ObservableCollection<string>();
         public string DoctorName { get; set; }
         public DateTime? AppointmentDate { get; set; }
         public string TimeSlot { get; set; }
@@ -73,33 +107,13 @@ namespace HealthCouch.CaseStudy.ViewModel
         public RelayCommand EditCommand { get; private set; }
         public RelayCommand DeleteCommand { get; private set; }
         public RelayCommand SearchCommand { get; private set; }
-        public List<string> DoctorSpecialities { get; private set; }
-
-        public PatientViewModel()
-        {
-            
-        }
-        public PatientViewModel(PatientRepository patientRepository, DoctorRepository doctorRepository)
-        {
-            _patientRepository = patientRepository;
-            _doctorRepository = doctorRepository;
-            LoadAllPatients();
-            LoadDoctorSpecialities();
-
-            AddCommand = new RelayCommand(OnAddPatientExecute);
-            EditCommand = new RelayCommand(OnEditPatientExecute, CanEditPatient);
-            DeleteCommand = new RelayCommand(OnDeletePatientExecute, CanDeletePatient);
-            SearchCommand = new RelayCommand(OnSearchExecute);
-        }
+        public ObservableCollection<string> DoctorSpecialities { get; private set; } = new ObservableCollection<string>();
 
         private void LoadAllPatients()
         {
             try
             {
-                foreach (var item in _patientRepository.GetAllPatients())
-                {
-                    AllPatients.Add(item);
-                }
+                AllPatients = new ObservableCollection<Patient>(_patientRepository.GetAllPatients());
             }
             catch (Exception ex)
             {
@@ -111,8 +125,7 @@ namespace HealthCouch.CaseStudy.ViewModel
         {
             try
             {
-                // Corrected property access
-                DoctorSpecialities = _doctorRepository.GetAllDoctorSpecialities();
+                DoctorSpecialities = new ObservableCollection<string>(_doctorRepository.GetAllDoctorSpecialities());
             }
             catch (Exception ex)
             {
@@ -124,14 +137,35 @@ namespace HealthCouch.CaseStudy.ViewModel
         {
             try
             {
-                DoctorNames = string.IsNullOrEmpty(DoctorSpeciality)
-                    ? new List<string>()
-                    : _doctorRepository.GetDoctorNamesBySpeciality(DoctorSpeciality);
+                if (!string.IsNullOrEmpty(DoctorSpeciality))
+                {
+                    DoctorNames.Clear();
+                    foreach (var doctorName in _doctorRepository.GetDoctorNamesBySpeciality(DoctorSpeciality))
+                    {
+                        DoctorNames.Add(doctorName);
+                    }
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading doctor names: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void ClearFormFields()
+        {
+            Name = string.Empty;
+            Address = string.Empty;
+            Age = 0;
+            Gender = string.Empty;
+            ContactNumber = string.Empty;
+            EmergencyContact = string.Empty;
+            BloodGroup = string.Empty;
+            Symptoms = string.Empty;
+            DoctorSpeciality = string.Empty;
+            DoctorName = string.Empty;
+            AppointmentDate = null;
+            TimeSlot = string.Empty;
         }
 
         private void OnAddPatientExecute(object parameter)
@@ -152,8 +186,8 @@ namespace HealthCouch.CaseStudy.ViewModel
                     Gender = Gender,
                     ContactNumber = ContactNumber,
                     EmergencyContact = EmergencyContact,
-                    Symptoms = Symptoms,
                     BloodGroup = BloodGroup,
+                    Symptoms = Symptoms,
                     DoctorSpeciality = DoctorSpeciality,
                     DoctorName = DoctorName,
                     AppointmentDate = (DateTime)AppointmentDate,
@@ -258,23 +292,6 @@ namespace HealthCouch.CaseStudy.ViewModel
             {
                 MessageBox.Show("Error searching patients: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private void ClearFormFields()
-        {
-            Name = string.Empty;
-            Address = string.Empty;
-            Age = 0;
-            Gender = string.Empty;
-            ContactNumber = string.Empty;
-            EmergencyContact = string.Empty;
-            Symptoms = string.Empty;
-            BloodGroup = string.Empty;
-            DoctorSpeciality = string.Empty;
-            DoctorNames.Clear();
-            DoctorName = string.Empty;
-            AppointmentDate = null;
-            TimeSlot = string.Empty;
         }
     }
 }

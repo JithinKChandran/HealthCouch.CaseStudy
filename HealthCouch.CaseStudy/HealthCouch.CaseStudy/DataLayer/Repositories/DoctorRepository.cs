@@ -1,5 +1,4 @@
 ﻿using System;
-
 using System.Collections.Generic;
 using System.Data.SQLite;
 using HealthCouch.CaseStudy.Database;
@@ -9,40 +8,36 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
 {
     public class DoctorRepository
     {
-        private readonly DataContext _dataContext;
+        private readonly DataContext _dataContext = new DataContext();
 
-        public DoctorRepository(DataContext dataContext)
+        public DoctorRepository()
         {
-            _dataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
-
-            // Create the Doctors table if it doesn't exist
             CreateDoctorsTable();
         }
 
         private void CreateDoctorsTable()
         {
-            using (var connection = _dataContext.GetConnection())
-            {
-                string createTableQuery = @"
+            string createTableQuery = @"
                     CREATE TABLE IF NOT EXISTS Doctors (
                         DoctorId INTEGER PRIMARY KEY AUTOINCREMENT, 
                         DoctorName TEXT NOT NULL,
                         Speciality TEXT NOT NULL
                     );";
-
-                using (var command = new SQLiteCommand(createTableQuery, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
+            var connection = _dataContext.GetConnection();
+            using (SQLiteCommand command = new SQLiteCommand(createTableQuery, connection))
+            {
+                command.ExecuteNonQuery();
             }
+
         }
 
         public List<Doctor> GetDoctors()
         {
             List<Doctor> doctors = new List<Doctor>();
-            using (var connection = _dataContext.GetConnection())
-            using (var command = new SQLiteCommand("SELECT * FROM Doctors", connection))
-            using (var reader = command.ExecuteReader())
+            var connection = _dataContext.GetConnection();
+            var command = new SQLiteCommand("SELECT * FROM Doctors", connection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
             {
                 while (reader.Read())
                 {
@@ -57,55 +52,33 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             return doctors;
         }
 
-        public List<Doctor> SearchDoctors(string searchDoctorId, string searchDoctorName, string searchSpeciality)
+        public List<Doctor> SearchDoctors(string searchDoctorName, string searchSpeciality)
         {
             List<Doctor> doctors = new List<Doctor>();
-            using (var connection = _dataContext.GetConnection())
+            var connection = _dataContext.GetConnection();
             {
-                string query = "SELECT * FROM Doctors WHERE ";
-                bool isFirstCondition = true;
-
-                if (!string.IsNullOrEmpty(searchDoctorId))
-                {
-                    query += (isFirstCondition ? "" : " OR ") + " DoctorId LIKE @SearchDoctorId";
-                    isFirstCondition = false;
-                }
-
+                string query = "SELECT * FROM Doctors WHERE 1=1";
                 if (!string.IsNullOrEmpty(searchDoctorName))
                 {
-                    query += (isFirstCondition ? "" : " OR ") + " DoctorName LIKE @SearchDoctorName";
-                    isFirstCondition = false;
+                    query += " AND DoctorName LIKE @SearchDoctorName";
                 }
-
                 if (!string.IsNullOrEmpty(searchSpeciality))
                 {
-                    query += (isFirstCondition ? "" : " OR ") + " Speciality LIKE @SearchSpeciality";
-                    isFirstCondition = false;
+                    query += " AND Speciality LIKE @SearchSpeciality";
                 }
 
-                if (isFirstCondition) // If no search criteria is provided, return all doctors
+                var command = new SQLiteCommand(query, connection);
                 {
-                    query = "SELECT * FROM Doctors";
-                }
-
-                using (var command = new SQLiteCommand(query, connection))
-                {
-                    if (!string.IsNullOrEmpty(searchDoctorId))
-                    {
-                        command.Parameters.AddWithValue("@SearchDoctorId", "%" + searchDoctorId + "%");
-                    }
-
                     if (!string.IsNullOrEmpty(searchDoctorName))
                     {
                         command.Parameters.AddWithValue("@SearchDoctorName", "%" + searchDoctorName + "%");
                     }
-
                     if (!string.IsNullOrEmpty(searchSpeciality))
                     {
                         command.Parameters.AddWithValue("@SearchSpeciality", "%" + searchSpeciality + "%");
                     }
 
-                    using (var reader = command.ExecuteReader())
+                    SQLiteDataReader reader = command.ExecuteReader();
                     {
                         while (reader.Read())
                         {
@@ -125,9 +98,10 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
         public List<string> GetAllDoctorSpecialities()
         {
             List<string> specialities = new List<string>();
-            using (var connection = _dataContext.GetConnection())
-            using (var command = new SQLiteCommand("SELECT DISTINCT Speciality FROM Doctors", connection))
-            using (var reader = command.ExecuteReader())
+            var connection = _dataContext.GetConnection();
+            var command = new SQLiteCommand("SELECT DISTINCT Speciality FROM Doctors", connection);
+            SQLiteDataReader reader = command.ExecuteReader();
+
             {
                 while (reader.Read())
                 {
@@ -140,36 +114,29 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
         public List<string> GetDoctorNamesBySpeciality(string speciality)
         {
             List<string> doctorNames = new List<string>();
-            using (var connection = _dataContext.GetConnection())
-            using (var command = new SQLiteCommand("SELECT DoctorName FROM Doctors WHERE Speciality = @Speciality", connection))
-            {
+            var connection = _dataContext.GetConnection();
+            var command = new SQLiteCommand("SELECT DoctorName FROM Doctors WHERE Speciality = @Speciality", connection);
                 command.Parameters.AddWithValue("@Speciality", speciality);
 
-                using (var reader = command.ExecuteReader())
+            SQLiteDataReader reader = command.ExecuteReader();
                 {
                     while (reader.Read())
                     {
                         doctorNames.Add(reader.GetString(0));
                     }
                 }
-            }
             return doctorNames;
         }
 
         public void AddDoctor(Doctor doctor)
         {
-            using (var connection = _dataContext.GetConnection())
-            {
                 string query = "INSERT INTO Doctors (DoctorName, Speciality) VALUES (@DoctorName, @Speciality)";
-
-                using (var command = new SQLiteCommand(query, connection))
-                {
+                var connection = _dataContext.GetConnection();
+                SQLiteCommand command = new SQLiteCommand(query, connection);
                     command.Parameters.AddWithValue("@DoctorName", doctor.DoctorName);
                     command.Parameters.AddWithValue("@Speciality", doctor.Speciality);
-
                     command.ExecuteNonQuery();
-                }
-            }
+            
         }
     }
 }

@@ -1,15 +1,9 @@
 ﻿using System;
-
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Input;
 using HealthCouch.CaseStudy.Common.Commands;
 using HealthCouch.CaseStudy.DataLayer.Entities;
 using HealthCouch.CaseStudy.DataLayer.Repositories;
-using HealthCouch.CaseStudy.Windows;
 
 namespace HealthCouch.CaseStudy.ViewModel
 {
@@ -39,26 +33,44 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
         }
 
-        public string SearchDoctorId { get; set; }
         public string SearchDoctorName { get; set; }
         public string SearchSpeciality { get; set; }
 
+        private string _doctorName;
+        public string DoctorName
+        {
+            get { return _doctorName; }
+            set
+            {
+                _doctorName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _speciality;
+        public string Speciality
+        {
+            get { return _speciality; }
+            set
+            {
+                _speciality = value;
+                OnPropertyChanged();
+            }
+        }
+
         public RelayCommand SearchCommand { get; private set; }
         public RelayCommand AddDoctorCommand { get; private set; }
-        public string DoctorName { get; private set; }
-        public string Speciality { get; private set; }
 
         public DoctorViewModel()
         {
-            
-        }
-        public DoctorViewModel(DoctorRepository doctorRepository)
-        {
-            _doctorRepository = doctorRepository;
+            _doctorRepository = new DoctorRepository();
             LoadDoctors();
 
             SearchCommand = new RelayCommand(OnSearchExecute);
             AddDoctorCommand = new RelayCommand(OnAddDoctorExecute);
+
+            DoctorName = string.Empty;
+            Speciality = string.Empty;
         }
 
         private void LoadDoctors()
@@ -77,7 +89,7 @@ namespace HealthCouch.CaseStudy.ViewModel
         {
             try
             {
-                var filteredDoctors = _doctorRepository.SearchDoctors(SearchDoctorId, SearchDoctorName, SearchSpeciality);
+                var filteredDoctors = _doctorRepository.SearchDoctors(SearchDoctorName, SearchSpeciality);
                 Doctors = new ObservableCollection<Doctor>(filteredDoctors);
             }
             catch (Exception ex)
@@ -90,7 +102,7 @@ namespace HealthCouch.CaseStudy.ViewModel
         {
             try
             {
-                // Validate input (e.g., check for empty fields)
+                // Validate input
                 if (string.IsNullOrEmpty(DoctorName) || string.IsNullOrEmpty(Speciality))
                 {
                     MessageBox.Show("Please enter Doctor Name and Speciality.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -1,5 +1,4 @@
 ﻿using System;
-
 using System.Collections.Generic;
 using System.Data.SQLite;
 using HealthCouch.CaseStudy.Database;
@@ -14,33 +13,43 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
         public PatientRepository(DataContext dataContext)
         {
             _dataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
+            CreatePatientTable();
         }
-        public void CreatePatientTable()
+
+        private void CreatePatientTable()
         {
             string createTableQuery = @"
-                CREATE TABLE Patients (
-                PatientId INT PRIMARY KEY IDENTITY,
-                PatinetName VARCHAR(100) NOT NULL,
-                Age INT NOT NULL,
-                ContactNumber VARCHAR(20) NOT NULL,                
-                EmergencyContactNumber VARCHAR(20) NOT NULL,
-                Gender VARCHAR(15) NOT NULL,
-                BloodGroup VARCHAR(10) NOT NULL,
-                Symptoms VARCHAR(300) NOT NULL
+                CREATE TABLE IF NOT EXISTS Patients (
+                    PatientID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Name TEXT NOT NULL,
+                    Address TEXT,
+                    Age INTEGER NOT NULL,
+                    Gender TEXT NOT NULL,
+                    ContactNumber TEXT NOT NULL,
+                    EmergencyContact TEXT,
+                    BloodGroup TEXT,
+                    Symptoms TEXT,
+                    DoctorSpeciality TEXT NOT NULL,
+                    DoctorName TEXT NOT NULL,
+                    AppointmentDate TEXT NOT NULL,
+                    TimeSlot TEXT NOT NULL
                 );";
 
-            var connection = _dataContext.GetConnection();
-            SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
-            command.ExecuteNonQuery();
+            using (var connection = _dataContext.GetConnection())
+            using (var command = new SQLiteCommand(createTableQuery, connection))
+            {
+                command.ExecuteNonQuery();
+            }
         }
+
         public void Add(Patient patient)
         {
             if (patient == null)
                 throw new ArgumentNullException(nameof(patient));
 
             using (var connection = _dataContext.GetConnection())
-            using (var command = new SQLiteCommand("INSERT INTO Patients (Name, Address, Age, Gender, ContactNumber, EmergencyContact, Symptoms, DoctorSpeciality, DoctorName, AppointmentDate, TimeSlot) " +
-                                                    "VALUES (@Name, @Address, @Age, @Gender, @ContactNumber, @EmergencyContact, @Symptoms, @DoctorSpeciality, @DoctorName, @AppointmentDate, @TimeSlot)", connection))
+            using (var command = new SQLiteCommand("INSERT INTO Patients (Name, Address, Age, Gender, ContactNumber, EmergencyContact, BloodGroup, Symptoms, DoctorSpeciality, DoctorName, AppointmentDate, TimeSlot) " +
+                                                   "VALUES (@Name, @Address, @Age, @Gender, @ContactNumber, @EmergencyContact, @BloodGroup, @Symptoms, @DoctorSpeciality, @DoctorName, @AppointmentDate, @TimeSlot)", connection))
             {
                 command.Parameters.AddWithValue("@Name", patient.Name);
                 command.Parameters.AddWithValue("@Address", patient.Address);
@@ -48,10 +57,11 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                 command.Parameters.AddWithValue("@Gender", patient.Gender);
                 command.Parameters.AddWithValue("@ContactNumber", patient.ContactNumber);
                 command.Parameters.AddWithValue("@EmergencyContact", patient.EmergencyContact);
+                command.Parameters.AddWithValue("@BloodGroup", patient.BloodGroup);
                 command.Parameters.AddWithValue("@Symptoms", patient.Symptoms);
                 command.Parameters.AddWithValue("@DoctorSpeciality", patient.DoctorSpeciality);
                 command.Parameters.AddWithValue("@DoctorName", patient.DoctorName);
-                command.Parameters.AddWithValue("@AppointmentDate", patient.AppointmentDate);
+                command.Parameters.AddWithValue("@AppointmentDate", patient.AppointmentDate.ToString("yyyy-MM-dd HH:mm:ss"));
                 command.Parameters.AddWithValue("@TimeSlot", patient.TimeSlot);
 
                 command.ExecuteNonQuery();
@@ -65,9 +75,9 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
 
             using (var connection = _dataContext.GetConnection())
             using (var command = new SQLiteCommand("UPDATE Patients SET Name = @Name, Address = @Address, Age = @Age, Gender = @Gender, " +
-                                                    "ContactNumber = @ContactNumber, EmergencyContact = @EmergencyContact, Symptoms = @Symptoms, " +
-                                                    "DoctorSpeciality = @DoctorSpeciality, DoctorName = @DoctorName, AppointmentDate = @AppointmentDate, " +
-                                                    "TimeSlot = @TimeSlot WHERE PatientID = @PatientID", connection))
+                                                   "ContactNumber = @ContactNumber, EmergencyContact = @EmergencyContact, BloodGroup = @BloodGroup, Symptoms = @Symptoms, " +
+                                                   "DoctorSpeciality = @DoctorSpeciality, DoctorName = @DoctorName, AppointmentDate = @AppointmentDate, TimeSlot = @TimeSlot " +
+                                                   "WHERE PatientID = @PatientID", connection))
             {
                 command.Parameters.AddWithValue("@Name", patient.Name);
                 command.Parameters.AddWithValue("@Address", patient.Address);
@@ -75,10 +85,11 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                 command.Parameters.AddWithValue("@Gender", patient.Gender);
                 command.Parameters.AddWithValue("@ContactNumber", patient.ContactNumber);
                 command.Parameters.AddWithValue("@EmergencyContact", patient.EmergencyContact);
+                command.Parameters.AddWithValue("@BloodGroup", patient.BloodGroup);
                 command.Parameters.AddWithValue("@Symptoms", patient.Symptoms);
                 command.Parameters.AddWithValue("@DoctorSpeciality", patient.DoctorSpeciality);
                 command.Parameters.AddWithValue("@DoctorName", patient.DoctorName);
-                command.Parameters.AddWithValue("@AppointmentDate", patient.AppointmentDate);
+                command.Parameters.AddWithValue("@AppointmentDate", patient.AppointmentDate.ToString("yyyy-MM-dd HH:mm:ss"));
                 command.Parameters.AddWithValue("@TimeSlot", patient.TimeSlot);
                 command.Parameters.AddWithValue("@PatientID", patient.PatientID);
 
@@ -92,7 +103,6 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             using (var command = new SQLiteCommand("DELETE FROM Patients WHERE PatientID = @PatientID", connection))
             {
                 command.Parameters.AddWithValue("@PatientID", patientID);
-
                 command.ExecuteNonQuery();
             }
         }
@@ -116,6 +126,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                         Gender = reader["Gender"].ToString(),
                         ContactNumber = reader["ContactNumber"].ToString(),
                         EmergencyContact = reader["EmergencyContact"].ToString(),
+                        BloodGroup = reader["BloodGroup"].ToString(),
                         Symptoms = reader["Symptoms"].ToString(),
                         DoctorSpeciality = reader["DoctorSpeciality"].ToString(),
                         DoctorName = reader["DoctorName"].ToString(),
@@ -150,6 +161,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                             Gender = reader["Gender"].ToString(),
                             ContactNumber = reader["ContactNumber"].ToString(),
                             EmergencyContact = reader["EmergencyContact"].ToString(),
+                            BloodGroup = reader["BloodGroup"].ToString(),
                             Symptoms = reader["Symptoms"].ToString(),
                             DoctorSpeciality = reader["DoctorSpeciality"].ToString(),
                             DoctorName = reader["DoctorName"].ToString(),
@@ -159,6 +171,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                     }
                 }
             }
+
             return patients;
         }
     }
