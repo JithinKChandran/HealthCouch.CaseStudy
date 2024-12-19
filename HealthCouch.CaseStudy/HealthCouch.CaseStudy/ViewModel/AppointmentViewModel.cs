@@ -14,8 +14,8 @@ namespace HealthCouch.CaseStudy.ViewModel
         private DateTime _date;
         private string _timeSlot;
         private string _doctorName;
-        private string _speciality;
-        private string _symptoms;
+        private int _age;
+        private string _gender;
 
         public int Id
         {
@@ -68,22 +68,22 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
         }
 
-        public string Speciality
+        public int Age
         {
-            get { return _speciality; }
+            get { return _age; }
             set
             {
-                _speciality = value;
+                _age = value;
                 OnPropertyChanged();
             }
         }
 
-        public string Symptoms
+        public string Gender
         {
-            get { return _symptoms; }
+            get { return _gender; }
             set
             {
-                _symptoms = value;
+                _gender = value;
                 OnPropertyChanged();
             }
         }
@@ -97,68 +97,6 @@ namespace HealthCouch.CaseStudy.ViewModel
         public AppointmentViewModel()
         {
             Appointments = new ObservableCollection<Appointment>();
-            SaveCommand = new RelayCommand(SaveAppointment);
-            SearchCommand = new RelayCommand(SearchAppointments);
-        }
-
-        private void SaveAppointment(object parameter)
-        {
-            var newAppointment = new Appointment(Id, PatientName, Date, TimeSlot, DoctorName, Speciality, Symptoms)
-            {
-                Id = this.Id,
-                PatientName = this.PatientName,
-                Date = this.Date,
-                TimeSlot = this.TimeSlot,
-                DoctorName = this.DoctorName,
-                Speciality = this.Speciality,
-                Symptoms = this.Symptoms
-            };
-
-            if (SelectedAppointment == null)
-            {
-                Appointments.Add(newAppointment);
-            }
-            else
-            {
-                int index = Appointments.IndexOf(SelectedAppointment);
-                Appointments[index] = newAppointment;
-            }
-
-            ClearFields();
-        }
-
-        private void SearchAppointments(object parameter)
-        {
-            var query = Appointments.AsQueryable();
-            if (!string.IsNullOrEmpty(PatientName))
-            {
-                query = query.Where(a => a.PatientName.Contains(PatientName));
-            }
-            if (!string.IsNullOrEmpty(DoctorName))
-            {
-                query = query.Where(a => a.DoctorName.Contains(DoctorName));
-            }
-            if (!string.IsNullOrEmpty(Speciality))
-            {
-                query = query.Where(a => a.Speciality.Contains(Speciality));
-            }
-
-            var results = query.ToList();
-            Appointments.Clear();
-            foreach (var appointment in results)
-            {
-                Appointments.Add(appointment);
-            }
-        }
-        private void ClearFields()
-        {
-            Id = 0;
-            PatientName = string.Empty;
-            TimeSlot = string.Empty;
-            DoctorName = string.Empty;
-            Speciality = string.Empty;
-            Symptoms = string.Empty;
-            SelectedAppointment = null;
         }
     }
 }
