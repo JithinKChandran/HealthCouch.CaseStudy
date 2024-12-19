@@ -18,15 +18,7 @@ namespace HealthCouch.CaseStudy.ViewModel
         private readonly DoctorRepository _doctorRepository;
 
         private ObservableCollection<Patient> _allPatients;
-        public ObservableCollection<Patient> AllPatients
-        {
-            get { return _allPatients; }
-            set
-            {
-                _allPatients = value;
-                OnPropertyChanged();
-            }
-        }
+        public ObservableCollection<Patient> AllPatients { get; set; } = new ObservableCollection<Patient>();
 
         private Patient _selectedPatient;
         public Patient SelectedPatient
@@ -65,31 +57,34 @@ namespace HealthCouch.CaseStudy.ViewModel
         public string Gender { get; set; }
         public string ContactNumber { get; set; }
         public string EmergencyContact { get; set; }
+        public string BloodGroup { get; set; }
         public string Symptoms { get; set; }
         public string DoctorSpeciality { get; set; }
         public List<string> DoctorNames { get; set; } = new List<string>();
         public string DoctorName { get; set; }
         public DateTime? AppointmentDate { get; set; }
         public string TimeSlot { get; set; }
-
-        // Search Criteria
         public string SearchPatientId { get; set; }
         public string SearchDoctor { get; set; }
         public string SearchGender { get; set; }
         public string SearchBloodGroup { get; set; }
 
-        // Commands
         public RelayCommand AddCommand { get; private set; }
         public RelayCommand EditCommand { get; private set; }
         public RelayCommand DeleteCommand { get; private set; }
         public RelayCommand SearchCommand { get; private set; }
+        public List<string> DoctorSpecialities { get; private set; }
 
+        public PatientViewModel()
+        {
+            
+        }
         public PatientViewModel(PatientRepository patientRepository, DoctorRepository doctorRepository)
         {
             _patientRepository = patientRepository;
             _doctorRepository = doctorRepository;
             LoadAllPatients();
-            //LoadDoctorSpecialities();
+            LoadDoctorSpecialities();
 
             AddCommand = new RelayCommand(OnAddPatientExecute);
             EditCommand = new RelayCommand(OnEditPatientExecute, CanEditPatient);
@@ -101,30 +96,29 @@ namespace HealthCouch.CaseStudy.ViewModel
         {
             try
             {
-                AllPatients = new ObservableCollection<Patient>(_patientRepository.GetAllPatients());
+                foreach (var item in _patientRepository.GetAllPatients())
+                {
+                    AllPatients.Add(item);
+                }
             }
             catch (Exception ex)
             {
-                // Handle exception (e.g., display error message)
-                // For example:
-                // MessageBox.Show("Error loading patients: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error loading patients: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        //private void LoadDoctorSpecialities()
-        //{
-        //    try
-        //    {
-        //        // Corrected property access
-        //        DoctorSpecialities = _doctorRepository.GetAllDoctorSpecialities();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Handle exception (e.g., display error message)
-        //        // For example:
-        //        // MessageBox.Show("Error loading doctor specialities: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //}
+        private void LoadDoctorSpecialities()
+        {
+            try
+            {
+                // Corrected property access
+                DoctorSpecialities = _doctorRepository.GetAllDoctorSpecialities();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading doctor specialities: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void LoadDoctorNamesBySpeciality()
         {
@@ -136,9 +130,7 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
             catch (Exception ex)
             {
-                // Handle exception (e.g., display error message)
-                // For example:
-                // MessageBox.Show("Error loading doctor names: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error loading doctor names: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -148,8 +140,7 @@ namespace HealthCouch.CaseStudy.ViewModel
             {
                 if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(DoctorSpeciality) || string.IsNullOrEmpty(DoctorName))
                 {
-                    // Handle empty fields (e.g., display error message)
-                    // MessageBox.Show("Please fill in required fields: Name, Doctor Speciality, and Doctor Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Please fill in required fields: Name, Doctor Speciality, and Doctor Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -162,6 +153,7 @@ namespace HealthCouch.CaseStudy.ViewModel
                     ContactNumber = ContactNumber,
                     EmergencyContact = EmergencyContact,
                     Symptoms = Symptoms,
+                    BloodGroup = BloodGroup,
                     DoctorSpeciality = DoctorSpeciality,
                     DoctorName = DoctorName,
                     AppointmentDate = (DateTime)AppointmentDate,
@@ -174,9 +166,7 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
             catch (Exception ex)
             {
-                // Handle exception (e.g., display error message)
-                // For example:
-                // MessageBox.Show("Error adding patient: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error adding patient: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -198,6 +188,7 @@ namespace HealthCouch.CaseStudy.ViewModel
                     SelectedPatient.ContactNumber = ContactNumber;
                     SelectedPatient.EmergencyContact = EmergencyContact;
                     SelectedPatient.Symptoms = Symptoms;
+                    SelectedPatient.BloodGroup = BloodGroup;
                     SelectedPatient.DoctorSpeciality = DoctorSpeciality;
                     SelectedPatient.DoctorName = DoctorName;
                     SelectedPatient.AppointmentDate = (DateTime)AppointmentDate;
@@ -209,9 +200,7 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
             catch (Exception ex)
             {
-                // Handle exception (e.g., display error message)
-                // For example:
-                // MessageBox.Show("Error editing patient: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error editing patient: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -233,9 +222,7 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
             catch (Exception ex)
             {
-                // Handle exception (e.g., display error message)
-                // For example:
-                // MessageBox.Show("Error deleting patient: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error deleting patient: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -282,6 +269,7 @@ namespace HealthCouch.CaseStudy.ViewModel
             ContactNumber = string.Empty;
             EmergencyContact = string.Empty;
             Symptoms = string.Empty;
+            BloodGroup = string.Empty;
             DoctorSpeciality = string.Empty;
             DoctorNames.Clear();
             DoctorName = string.Empty;

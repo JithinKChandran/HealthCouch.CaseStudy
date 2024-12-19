@@ -17,7 +17,7 @@ namespace HealthCouch.CaseStudy.Common.Converters
                 return gender.Equals("M", StringComparison.OrdinalIgnoreCase) ? "Male" :
                        gender.Equals("F", StringComparison.OrdinalIgnoreCase) ? "Female" : "Other";
             }
-            return "Unknown";
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

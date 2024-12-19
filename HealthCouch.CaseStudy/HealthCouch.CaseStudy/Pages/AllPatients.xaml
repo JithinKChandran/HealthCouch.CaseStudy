@@ -4,12 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HealthCouch.CaseStudy.Pages"
-      xmlns:vm ="clr-namespace:HealthCouch.CaseStudy.ViewModel"
+      xmlns:vm="clr-namespace:HealthCouch.CaseStudy.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800" d:Background="AliceBlue"
       Title="AllPatients">
     <Page.DataContext>
-        <vm:PatientViewModel></vm:PatientViewModel>
+        <vm:PatientViewModel/>
     </Page.DataContext>
 
     <Grid>
@@ -18,10 +18,11 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <DataGrid x:Name="patientDataGrid" Grid.Row="0" ColumnWidth="*" AutoGenerateColumns="False"
-                  ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient}">
+                  CanUserAddRows="False"
+                  ItemsSource="{Binding AllPatients}" SelectedItem="{Binding SelectedPatient}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding PatientId}" Width="40"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding PatientName}" />
+                <DataGridTextColumn Header="ID"  Binding="{Binding PatientID}" Width="40"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="65"/>
                 <DataGridTextColumn Header="Gender" Binding="{Binding Gender}"/>
                 <DataGridTextColumn Header="Blood" Binding="{Binding BloodGroup}" Width="70"/>
@@ -38,7 +39,6 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
-            <Separator/>
         </DataGrid>
         <StackPanel Grid.Row="1">
             <TextBlock Text="Search Options" HorizontalAlignment="Center" FontSize="{StaticResource SubHeading}"/>

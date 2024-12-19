@@ -14,6 +14,27 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
         public DoctorRepository(DataContext dataContext)
         {
             _dataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
+
+            // Create the Doctors table if it doesn't exist
+            CreateDoctorsTable();
+        }
+
+        private void CreateDoctorsTable()
+        {
+            using (var connection = _dataContext.GetConnection())
+            {
+                string createTableQuery = @"
+                    CREATE TABLE IF NOT EXISTS Doctors (
+                        DoctorId INTEGER PRIMARY KEY AUTOINCREMENT, 
+                        DoctorName TEXT NOT NULL,
+                        Speciality TEXT NOT NULL
+                    );";
+
+                using (var command = new SQLiteCommand(createTableQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
         public List<Doctor> GetDoctors()
@@ -133,6 +154,22 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                 }
             }
             return doctorNames;
+        }
+
+        public void AddDoctor(Doctor doctor)
+        {
+            using (var connection = _dataContext.GetConnection())
+            {
+                string query = "INSERT INTO Doctors (DoctorName, Speciality) VALUES (@DoctorName, @Speciality)";
+
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@DoctorName", doctor.DoctorName);
+                    command.Parameters.AddWithValue("@Speciality", doctor.Speciality);
+
+                    command.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

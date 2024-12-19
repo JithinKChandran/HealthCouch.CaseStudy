@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Windows.Input;
 using HealthCouch.CaseStudy.Common.Commands;
 using HealthCouch.CaseStudy.DataLayer.Entities;
 using HealthCouch.CaseStudy.DataLayer.Repositories;
+using HealthCouch.CaseStudy.Windows;
 
 namespace HealthCouch.CaseStudy.ViewModel
 {
@@ -26,29 +28,37 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
         }
 
-        //private Doctor _selectedDoctor;
-        //public Doctor SelectedDoctor
-        //{
-        //    get { return _selectedDoctor; }
-        //    set
-        //    {
-        //        _selectedDoctor = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
+        private Doctor _selectedDoctor;
+        public Doctor SelectedDoctor
+        {
+            get { return _selectedDoctor; }
+            set
+            {
+                _selectedDoctor = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string SearchDoctorId { get; set; }
         public string SearchDoctorName { get; set; }
         public string SearchSpeciality { get; set; }
 
         public RelayCommand SearchCommand { get; private set; }
+        public RelayCommand AddDoctorCommand { get; private set; }
+        public string DoctorName { get; private set; }
+        public string Speciality { get; private set; }
 
+        public DoctorViewModel()
+        {
+            
+        }
         public DoctorViewModel(DoctorRepository doctorRepository)
         {
             _doctorRepository = doctorRepository;
             LoadDoctors();
 
             SearchCommand = new RelayCommand(OnSearchExecute);
+            AddDoctorCommand = new RelayCommand(OnAddDoctorExecute);
         }
 
         private void LoadDoctors()
@@ -73,6 +83,42 @@ namespace HealthCouch.CaseStudy.ViewModel
             catch (Exception ex)
             {
                 MessageBox.Show("Error searching doctors: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void OnAddDoctorExecute(object parameter)
+        {
+            try
+            {
+                // Validate input (e.g., check for empty fields)
+                if (string.IsNullOrEmpty(DoctorName) || string.IsNullOrEmpty(Speciality))
+                {
+                    MessageBox.Show("Please enter Doctor Name and Speciality.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Create a new Doctor object
+                var newDoctor = new Doctor
+                {
+                    DoctorName = DoctorName,
+                    Speciality = Speciality
+                };
+
+                // Add the new doctor to the database
+                _doctorRepository.AddDoctor(newDoctor);
+
+                // Refresh the Doctors collection
+                LoadDoctors();
+
+                // Clear the input fields
+                DoctorName = string.Empty;
+                Speciality = string.Empty;
+
+                MessageBox.Show("Doctor added successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding doctor: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

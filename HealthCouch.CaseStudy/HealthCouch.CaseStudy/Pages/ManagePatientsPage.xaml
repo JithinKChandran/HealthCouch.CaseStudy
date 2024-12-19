@@ -40,7 +40,7 @@
             </WrapPanel>
             <WrapPanel Margin="10">
                 <Label Content="Contact" Width="112"></Label>
-                <TextBox Text="{Binding Contact}" Width="273"></TextBox>
+                <TextBox Text="{Binding ContactNumber}" Width="273"></TextBox>
             </WrapPanel>
             <WrapPanel Margin="10">
                 <Label Content="Emergency Contact"></Label>
@@ -48,7 +48,7 @@
             </WrapPanel>
             <WrapPanel Margin="10">
                 <Label Content="Speciality" Width="112"></Label>
-                <ComboBox Width="270">
+                <ComboBox Width="270" ItemsSource="{Binding DoctorSpecialities}">
                     <ComboBoxItem Content="Dermatology"></ComboBoxItem>
                     <ComboBoxItem Content="ENT"></ComboBoxItem>
                     <ComboBoxItem Content="Diet and Nutrition"></ComboBoxItem>
@@ -59,7 +59,7 @@
             </WrapPanel>
             <WrapPanel Margin="10">
                 <Label Content="Date Of Appointment"></Label>
-                <DatePicker Width="192" DisplayDateStart="{x:Static sys:DateTime.Today}"></DatePicker>
+                <DatePicker Width="192" DisplayDateStart="{x:Static sys:DateTime.Today}" Text="{Binding AppointmentDate}"></DatePicker>
             </WrapPanel>
         </StackPanel>
 
@@ -74,7 +74,7 @@
             </WrapPanel>
             <WrapPanel Margin="10">
                 <Label Content="Blood Group"></Label>
-                <ComboBox Width="260">
+                <ComboBox Width="260" ItemsSource="{Binding BloodGroup}">
                     <ComboBoxItem Content="A+"/>
                     <ComboBoxItem Content="A-"/>
                     <ComboBoxItem Content="B+"/>
@@ -104,7 +104,7 @@
             </WrapPanel>
             <WrapPanel Margin="10">
                 <Label Content="Time Slot" Width="88"></Label>
-                <ComboBox x:Name="TimeSlotPicker" Width="253" Height="30"  VerticalAlignment="Center">
+                <ComboBox x:Name="TimeSlotPicker" Width="253" Height="30"  VerticalAlignment="Center" ItemsSource="{Binding TimeSlot}">
                     <ComboBoxItem Content="10:00 AM - 11:00 AM"/>
                     <ComboBoxItem Content="11:00 AM - 12:00 AM"/>
                     <ComboBoxItem Content="12:00 AM - 01:00 PM"/>

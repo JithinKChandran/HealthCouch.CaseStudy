@@ -15,7 +15,24 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
         {
             _dataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
         }
+        public void CreatePatientTable()
+        {
+            string createTableQuery = @"
+                CREATE TABLE Patients (
+                PatientId INT PRIMARY KEY IDENTITY,
+                PatinetName VARCHAR(100) NOT NULL,
+                Age INT NOT NULL,
+                ContactNumber VARCHAR(20) NOT NULL,                
+                EmergencyContactNumber VARCHAR(20) NOT NULL,
+                Gender VARCHAR(15) NOT NULL,
+                BloodGroup VARCHAR(10) NOT NULL,
+                Symptoms VARCHAR(300) NOT NULL
+                );";
 
+            var connection = _dataContext.GetConnection();
+            SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
+            command.ExecuteNonQuery();
+        }
         public void Add(Patient patient)
         {
             if (patient == null)
@@ -142,7 +159,6 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                     }
                 }
             }
-
             return patients;
         }
     }
