@@ -5,92 +5,101 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HealthCouch.CaseStudy.Pages"
       xmlns:c="clr-namespace:HealthCouch.CaseStudy.Common.Converters"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="900"
       Title="ManagePatientsPage">
     <Page.Resources>
         <c:GenderConverter x:Key="GenderConverter"/>
     </Page.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Margin="10">
-            <StackPanel Orientation="Horizontal" Margin="5" Width="348">
-                <TextBlock Text="Name:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="74"/>
-                <TextBox Width="271" Text="{Binding Name}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Address:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="84"/>
-                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="72" Width="249" Text="{Binding Address}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Contact:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="85"/>
-                <TextBox Width="253" Text="{Binding Contact}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Emergency Contact:" VerticalAlignment="Center" Margin="0, 0, 5, 0"/>
-                <TextBox Width="181" Text="{Binding EmergencyContact}"/>
-            </StackPanel>
+        <StackPanel Grid.Column="0" Margin="10">
+            <WrapPanel Margin="10">
+                <Label Content="Name" Width="107"></Label>
+                <TextBox Text="{Binding Name}" Width="279"></TextBox>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <Label Content="Address" Width="103"></Label>
+                <TextBox Text="{Binding Address}"
+                     AcceptsReturn="True" 
+                     VerticalScrollBarVisibility="Auto" 
+                     TextWrapping="Wrap" Width="283" Height="60"></TextBox>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <Label Content="Contact" Width="102"></Label>
+                <TextBox Text="{Binding Contact}" Width="284"></TextBox>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <Label Content="Emergency Contact"></Label>
+                <TextBox Text="{Binding EmergencyContact}" Width="210"></TextBox>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <Label Content="Speciality"></Label>
+                <ComboBox Width="289">
+                    <ComboBoxItem Content="Dermatology"></ComboBoxItem>
+                    <ComboBoxItem Content="ENT"></ComboBoxItem>
+                    <ComboBoxItem Content="Diet and Nutrition"></ComboBoxItem>
+                    <ComboBoxItem Content="General Medicine"></ComboBoxItem>
+                    <ComboBoxItem Content="Pediatrics"></ComboBoxItem>
+                    <ComboBoxItem Content="Gynecology"></ComboBoxItem>
+                </ComboBox>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <Label Content="Date Of Appointment"></Label>
+                <DatePicker Width="192" DisplayDateStart="{x:Static sys:DateTime.Today}"></DatePicker>
+            </WrapPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
-            <StackPanel Orientation="Horizontal" Margin="5" Height="44" Width="332">
-                <TextBlock Text="Gender:"/>
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Male" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Male}" Height="28"/>
-                    <RadioButton Content="Female" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Female}" Height="31"/>
-                    <RadioButton Content="Other" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Other}" Height="28" Width="77"/>
+        <StackPanel Grid.Column="1" Margin="10">
+            <WrapPanel Margin="10">
+                <Label Content="Gender" Width="126"></Label>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <RadioButton Content="Male" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Male}" />
+                    <RadioButton Content="Female" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Female}" />
+                    <RadioButton Content="Other" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Other}" />
                 </StackPanel>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Height="34">
-                <TextBlock Text="Blood Group:"/>
-                <ComboBox Width="243" ItemsSource="{Binding BloodGroups}" SelectedItem="{Binding BloodGroup}" Height="22"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Width="367" Height="43">
-                <TextBlock Text="Age:" Width="95"/>
-                <TextBox Width="246" Text="{Binding Age}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Height="84" Width="369">
-                <TextBlock Text="Symptoms:" Width="95"/>
-                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="72" Width="248" Text="{Binding Symptoms}"/>
-            </StackPanel>
-        </StackPanel>
-
-        <Grid Margin="10, 0" Grid.Row="1" Grid.ColumnSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="5">
-                <TextBlock Text="Date Of Appointment:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="186"/>
-                <DatePicker Width="151"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="5">
-                <TextBlock Text="Doctor Name:" VerticalAlignment="Center" Margin="0, 0, 5, 0"/>
-                <TextBox Width="249" Text="{Binding SearchDoctorName}"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Margin="0,5,0,5" HorizontalAlignment="Center" Width="390">
-                <TextBlock Text="Speciality:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="84"/>
-                <ComboBox Width="261" ItemsSource="{Binding Specialities}" SelectedItem="{Binding SearchSpeciality}"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" HorizontalAlignment="Center" Width="370">
-                <TextBlock Text="Time Slot:" VerticalAlignment="Center" Margin="0, 0, 5, 0" Width="99"/>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <Label Content="Blood Group"></Label>
+                <ComboBox Width="260">
+                    <ComboBoxItem Content="A+"/>
+                    <ComboBoxItem Content="A-"/>
+                    <ComboBoxItem Content="B+"/>
+                    <ComboBoxItem Content="B-"/>
+                    <ComboBoxItem Content="O+"/>
+                    <ComboBoxItem Content="O-"/>
+                    <ComboBoxItem Content="AB+"/>
+                    <ComboBoxItem Content="AB-"/>
+                </ComboBox>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <Label Content="Age" Width="121"></Label>
+                <TextBox Text="{Binding Age}" Width="260"></TextBox>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <Label Content="Symptoms" Width="121"></Label>
+                <TextBox AcceptsReturn="True" 
+                     VerticalScrollBarVisibility="Auto" 
+                     TextWrapping="Wrap" 
+                     Text="{Binding Symptoms}" Width="260" Height="60">
+                </TextBox>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <Label Content="Doctor Name"></Label>
+                <ComboBox Width="253">
+                </ComboBox>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <Label Content="Time Slot" Width="127"></Label>
                 <ComboBox x:Name="TimeSlotPicker" Width="253" Height="30"  VerticalAlignment="Center">
                     <ComboBoxItem Content="10:00 AM - 11:00 AM"/>
                     <ComboBoxItem Content="11:00 AM - 12:00 AM"/>
@@ -99,11 +108,11 @@
                     <ComboBoxItem Content="03:00 PM - 04:00 PM"/>
                     <ComboBoxItem Content="04:00 PM - 05:00 PM"/>
                 </ComboBox>
-            </StackPanel>
+            </WrapPanel>
+        </StackPanel>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="2" Grid.ColumnSpan="2">
-                <Button x:Name="AddButton" Content="Add" Command="{Binding AddCommand}"/>
-            </StackPanel>
-        </Grid>
+        <StackPanel HorizontalAlignment="Center" Margin="10" Grid.Row="1" Grid.ColumnSpan="2">
+            <Button x:Name="AddButton" Content="Add" Command="{Binding AddCommand}"/>
+        </StackPanel>
     </Grid>
 </Page>
