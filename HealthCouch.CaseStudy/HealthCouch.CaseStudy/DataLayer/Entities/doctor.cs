@@ -17,8 +17,6 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
         [StringLength(100)]
         public string Speciality { get; set; }
 
-        public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
-
         public Doctor()
         {
             

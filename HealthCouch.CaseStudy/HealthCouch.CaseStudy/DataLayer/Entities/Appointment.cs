@@ -18,7 +18,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
         public DateTime Date { get; set; }
 
         [Required]
-        [Display(Name = "Start Time")]
+        [Display(Name = "TimeSlot")]
         public string TimeSlot { get; set; }
 
         [Required]
@@ -26,27 +26,27 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
         [Display(Name = "Doctor Name")]
         public string DoctorName { get; set; }
 
-        [StringLength(100)]
-        [Display(Name = "Speciality")]
-        public string Speciality { get; set; }
+        [Required]
+        [Display(Name = "Age")]
+        public int Age { get; set; }
 
-        [StringLength(500)]
-        [Display(Name = "Symptoms")]
-        public string Symptoms { get; set; }
+        [Required]
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
 
         public Appointment()
         {
             
         }
-        public Appointment(int id, string patientName, DateTime date, string timeSlot, string doctorName, string speciality, string symptoms)
+        public Appointment(int id, string patientName, DateTime date, string timeSlot, string doctorName, int age, string gender)
         {
             Id = id;
             PatientName = patientName;
             Date = date;
             TimeSlot = timeSlot;
             DoctorName = doctorName;
-            Speciality = speciality;
-            Symptoms = symptoms;
+            Age = age;
+            Gender = gender;
         }
 
     }

@@ -19,11 +19,11 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             string createTableQuery = @"
                 CREATE TABLE Appointments (
                 Id INT PRIMARY KEY IDENTITY,
-                PatinetName VARCHAR(100) NOT NUL,
-                TimeSlot VARCHAR(100) NOT NUL,
-                DoctorName VARCHAR(100) NOT NUL,
-                Speciality VARCHAR(100) NOT NUL,
-                Symptoms VARCHAR(300) NOT NULL
+                PatinetName VARCHAR(100) NOT NULL,
+                TimeSlot VARCHAR(100) NOT NULL,
+                DoctorName VARCHAR(100) NOT NULL,
+                Age INT NOT NULL,
+                Gender VARCHAR(100) NOT NULL
                 );";
 
             var connection = _dataContext.GetConnection();
@@ -40,14 +40,14 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             using (var connection = _dataContext.GetConnection())
             {
                 var command = new SQLiteCommand(
-                    "INSERT INTO Appointments (PatientName, TimeSlot, DoctorName, Speciality, Symptoms) VALUES (@Id, @PatientName, @TimeSlot, @DoctorName, @Speciality, @Symptoms)",
+                    "INSERT INTO Appointments (PatientName, TimeSlot, DoctorName, Age, Gender) VALUES (@Id, @PatientName, @TimeSlot, @DoctorName, @Age, @Gender)",
                     connection);
 
                 command.Parameters.AddWithValue("@PatientName", appointment.PatientName);
                 command.Parameters.AddWithValue("@TimeSlot", appointment.TimeSlot);
                 command.Parameters.AddWithValue("@DoctorName", appointment.DoctorName);
-                command.Parameters.AddWithValue("@Speciality", appointment.Speciality);
-                command.Parameters.AddWithValue("@Symptoms", appointment.Symptoms);
+                command.Parameters.AddWithValue("@Age", appointment.Age);
+                command.Parameters.AddWithValue("@Gender", appointment.Gender);
 
                 command.ExecuteNonQuery();
             }
@@ -71,8 +71,8 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                             PatientName = reader["PatientName"].ToString(),
                             TimeSlot = reader["TimeSlot"].ToString(),
                             DoctorName = reader["DoctorName"].ToString(),
-                            Speciality = reader["Speciality"].ToString(),
-                            Symptoms = reader["Symptoms"].ToString()
+                            Age = Convert.ToInt32(reader["Age"]),
+                            Gender = reader["Gender"].ToString(),
                         });
                     }
                 }
@@ -90,15 +90,15 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             using (var connection = _dataContext.GetConnection())
             {
                 var command = new SQLiteCommand(
-                    "UPDATE Appointments SET PatientName = @PatientName, TimeSlot = @TimeSlot, DoctorName = @DoctorName, Speciality = @Speciality, Symptoms = @Symptoms WHERE Id = @Id",
+                    "UPDATE Appointments SET PatientName = @PatientName, TimeSlot = @TimeSlot, DoctorName = @DoctorName, Age = @Age, Gender = @Gender WHERE Id = @Id",
                     connection);
 
                 command.Parameters.AddWithValue("@Id", updatedAppointment.Id);
                 command.Parameters.AddWithValue("@PatientName", updatedAppointment.PatientName);
                 command.Parameters.AddWithValue("@TimeSlot", updatedAppointment.TimeSlot);
                 command.Parameters.AddWithValue("@DoctorName", updatedAppointment.DoctorName);
-                command.Parameters.AddWithValue("@Speciality", updatedAppointment.Speciality);
-                command.Parameters.AddWithValue("@Symptoms", updatedAppointment.Symptoms);
+                command.Parameters.AddWithValue("@Age", updatedAppointment.Age);
+                command.Parameters.AddWithValue("@Gender", updatedAppointment.Gender);
 
                 if (command.ExecuteNonQuery() == 0)
                     throw new KeyNotFoundException("Appointment not found.");
@@ -136,8 +136,8 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                             PatientName = reader["PatientName"].ToString(),
                             TimeSlot = reader["TimeSlot"].ToString(),
                             DoctorName = reader["DoctorName"].ToString(),
-                            Speciality = reader["Speciality"].ToString(),
-                            Symptoms = reader["Symptoms"].ToString()
+                            Age = Convert.ToInt32(reader["Age"]),
+                            Gender = reader["Gender"].ToString(),
                         };
                     }
                 }
@@ -166,8 +166,8 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                             PatientName = reader["PatientName"].ToString(),
                             TimeSlot = reader["TimeSlot"].ToString(),
                             DoctorName = reader["DoctorName"].ToString(),
-                            Speciality = reader["Speciality"].ToString(),
-                            Symptoms = reader["Symptoms"].ToString()
+                            Age = Convert.ToInt32(reader["Age"]),
+                            Gender = reader["Gender"].ToString(),
                         });
                     }
                 }
