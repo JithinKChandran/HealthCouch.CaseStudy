@@ -22,8 +22,6 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
         public void CreateAppointmentTable()
         {
             string createTableQuery = @"
-                IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Appointments' AND xtype='U')
-                BEGIN
                 CREATE TABLE Appointments (
                 Id INT PRIMARY KEY IDENTITY,
                 PatinetName VARCHAR(100) NOT NUL,
@@ -31,8 +29,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                 DoctorName VARCHAR(100) NOT NUL,
                 Speciality VARCHAR(100) NOT NUL,
                 Symptoms VARCHAR(300) NOT NULL
-                );
-                END";
+                );";
 
             var connection = _dataContext.GetConnection();
             SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);

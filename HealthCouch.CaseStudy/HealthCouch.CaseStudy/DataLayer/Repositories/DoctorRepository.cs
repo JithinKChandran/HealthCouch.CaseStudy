@@ -22,14 +22,11 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
         public void CreateDoctorTable()
         {
             string createTableQuery = @"
-                IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Doctors' AND xtype='U')
-                BEGIN
                 CREATE TABLE Doctors (
                 DoctorId INT PRIMARY KEY IDENTITY,
                 DoctorName VARCHAR(100) NOT NUL,
                 Speciality VARCHAR(100) NOT NULL
-                );
-                END";
+                );";
 
             var connection = _dataContext.GetConnection();
             SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);

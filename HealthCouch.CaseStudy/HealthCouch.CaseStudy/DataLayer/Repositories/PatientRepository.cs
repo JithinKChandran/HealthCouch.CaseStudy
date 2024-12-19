@@ -20,8 +20,6 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
         public void CreatePatientTable()
         {
             string createTableQuery = @"
-                IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Patients' AND xtype='U')
-                BEGIN
                 CREATE TABLE Patients (
                 PatientId INT PRIMARY KEY IDENTITY,
                 PatinetName VARCHAR(100) NOT NUL,
@@ -30,8 +28,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                 Gender VARCHAR(15) NOT NUL,
                 BloodGroup VARCHAR(10) NOT NUL,
                 Symptoms VARCHAR(300) NOT NULL
-                );
-                END";
+                );";
 
             var connection = _dataContext.GetConnection();
             SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
