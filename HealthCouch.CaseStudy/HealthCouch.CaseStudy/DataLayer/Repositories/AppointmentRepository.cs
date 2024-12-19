@@ -13,11 +13,6 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
     {
         private readonly DataContext _dataContext;
 
-        public AppointmentRepository()
-        {
-            _dataContext = new DataContext();
-        }
-
         // Creating patient table.
         public void CreateAppointmentTable()
         {

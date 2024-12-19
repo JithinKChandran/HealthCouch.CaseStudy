@@ -10,6 +10,10 @@
         
     </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <DockPanel LastChildFill="True">
             <Grid DockPanel.Dock="Left" 
                     Width="70" 
@@ -38,7 +42,8 @@
                             Grid.Row="1"
                             Background="Transparent"
                             BorderThickness="0"
-                            BorderBrush="Transparent">
+                            BorderBrush="Transparent"
+                            Click="DoctorButton_Click">
                     <Image Source="/Resources/Assets/stethoscope.png"></Image>
                 </Button>
 

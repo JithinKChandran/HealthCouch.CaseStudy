@@ -35,6 +35,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <Separator/>
         </DataGrid>
         <StackPanel Grid.Row="1">
             <TextBlock Text="Search Options" HorizontalAlignment="Center" FontSize="{StaticResource FontL}"/>
@@ -78,9 +79,8 @@
                     </WrapPanel>
                 </StackPanel>
             </Grid>
-            <WrapPanel HorizontalAlignment="Center" Height="85" RenderTransformOrigin="0.558,1.005" Width="156">
-                <Button Margin="10" Content="Search" Command="{Binding SearchCommand}"/>
-                <Button Margin="10" Content="Back" Command="{Binding BackCommand}"/>
+            <WrapPanel HorizontalAlignment="Center" Height="85" RenderTransformOrigin="0.558,1.005" Width="112">
+                <Button Content="Search" Command="{Binding SearchCommand}" Width="97"/>
             </WrapPanel>
         </StackPanel>
     </Grid>

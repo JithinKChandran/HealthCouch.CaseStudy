@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HealthCouch.CaseStudy.Pages;
+using HealthCouch.CaseStudy.Windows;
 
 namespace HealthCouch.CaseStudy
 {
@@ -33,7 +34,12 @@ namespace HealthCouch.CaseStudy
 
         private void PatientButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new PatientPage();
+            new PatientPage().Show();
+        }
+
+        private void DoctorButton_Click(object sender, RoutedEventArgs e)
+        {
+            new DoctorPage().Show();    
         }
     }
 }

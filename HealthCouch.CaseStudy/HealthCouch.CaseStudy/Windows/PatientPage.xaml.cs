@@ -10,15 +10,14 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HealthCouch.CaseStudy.Pages
+namespace HealthCouch.CaseStudy.Windows
 {
     /// <summary>
     /// Interaction logic for PatientPage.xaml
     /// </summary>
-    public partial class PatientPage : Page
+    public partial class PatientPage : Window
     {
         public PatientPage()
         {
