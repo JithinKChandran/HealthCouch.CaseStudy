@@ -34,10 +34,12 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
         }
 
         // Add a new doctor to the repository.
-        public void Add(Doctor doctor)
+        public void InsertDoctors()
         {
-            if (doctor == null)
-                throw new ArgumentNullException(nameof(doctor));
+            var doctors = new List<Doctor>()
+            {
+                new Doctor{DoctorId=1,DoctorName="Dr.Alice",},
+            };
 
             using (var connection = _dataContext.GetConnection())
             {
