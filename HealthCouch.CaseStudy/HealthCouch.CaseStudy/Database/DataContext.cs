@@ -10,9 +10,6 @@ namespace HealthCouch.CaseStudy.Database
 {
     public class DataContext
     {
-        private static DataContext _instance;
-        private static readonly object _lock = new object(); 
-
         private readonly SQLiteConnection _connection;
         private readonly string _dbPath;
         private DataContext()
@@ -25,22 +22,6 @@ namespace HealthCouch.CaseStudy.Database
 
             _connection = new SQLiteConnection($"Data Source={_dbPath}");
         }
-
-        public static DataContext Instance
-        {
-            get
-            {
-                lock (_lock) 
-                {
-                    if (_instance == null)
-                    {
-                        _instance = new DataContext();
-                    }
-                    return _instance;
-                }
-            }
-        }
-
         public SQLiteConnection GetConnection()
         {
             if (_connection.State == System.Data.ConnectionState.Closed)

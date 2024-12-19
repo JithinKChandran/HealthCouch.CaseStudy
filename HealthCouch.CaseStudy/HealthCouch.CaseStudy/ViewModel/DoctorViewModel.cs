@@ -15,37 +15,5 @@ namespace HealthCouch.CaseStudy.ViewModel
         public string SearchDoctorName { get; set; }
         public string SearchSpeciality { get; set; }
 
-        public ICommand SearchCommand { get; set; }
-
-        public DoctorViewModel()
-        {
-            Doctors = new ObservableCollection<Doctor>();
-            SearchCommand = new RelayCommand(SearchDoctors);
-        }
-
-        private void SearchDoctors(object parameter)
-        {
-            var query = Doctors.AsQueryable();
-
-            if (!string.IsNullOrEmpty(SearchDoctorId))
-            {
-                query = query.Where(d => d.DoctorId.ToString().Contains(SearchDoctorId));
-            }
-            if (!string.IsNullOrEmpty(SearchDoctorName))
-            {
-                query = query.Where(d => d.DoctorName.Contains(SearchDoctorName));
-            }
-            if (!string.IsNullOrEmpty(SearchSpeciality))
-            {
-                query = query.Where(d => d.DoctorName.Contains(SearchSpeciality));
-            }
-
-            var results = query.ToList();
-            Doctors.Clear();
-            foreach (var doctor in results)
-            {
-                Doctors.Add(doctor);
-            }
-        }
     }
 }
