@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HealthCouch.CaseStudy.Windows"
         mc:Ignorable="d"
-        Title="PatientPage" Height="450" Width="800" Icon="/Windows/logo.png">
+        Title="PatientPage" Height="450" Width="800" Icon="/Windows/logo.png" WindowState="Maximized">
     <Grid Background="{StaticResource WindowBackground}">
         <TabControl Margin="10">
-            <TabItem Header="Manage Patients">
+            <TabItem Header="Manage Patients" FontSize="{StaticResource SubHeading}">
                 <StackPanel Margin="10">
                     <Frame x:Name="ManagePatient" Source="pack://application:,,,/Pages/ManagePatientsPage.xaml"></Frame>
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="All Patients">
+            <TabItem Header="All Patients" FontSize="{StaticResource SubHeading}">
                 <StackPanel Margin="10">
                     <Frame x:Name="AllPatient" Source="pack://application:,,,/Pages/AllPatients.xaml"></Frame>
                 </StackPanel>

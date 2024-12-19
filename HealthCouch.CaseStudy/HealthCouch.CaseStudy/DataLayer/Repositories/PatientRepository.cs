@@ -22,11 +22,12 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             string createTableQuery = @"
                 CREATE TABLE Patients (
                 PatientId INT PRIMARY KEY IDENTITY,
-                PatinetName VARCHAR(100) NOT NUL,
-                Age INT NOT NUL,
-                ContactNumber VARCHAR(20) NOT NUL,
-                Gender VARCHAR(15) NOT NUL,
-                BloodGroup VARCHAR(10) NOT NUL,
+                PatinetName VARCHAR(100) NOT NULL,
+                Age INT NOT NULL,
+                ContactNumber VARCHAR(20) NOT NULL,                
+                EmergencyContactNumber VARCHAR(20) NOT NULL,
+                Gender VARCHAR(15) NOT NULL,
+                BloodGroup VARCHAR(10) NOT NULL,
                 Symptoms VARCHAR(300) NOT NULL
                 );";
 
@@ -50,6 +51,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                 command.Parameters.AddWithValue("@PatientName", patient.PatientName);
                 command.Parameters.AddWithValue("@Age", patient.Age);
                 command.Parameters.AddWithValue("@ContactNumber", patient.ContactNumber);
+                command.Parameters.AddWithValue("@EmergencyContactNumber", patient.EmergencyContactNumber);
                 command.Parameters.AddWithValue("@Gender", patient.Gender);
                 command.Parameters.AddWithValue("@BloodGroup", patient.BloodGroup);
                 command.Parameters.AddWithValue("@Symptoms", patient.Symptoms);
@@ -77,6 +79,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                             PatientName = reader.GetString(reader.GetOrdinal("PatientName")),
                             Age = reader.GetInt32(reader.GetOrdinal("Age")),
                             ContactNumber = reader.GetString(reader.GetOrdinal("ContactNumber")),
+                            EmergencyContactNumber = reader.GetString(reader.GetOrdinal("EmergencyContactNumber")),
                             Gender = reader.GetString(reader.GetOrdinal("Gender")),
                             BloodGroup = reader.GetString(reader.GetOrdinal("BloodGroup")),
                             Symptoms = reader.GetString(reader.GetOrdinal("Symptoms"))
@@ -102,6 +105,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                     SET PatientName = @PatientName,
                         Age = @Age,
                         ContactNumber = @ContactNumber,
+                        EmergencyContactNumber = @EmergencyContactNumber,
                         Gender = @Gender,
                         BloodGroup = @BloodGroup,
                         Symptoms = @Symptoms
@@ -111,6 +115,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                 command.Parameters.AddWithValue("@PatientName", updatedPatient.PatientName);
                 command.Parameters.AddWithValue("@Age", updatedPatient.Age);
                 command.Parameters.AddWithValue("@ContactNumber", updatedPatient.ContactNumber);
+                command.Parameters.AddWithValue("@EmergencyContactNumber", updatedPatient.EmergencyContactNumber);
                 command.Parameters.AddWithValue("@Gender", updatedPatient.Gender);
                 command.Parameters.AddWithValue("@BloodGroup", updatedPatient.BloodGroup);
                 command.Parameters.AddWithValue("@Symptoms", updatedPatient.Symptoms);
@@ -159,6 +164,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                             PatientName = reader.GetString(reader.GetOrdinal("PatientName")),
                             Age = reader.GetInt32(reader.GetOrdinal("Age")),
                             ContactNumber = reader.GetString(reader.GetOrdinal("ContactNumber")),
+                            EmergencyContactNumber = reader.GetString(reader.GetOrdinal("EmergencyContactNumber")),
                             Gender = reader.GetString(reader.GetOrdinal("Gender")),
                             BloodGroup = reader.GetString(reader.GetOrdinal("BloodGroup")),
                             Symptoms = reader.GetString(reader.GetOrdinal("Symptoms"))
@@ -189,6 +195,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
                             PatientName = reader.GetString(reader.GetOrdinal("PatientName")),
                             Age = reader.GetInt32(reader.GetOrdinal("Age")),
                             ContactNumber = reader.GetString(reader.GetOrdinal("ContactNumber")),
+                            EmergencyContactNumber = reader.GetString(reader.GetOrdinal("EmergencyContactNumber")),
                             Gender = reader.GetString(reader.GetOrdinal("Gender")),
                             BloodGroup = reader.GetString(reader.GetOrdinal("BloodGroup")),
                             Symptoms = reader.GetString(reader.GetOrdinal("Symptoms"))

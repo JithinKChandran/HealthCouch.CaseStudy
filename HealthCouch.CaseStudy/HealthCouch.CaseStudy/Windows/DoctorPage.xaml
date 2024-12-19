@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HealthCouch.CaseStudy.Windows"
         mc:Ignorable="d"
-        Title="DoctorPage" Height="450" Width="800" Icon="/Windows/logo.png">
+        Title="DoctorPage" Height="450" Width="800" Icon="/Windows/logo.png" WindowState="Maximized">
     <Grid Background="White">
         <StackPanel>
             <TextBlock Text="List of Doctors"
                    Margin="0, 10"
-                   FontSize="{StaticResource FontXL}"
+                   FontSize="{StaticResource MainHeading}"
                    HorizontalAlignment="Center">
             </TextBlock>
 
@@ -35,7 +35,7 @@
             </DataGrid>
 
             <TextBlock Text="Search Options"
-                   FontSize="{StaticResource FontL}"
+                   FontSize="{StaticResource SubHeading}"
                    TextAlignment="Center">
             </TextBlock>
 

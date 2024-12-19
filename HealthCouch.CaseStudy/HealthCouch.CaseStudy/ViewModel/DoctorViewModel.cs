@@ -16,13 +16,11 @@ namespace HealthCouch.CaseStudy.ViewModel
         public string SearchSpeciality { get; set; }
 
         public ICommand SearchCommand { get; set; }
-        public ICommand BackCommand { get; set; }
 
         public DoctorViewModel()
         {
             Doctors = new ObservableCollection<Doctor>();
             SearchCommand = new RelayCommand(SearchDoctors);
-            BackCommand = new RelayCommand(Back);
         }
 
         private void SearchDoctors(object parameter)
@@ -48,11 +46,6 @@ namespace HealthCouch.CaseStudy.ViewModel
             {
                 Doctors.Add(doctor);
             }
-        }
-
-        private void Back(object parameter)
-        {
-            // Implement back logic, typically navigation-related
         }
     }
 }

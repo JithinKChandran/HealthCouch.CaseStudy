@@ -13,6 +13,7 @@ namespace HealthCouch.CaseStudy.ViewModel
         private string _patientName;
         private int _age;
         private string _contactNumber;
+        private string _emergencyContactNumber;
         private string _gender;
         private string _bloodGroup;
         private string _symptoms;
@@ -56,6 +57,15 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
         }
 
+        public string EmergencyContactNumber
+        {
+            get { return _emergencyContactNumber; }
+            set
+            {
+                _emergencyContactNumber = value;
+                OnPropertyChanged();
+            }
+        }
         public string Gender
         {
             get { return _gender; }
@@ -88,27 +98,25 @@ namespace HealthCouch.CaseStudy.ViewModel
 
         public ObservableCollection<Patient> Patients { get; set; }
         public Patient SelectedPatient { get; set; }
-
         public ICommand SaveCommand { get; set; }
         public ICommand SearchCommand { get; set; }
-        public ICommand BackCommand { get; set; }
 
         public PatientViewModel()
         {
             Patients = new ObservableCollection<Patient>();
             SaveCommand = new RelayCommand(SavePatient);
             SearchCommand = new RelayCommand(SearchPatients);
-            BackCommand = new RelayCommand(Back);
         }
 
         private void SavePatient(object parameter)
         {
-            var newPatient = new Patient(PatientId,PatientName,Age, ContactNumber, Gender, BloodGroup, Symptoms)
+            var newPatient = new Patient(PatientId,PatientName,Age, ContactNumber, EmergencyContactNumber,Gender, BloodGroup, Symptoms)
             {
                 PatientId = (SelectedPatient != null) ? SelectedPatient.PatientId : Patients.Count + 1,
                 PatientName = this.PatientName,
                 Age = this.Age,
                 ContactNumber = this.ContactNumber,
+                EmergencyContactNumber = this.EmergencyContactNumber,
                 Gender = this.Gender,
                 BloodGroup = this.BloodGroup,
                 Symptoms = this.Symptoms
@@ -160,16 +168,13 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
         }
 
-        private void Back(object parameter)
-        {
-            // Implement back logic, typically navigation-related
-        }
 
         private void ClearFields()
         {
             PatientName = string.Empty;
             Age = default;
             ContactNumber = string.Empty;
+            EmergencyContactNumber = string.Empty;
             Gender = string.Empty;
             BloodGroup = string.Empty;
             Symptoms = string.Empty;

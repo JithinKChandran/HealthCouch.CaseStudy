@@ -24,7 +24,7 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             string createTableQuery = @"
                 CREATE TABLE Doctors (
                 DoctorId INT PRIMARY KEY IDENTITY,
-                DoctorName VARCHAR(100) NOT NUL,
+                DoctorName VARCHAR(100) NOT NULL,
                 Speciality VARCHAR(100) NOT NULL
                 );";
 

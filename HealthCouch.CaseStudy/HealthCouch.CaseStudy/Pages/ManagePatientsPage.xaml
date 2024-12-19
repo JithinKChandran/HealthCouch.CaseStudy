@@ -28,23 +28,23 @@
                 <TextBox Text="{Binding Name}" Width="279"></TextBox>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Address" Width="103"></Label>
+                <Label Content="Address" Width="108"></Label>
                 <TextBox Text="{Binding Address}"
                      AcceptsReturn="True" 
                      VerticalScrollBarVisibility="Auto" 
                      TextWrapping="Wrap" Width="283" Height="60"></TextBox>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Contact" Width="102"></Label>
-                <TextBox Text="{Binding Contact}" Width="284"></TextBox>
+                <Label Content="Contact" Width="112"></Label>
+                <TextBox Text="{Binding Contact}" Width="273"></TextBox>
             </WrapPanel>
             <WrapPanel Margin="10">
                 <Label Content="Emergency Contact"></Label>
-                <TextBox Text="{Binding EmergencyContact}" Width="210"></TextBox>
+                <TextBox Text="{Binding EmergencyContact}" Width="271"></TextBox>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Speciality"></Label>
-                <ComboBox Width="289">
+                <Label Content="Speciality" Width="112"></Label>
+                <ComboBox Width="270">
                     <ComboBoxItem Content="Dermatology"></ComboBoxItem>
                     <ComboBoxItem Content="ENT"></ComboBoxItem>
                     <ComboBoxItem Content="Diet and Nutrition"></ComboBoxItem>
@@ -82,11 +82,11 @@
                 </ComboBox>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Age" Width="121"></Label>
-                <TextBox Text="{Binding Age}" Width="260"></TextBox>
+                <Label Content="Age" Width="77"></Label>
+                <TextBox Text="{Binding Age}" Width="265"></TextBox>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Symptoms" Width="121"></Label>
+                <Label Content="Symptoms" Width="85"></Label>
                 <TextBox AcceptsReturn="True" 
                      VerticalScrollBarVisibility="Auto" 
                      TextWrapping="Wrap" 
@@ -94,12 +94,12 @@
                 </TextBox>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Doctor Name"></Label>
+                <Label Content="Doctor Name" Width="86"></Label>
                 <ComboBox Width="253">
                 </ComboBox>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Time Slot" Width="127"></Label>
+                <Label Content="Time Slot" Width="88"></Label>
                 <ComboBox x:Name="TimeSlotPicker" Width="253" Height="30"  VerticalAlignment="Center">
                     <ComboBoxItem Content="10:00 AM - 11:00 AM"/>
                     <ComboBoxItem Content="11:00 AM - 12:00 AM"/>
@@ -112,7 +112,7 @@
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Center" Margin="10" Grid.Row="1" Grid.ColumnSpan="2">
-            <Button x:Name="AddButton" Content="Add" Command="{Binding AddCommand}"/>
+            <Button x:Name="AddButton" Content="Add" Command="{Binding AddCommand}" Height="36" Width="63"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -29,7 +29,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="Edit" Margin="2,0" Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"></Button>
-                                <Button Content="Delete" Margin="2,0" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}"></Button>
+                                <Button Content="Delete" Margin="2,0" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Background="Red"></Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -38,7 +38,7 @@
             <Separator/>
         </DataGrid>
         <StackPanel Grid.Row="1">
-            <TextBlock Text="Search Options" HorizontalAlignment="Center" FontSize="{StaticResource FontL}"/>
+            <TextBlock Text="Search Options" HorizontalAlignment="Center" FontSize="{StaticResource SubHeading}"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -51,14 +51,14 @@
                         <TextBox Width="290" Height="31" Text="{Binding SearchPatientId, UpdateSourceTrigger=PropertyChanged}"/>
                     </WrapPanel>
                     <WrapPanel>
-                        <Label Content="Doctor" Width="98"/>
+                        <Label Content="Doctor" Width="60"/>
                         <TextBox Width="287" Height="31" Text="{Binding SearchDoctor, UpdateSourceTrigger=PropertyChanged}"/>
                     </WrapPanel>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <WrapPanel>
-                        <Label Content="Gender"/>
-                        <ComboBox Width="310" Height="34" SelectedValue="{Binding SearchGender, UpdateSourceTrigger=PropertyChanged}">
+                        <Label Content="Gender" Width="81"/>
+                        <ComboBox Width="308" Height="34" SelectedValue="{Binding SearchGender, UpdateSourceTrigger=PropertyChanged}">
                             <ComboBoxItem Content="Male"/>
                             <ComboBoxItem Content="Female"/>
                             <ComboBoxItem Content="Other"/>
@@ -80,7 +80,7 @@
                 </StackPanel>
             </Grid>
             <WrapPanel HorizontalAlignment="Center" Height="85" RenderTransformOrigin="0.558,1.005" Width="112">
-                <Button Content="Search" Command="{Binding SearchCommand}" Width="97"/>
+                <Button Content="Search" Command="{Binding SearchCommand}" Width="97" Height="24"/>
             </WrapPanel>
         </StackPanel>
     </Grid>

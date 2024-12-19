@@ -24,6 +24,11 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
         [Display(Name = "Contact Number")]
         public string ContactNumber { get; set; }
 
+        [Required]
+        [StringLength(15)]
+        [Display(Name = "Emergency Contact Number")]
+        public string EmergencyContactNumber { get; set; }
+
         [StringLength(6)]
         [Display(Name = "Gender")]
         public string Gender { get; set; }
@@ -36,12 +41,13 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
         [Display(Name = "Symptoms")]
         public string Symptoms { get; set; }
 
-        public Patient(int patientId, string patientName, int age, string contactNumber, string gender, string bloodGroup, string symptoms)
+        public Patient(int patientId, string patientName, int age, string contactNumber, string emergenvyContactNumber,string gender, string bloodGroup, string symptoms)
         {
             PatientId = patientId;
             PatientName = patientName;
             Age = age;
             ContactNumber = contactNumber;
+            EmergencyContactNumber = emergenvyContactNumber;
             Gender = gender;
             BloodGroup = bloodGroup;
             Symptoms = symptoms;
@@ -49,10 +55,6 @@ namespace HealthCouch.CaseStudy.DataLayer.Entities
         public Patient()
         {
             
-        }
-        public override string ToString()
-        {
-            return $"Patient [PatientId={PatientId}, PatientName={PatientName}, DateOfBirth={Age}, ContactNumber={ContactNumber}, Gender={Gender}, BloodGroup={BloodGroup}, Symptoms={Symptoms}]";
         }
     }
 }

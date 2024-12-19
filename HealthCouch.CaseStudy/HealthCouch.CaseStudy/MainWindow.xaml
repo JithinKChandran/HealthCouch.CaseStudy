@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HealthCouch.CaseStudy"
         mc:Ignorable="d"
-        Title="HealthCouch" Height="450" Width="800" Icon="/logo.png">
+        Title="HealthCouch" Height="450" Width="800" Icon="/logo.png" WindowState="Maximized">
     <Window.Resources>
         
     </Window.Resources>
@@ -61,7 +61,7 @@
                 BorderThickness="1"
                 Margin="10">
                 <StackPanel>
-                    <TextBlock Text="Appointments" HorizontalAlignment="Center" FontSize="{StaticResource FontL}"></TextBlock>
+                    <TextBlock Text="Appointments" HorizontalAlignment="Center" FontSize="{StaticResource  MainHeading}"></TextBlock>
                 <DataGrid x:Name="patientDataGrid" Grid.Row="0" ColumnWidth="*" AutoGenerateColumns="False"
           ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient}">
                         <DataGrid.Columns>

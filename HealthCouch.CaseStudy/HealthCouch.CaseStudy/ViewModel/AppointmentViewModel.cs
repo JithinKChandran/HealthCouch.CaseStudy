@@ -93,14 +93,12 @@ namespace HealthCouch.CaseStudy.ViewModel
 
         public ICommand SaveCommand { get; set; }
         public ICommand SearchCommand { get; set; }
-        public ICommand BackCommand { get; set; }
 
         public AppointmentViewModel()
         {
             Appointments = new ObservableCollection<Appointment>();
             SaveCommand = new RelayCommand(SaveAppointment);
             SearchCommand = new RelayCommand(SearchAppointments);
-            BackCommand = new RelayCommand(Back);
         }
 
         private void SaveAppointment(object parameter)
@@ -152,12 +150,6 @@ namespace HealthCouch.CaseStudy.ViewModel
                 Appointments.Add(appointment);
             }
         }
-
-        private void Back(object parameter)
-        {
-            // Implement back logic, typically navigation-related
-        }
-
         private void ClearFields()
         {
             Id = 0;
