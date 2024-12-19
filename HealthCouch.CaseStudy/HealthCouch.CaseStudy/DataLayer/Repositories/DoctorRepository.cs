@@ -1,9 +1,7 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HealthCouch.CaseStudy.Database;
 using HealthCouch.CaseStudy.DataLayer.Entities;
 
@@ -18,163 +16,123 @@ namespace HealthCouch.CaseStudy.DataLayer.Repositories
             _dataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
         }
 
-        // Creating doctor table.
-        public void CreateDoctorTable()
-        {
-            string createTableQuery = @"
-                CREATE TABLE Doctors (
-                DoctorId INT PRIMARY KEY IDENTITY,
-                DoctorName VARCHAR(100) NOT NULL,
-                Speciality VARCHAR(100) NOT NULL
-                );";
-
-            var connection = _dataContext.GetConnection();
-            SQLiteCommand command = new SQLiteCommand(createTableQuery, connection);
-            command.ExecuteNonQuery();
-        }
-
-        // Add a new doctor to the repository.
-        public void Add(Doctor doctor)
-        {
-            if (doctor == null)
-                throw new ArgumentNullException(nameof(doctor));
-
-            using (var connection = _dataContext.GetConnection())
-            {
-                var command = connection.CreateCommand();
-                command.CommandText = @"
-                    INSERT INTO Doctors (DoctorName, Speciality)
-                    VALUES (@DoctorName, @Speciality)";
-
-                // Adding parameters to SQL command
-                command.Parameters.AddWithValue("@DoctorName", doctor.DoctorName ?? (object)DBNull.Value);
-                command.Parameters.AddWithValue("@Speciality", doctor.Speciality ?? (object)DBNull.Value);
-
-                command.ExecuteNonQuery();
-            }
-        }
-
-        // Get all doctors from the repository.
         public List<Doctor> GetDoctors()
         {
-            var doctors = new List<Doctor>();
+            List<Doctor> doctors = new List<Doctor>();
+            using (var connection = _dataContext.GetConnection())
+            using (var command = new SQLiteCommand("SELECT * FROM Doctors", connection))
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    doctors.Add(new Doctor
+                    {
+                        DoctorId = reader.GetInt32(reader.GetOrdinal("DoctorId")),
+                        DoctorName = reader.GetString(reader.GetOrdinal("DoctorName")),
+                        Speciality = reader.GetString(reader.GetOrdinal("Speciality"))
+                    });
+                }
+            }
+            return doctors;
+        }
+
+        public List<Doctor> SearchDoctors(string searchDoctorId, string searchDoctorName, string searchSpeciality)
+        {
+            List<Doctor> doctors = new List<Doctor>();
             using (var connection = _dataContext.GetConnection())
             {
-                var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM Doctors";
+                string query = "SELECT * FROM Doctors WHERE ";
+                bool isFirstCondition = true;
 
-                using (var reader = command.ExecuteReader())
+                if (!string.IsNullOrEmpty(searchDoctorId))
                 {
-                    while (reader.Read())
+                    query += (isFirstCondition ? "" : " OR ") + " DoctorId LIKE @SearchDoctorId";
+                    isFirstCondition = false;
+                }
+
+                if (!string.IsNullOrEmpty(searchDoctorName))
+                {
+                    query += (isFirstCondition ? "" : " OR ") + " DoctorName LIKE @SearchDoctorName";
+                    isFirstCondition = false;
+                }
+
+                if (!string.IsNullOrEmpty(searchSpeciality))
+                {
+                    query += (isFirstCondition ? "" : " OR ") + " Speciality LIKE @SearchSpeciality";
+                    isFirstCondition = false;
+                }
+
+                if (isFirstCondition) // If no search criteria is provided, return all doctors
+                {
+                    query = "SELECT * FROM Doctors";
+                }
+
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    if (!string.IsNullOrEmpty(searchDoctorId))
                     {
-                        var doctor = new Doctor
+                        command.Parameters.AddWithValue("@SearchDoctorId", "%" + searchDoctorId + "%");
+                    }
+
+                    if (!string.IsNullOrEmpty(searchDoctorName))
+                    {
+                        command.Parameters.AddWithValue("@SearchDoctorName", "%" + searchDoctorName + "%");
+                    }
+
+                    if (!string.IsNullOrEmpty(searchSpeciality))
+                    {
+                        command.Parameters.AddWithValue("@SearchSpeciality", "%" + searchSpeciality + "%");
+                    }
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
                         {
-                            DoctorId = reader.GetInt32(reader.GetOrdinal("DoctorId")),
-                            DoctorName = reader.GetString(reader.GetOrdinal("DoctorName")),
-                            Speciality = reader.GetString(reader.GetOrdinal("Speciality"))
-                        };
-                        doctors.Add(doctor);
+                            doctors.Add(new Doctor
+                            {
+                                DoctorId = reader.GetInt32(reader.GetOrdinal("DoctorId")),
+                                DoctorName = reader.GetString(reader.GetOrdinal("DoctorName")),
+                                Speciality = reader.GetString(reader.GetOrdinal("Speciality"))
+                            });
+                        }
                     }
                 }
             }
             return doctors;
         }
 
-        // Update an existing doctor's information.
-        public void Update(Doctor updatedDoctor)
+        public List<string> GetAllDoctorSpecialities()
         {
-            if (updatedDoctor == null)
-                throw new ArgumentNullException(nameof(updatedDoctor));
-
+            List<string> specialities = new List<string>();
             using (var connection = _dataContext.GetConnection())
+            using (var command = new SQLiteCommand("SELECT DISTINCT Speciality FROM Doctors", connection))
+            using (var reader = command.ExecuteReader())
             {
-                var command = connection.CreateCommand();
-                command.CommandText = @"
-                    UPDATE Doctors
-                    SET DoctorName = @DoctorName,
-                        Speciality = @Speciality
-                    WHERE DoctorId = @DoctorId";
-
-                // Adding parameters to SQL command.
-                command.Parameters.AddWithValue("@DoctorId", updatedDoctor.DoctorId);
-                command.Parameters.AddWithValue("@DoctorName", updatedDoctor.DoctorName ?? (object)DBNull.Value);
-                command.Parameters.AddWithValue("@Speciality", updatedDoctor.Speciality ?? (object)DBNull.Value);
-
-                var rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected == 0)
+                while (reader.Read())
                 {
-                    throw new KeyNotFoundException("Doctor not found.");
+                    specialities.Add(reader.GetString(0));
                 }
             }
+            return specialities;
         }
 
-        // Remove a doctor from the repository.
-        public void Remove(int doctorId)
+        public List<string> GetDoctorNamesBySpeciality(string speciality)
         {
+            List<string> doctorNames = new List<string>();
             using (var connection = _dataContext.GetConnection())
+            using (var command = new SQLiteCommand("SELECT DoctorName FROM Doctors WHERE Speciality = @Speciality", connection))
             {
-                var command = connection.CreateCommand();
-                command.CommandText = "DELETE FROM Doctors WHERE DoctorId = @DoctorId";
-                command.Parameters.AddWithValue("@DoctorId", doctorId);
-
-                var rowsAffected = command.ExecuteNonQuery();
-                if (rowsAffected == 0)
-                {
-                    throw new KeyNotFoundException("Doctor not found.");
-                }
-            }
-        }
-
-        // Find a doctor by ID.
-        public Doctor FindById(int doctorId)
-        {
-            using (var connection = _dataContext.GetConnection())
-            {
-                var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM Doctors WHERE DoctorId = @DoctorId";
-                command.Parameters.AddWithValue("@DoctorId", doctorId);
-
-                using (var reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        return new Doctor
-                        {
-                            DoctorId = reader.GetInt32(reader.GetOrdinal("DoctorId")),
-                            DoctorName = reader.GetString(reader.GetOrdinal("DoctorName")),
-                            Speciality = reader.GetString(reader.GetOrdinal("Speciality"))
-                        };
-                    }
-                }
-            }
-            return null;
-        }
-
-        // Find doctors by speciality.
-        public List<Doctor> FindBySpeciality(string speciality)
-        {
-            var doctors = new List<Doctor>();
-            using (var connection = _dataContext.GetConnection())
-            {
-                var command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM Doctors WHERE Speciality LIKE @Speciality";
-                command.Parameters.AddWithValue("@Speciality", "%" + speciality + "%");
+                command.Parameters.AddWithValue("@Speciality", speciality);
 
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        var doctor = new Doctor
-                        {
-                            DoctorId = reader.GetInt32(reader.GetOrdinal("DoctorId")),
-                            DoctorName = reader.GetString(reader.GetOrdinal("DoctorName")),
-                            Speciality = reader.GetString(reader.GetOrdinal("Speciality"))
-                        };
-                        doctors.Add(doctor);
+                        doctorNames.Add(reader.GetString(0));
                     }
                 }
             }
-            return doctors;
+            return doctorNames;
         }
     }
 }

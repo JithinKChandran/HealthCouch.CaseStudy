@@ -5,10 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HealthCouch.CaseStudy.Pages"
       xmlns:c="clr-namespace:HealthCouch.CaseStudy.Common.Converters"
+      xmlns:vm="clr-namespace:HealthCouch.CaseStudy.ViewModel"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="900"
       Title="ManagePatientsPage">
+    <Page.DataContext>
+        <vm:PatientViewModel/>
+    </Page.DataContext>
     <Page.Resources>
         <c:GenderConverter x:Key="GenderConverter"/>
     </Page.Resources>

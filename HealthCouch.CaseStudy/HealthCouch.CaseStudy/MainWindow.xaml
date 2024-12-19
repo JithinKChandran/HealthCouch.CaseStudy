@@ -4,11 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HealthCouch.CaseStudy"
+        xmlns:vm="clr-namespace:HealthCouch.CaseStudy.ViewModel"
         mc:Ignorable="d"
         Title="HealthCouch" Height="450" Width="800" Icon="/logo.png" WindowState="Maximized">
-    <Window.Resources>
-        
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400*"/>

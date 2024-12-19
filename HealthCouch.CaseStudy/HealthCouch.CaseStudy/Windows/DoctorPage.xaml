@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HealthCouch.CaseStudy.Windows"
+        xmlns:vm="clr-namespace:HealthCouch.CaseStudy.ViewModel"
         mc:Ignorable="d"
         Title="DoctorPage" Height="450" Width="800" Icon="/Windows/logo.png" WindowState="Maximized">
+    <Window.DataContext>
+        <vm:DoctorViewModel/>
+    </Window.DataContext>
     <Grid Background="White">
         <StackPanel>
             <TextBlock Text="List of Doctors"
@@ -20,7 +24,7 @@
                   CanUserAddRows="False"
                   ColumnWidth="*"
                   ItemsSource="{Binding Doctors}"
-                  SelectedItem="{Binding SelectedDoctor}">
+                  SelectedItem="{Binding SelectedDoctor, Mode=TwoWay}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Doctor ID"
                                     Binding="{Binding DoctorId}"
@@ -35,7 +39,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <TextBlock Text="Search | Add "
+            <TextBlock Text="Search | Add"
                    FontSize="{StaticResource SubHeading}"
                    TextAlignment="Center">
             </TextBlock>
@@ -97,10 +101,10 @@
                     Content="Search"
                     Command="{Binding SearchCommand}" Width="51">
                 </Button>
-                <Button x:Name="AddButton"
-                        Content="Add"
-                        Command="{Binding AddCommand}" Width="56">      
-                </Button>
+                <Button x:Name="AddButton" 
+                        Content="Add" 
+                        Command="{Binding AddDoctorCommand}" 
+                        Width="56"/>
             </StackPanel>
         </StackPanel>
     </Grid>
