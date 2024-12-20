@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:HealthCouch.CaseStudy.Pages"
       xmlns:vm="clr-namespace:HealthCouch.CaseStudy.ViewModel"
       mc:Ignorable="d"
-      d:DesignHeight="450" d:DesignWidth="800" d:Background="AliceBlue"
+      d:DesignHeight="500" d:DesignWidth="800" d:Background="AliceBlue"
       Title="AllPatients">
     <Page.DataContext>
         <vm:PatientViewModel/>
@@ -20,6 +20,7 @@
         <StackPanel>
             <DataGrid x:Name="patientDataGrid" Grid.Row="0" ColumnWidth="*" AutoGenerateColumns="False"
                       CanUserAddRows="False"
+                      Height="350"
                       ItemsSource="{Binding AllPatients}" SelectedItem="{Binding SelectedPatient}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding PatientID}" Width="40"/>
@@ -42,25 +43,25 @@
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
-        <StackPanel Grid.Row="1">
-            <TextBlock Text="Search Options" HorizontalAlignment="Center" FontSize="16"/>
+        <StackPanel Grid.Row="1" Margin="10">
+            <TextBlock Text="Search Options" HorizontalAlignment="Center" FontSize="{StaticResource SubHeading}" Margin="10"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <WrapPanel>
+                    <WrapPanel HorizontalAlignment="Center">
                         <Label Content="Patient Id"/>
                         <TextBox Width="290" Height="31" Text="{Binding SearchPatientId, UpdateSourceTrigger=PropertyChanged}"/>
                     </WrapPanel>
-                    <WrapPanel>
+                    <WrapPanel HorizontalAlignment="Center">
                         <Label Content="Doctor" Width="60"/>
                         <TextBox Width="287" Height="31" Text="{Binding SearchDoctor, UpdateSourceTrigger=PropertyChanged}"/>
                     </WrapPanel>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <WrapPanel>
+                    <WrapPanel HorizontalAlignment="Center">
                         <Label Content="Gender" Width="81"/>
                         <ComboBox Width="308" Height="34" SelectedValue="{Binding SearchGender, UpdateSourceTrigger=PropertyChanged}">
                             <ComboBoxItem Content="Male"/>
@@ -68,7 +69,7 @@
                             <ComboBoxItem Content="Other"/>
                         </ComboBox>
                     </WrapPanel>
-                    <WrapPanel>
+                    <WrapPanel HorizontalAlignment="Center">
                         <Label Content="Blood" Width="79"/>
                         <ComboBox Width="310" Height="34" SelectedValue="{Binding SearchBloodGroup, UpdateSourceTrigger=PropertyChanged}">
                             <ComboBoxItem Content="A+"/>
@@ -83,8 +84,8 @@
                     </WrapPanel>
                 </StackPanel>
             </Grid>
-            <WrapPanel HorizontalAlignment="Center" Height="85" Width="112">
-                <Button Content="Search" Command="{Binding SearchCommand}" Width="97" Height="24"/>
+            <WrapPanel HorizontalAlignment="Center" Height="85" Width="112" Margin="0, 10">
+                <Button Content="Search" Command="{Binding SearchCommand}" Width="90" Height="35"/>
             </WrapPanel>
         </StackPanel>
     </Grid>
