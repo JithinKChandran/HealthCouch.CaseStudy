@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HealthCouch.CaseStudy.Windows"
         xmlns:vm="clr-namespace:HealthCouch.CaseStudy.ViewModel"
         mc:Ignorable="d"
-        Title="DoctorPage" Height="450" Width="800" Icon="/Windows/logo.png" WindowState="Maximized">
+        Title="DoctorPage" Height="550" Width="800" Icon="/Windows/logo.png" WindowState="Maximized">
     <Window.DataContext>
         <vm:DoctorViewModel/>
     </Window.DataContext>
@@ -18,7 +18,7 @@
                        HorizontalAlignment="Center"/>
             <DataGrid x:Name="DoctorDataGrid"
                       AutoGenerateColumns="False"
-                      Height="150"
+                      Height="280"
                       CanUserAddRows="False"
                       ColumnWidth="*"
                       ItemsSource="{Binding Doctors}"
@@ -33,9 +33,10 @@
                                         Binding="{Binding Speciality}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock Text="Search | Add"
+            <TextBlock Text="Search"
                        FontSize="{StaticResource SubHeading}"
-                       TextAlignment="Center"/>
+                       TextAlignment="Center">
+            </TextBlock>
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -54,8 +55,8 @@
                              Width="250"
                              Text="{Binding SearchDoctorName, UpdateSourceTrigger=PropertyChanged}"/>
                 </WrapPanel>
-                <WrapPanel Grid.Row="1"
-                           Grid.ColumnSpan="2"
+                <WrapPanel Grid.Row="0"
+                           Grid.Column="1"
                            Margin="10"
                            HorizontalAlignment="Center">
                     <Label Content="Speciality:"/>
@@ -71,18 +72,21 @@
                         <ComboBoxItem Content="Gynecology"/>
                     </ComboBox>
                 </WrapPanel>
-            </Grid>
-            <StackPanel HorizontalAlignment="Center" 
-                        Margin="10" Width="126"
-                        Orientation="Horizontal" Height="37">
+
                 <Button x:Name="SearchButton"
-                        Content="Search"
-                        Command="{Binding SearchCommand}" Width="51"/>
-                <Button x:Name="AddButton" 
-                        Content="Add" 
-                        Command="{Binding AddDoctorCommand}" 
-                        Width="56"/>
-            </StackPanel>
+                            Content="Search"
+                            Command="{Binding SearchCommand}" Width="51"
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2">
+                </Button>
+            </Grid>
+
+            <Separator Height="1" Margin="10"></Separator>
+            
+            <TextBlock Text="Add"
+                       FontSize="{StaticResource SubHeading}"
+                       TextAlignment="Center">
+            </TextBlock>
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -101,8 +105,8 @@
                              Width="250"
                              Text="{Binding DoctorName, UpdateSourceTrigger=PropertyChanged}"/>
                 </WrapPanel>
-                <WrapPanel Grid.Row="1"
-                           Grid.ColumnSpan="2"
+                <WrapPanel Grid.Row="0"
+                           Grid.Column="1"
                            Margin="10"
                            HorizontalAlignment="Center">
                     <Label Content="Speciality:"/>
@@ -118,6 +122,14 @@
                         <ComboBoxItem Content="Gynecology"/>
                     </ComboBox>
                 </WrapPanel>
+
+                <Button x:Name="AddButton" 
+                        Content="Add" 
+                        Command="{Binding AddDoctorCommand}" 
+                        Width="56"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2">
+                </Button>
             </Grid>
         </StackPanel>
     </Grid>
