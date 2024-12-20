@@ -22,7 +22,8 @@
                       CanUserAddRows="False"
                       ColumnWidth="*"
                       ItemsSource="{Binding Doctors}"
-                      SelectedItem="{Binding SelectedDoctor, Mode=TwoWay}">
+                      SelectedItem="{Binding SelectedDoctor, Mode=TwoWay}"
+                      IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Doctor ID"
                                         Binding="{Binding DoctorId}"

@@ -86,7 +86,7 @@
             </WrapPanel>
             <WrapPanel Margin="10">
                 <Label Content="Age" Width="77"/>
-                <TextBox Text="{Binding Age}" Width="265"/>
+                <TextBox Text="{Binding Age, TargetNullValue='', FallbackValue=''}" Width="265"/>
             </WrapPanel>
             <WrapPanel Margin="10">
                 <Label Content="Symptoms" Width="85"/>

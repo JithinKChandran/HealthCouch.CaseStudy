@@ -43,6 +43,20 @@ namespace HealthCouch.CaseStudy.ViewModel
         }
 
         private Patient _selectedPatient;
+        private int patientID;
+        private string name;
+        private string address;
+        private int? age;
+        private string gender;
+        private string contactNumber;
+        private string emergencyContact;
+        private string bloodGroup;
+        private string symptoms;
+        private string doctorSpeciality;
+        private string doctorName;
+        private DateTime? appointmentDate;
+        private string timeSlot;
+
         public Patient SelectedPatient
         {
             get { return _selectedPatient; }
@@ -71,20 +85,124 @@ namespace HealthCouch.CaseStudy.ViewModel
             }
         }
 
-        public int PatientID { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public int Age { get; set; }
-        public string Gender { get; set; }
-        public string ContactNumber { get; set; }
-        public string EmergencyContact { get; set; }
-        public string BloodGroup { get; set; }
-        public string Symptoms { get; set; }
-        public string DoctorSpeciality { get; set; }
+        public int PatientID
+        { get => patientID;
+            set
+            {
+                patientID = value;
+                OnPropertyChanged();
+            }
+
+        }
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+        public string Address 
+        {
+            get => address;
+            set
+            {
+                address = value;
+                OnPropertyChanged();
+            }
+        }
+        public int? Age 
+        {
+            get => age;
+            set
+            {
+                age = value;
+                OnPropertyChanged();
+            }
+        }
+        public string Gender 
+        {
+            get => gender;
+            set
+            {
+                gender = value;
+                OnPropertyChanged();
+            }
+        }
+        public string ContactNumber 
+        {
+            get => contactNumber;
+            set
+            {
+                contactNumber = value;
+                OnPropertyChanged();
+            }
+        }
+        public string EmergencyContact 
+        {
+            get => emergencyContact;
+            set
+            {
+                emergencyContact = value;
+                OnPropertyChanged();
+            }
+        }
+        public string BloodGroup 
+        {
+            get => bloodGroup;
+            set
+            {
+                bloodGroup = value;
+                OnPropertyChanged();
+            }
+        }
+        public string Symptoms 
+        { 
+            get => symptoms;
+            set
+            {
+                symptoms = value;
+                OnPropertyChanged();
+            }
+        }
+        public string DoctorSpeciality
+        {
+            get => doctorSpeciality;
+            set
+            {
+                doctorSpeciality = value;
+                OnPropertyChanged();
+            }
+        }
         public ObservableCollection<string> DoctorNames { get; set; } = new ObservableCollection<string>();
-        public string DoctorName { get; set; }
-        public DateTime? AppointmentDate { get; set; }
-        public string TimeSlot { get; set; }
+        public string DoctorName
+        {
+            get => doctorName;
+            set
+            {
+                doctorName = value;
+                OnPropertyChanged();
+            }
+        }
+        public DateTime? AppointmentDate 
+        {
+            get => appointmentDate;
+            set
+            {
+                appointmentDate = value;
+                OnPropertyChanged();
+            }
+        }
+        public string TimeSlot 
+        { 
+            get => timeSlot;
+            set
+            {
+                timeSlot = value;
+                OnPropertyChanged();
+            }
+        }
         public string SearchPatientId { get; set; }
         public string SearchDoctor { get; set; }
         public string SearchGender { get; set; }
@@ -147,7 +265,7 @@ namespace HealthCouch.CaseStudy.ViewModel
         {
             Name = string.Empty;
             Address = string.Empty;
-            Age = 0;
+            Age = null;
             Gender = string.Empty;
             ContactNumber = string.Empty;
             EmergencyContact = string.Empty;
