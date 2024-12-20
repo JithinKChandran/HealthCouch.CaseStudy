@@ -5,72 +5,75 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HealthCouch.CaseStudy.Pages"
       xmlns:c="clr-namespace:HealthCouch.CaseStudy.Common.Converters"
+      xmlns:vm="clr-namespace:HealthCouch.CaseStudy.ViewModel"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="900"
       Title="ManagePatientsPage">
+    <Page.DataContext>
+        <vm:PatientViewModel/>
+    </Page.DataContext>
     <Page.Resources>
         <c:GenderConverter x:Key="GenderConverter"/>
     </Page.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Margin="10">
             <WrapPanel Margin="10">
-                <Label Content="Name" Width="107"></Label>
-                <TextBox Text="{Binding Name}" Width="279"></TextBox>
+                <Label Content="Name" Width="107"/>
+                <TextBox Text="{Binding Name}" Width="279"/>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Address" Width="108"></Label>
+                <Label Content="Address" Width="108"/>
                 <TextBox Text="{Binding Address}"
-                     AcceptsReturn="True" 
-                     VerticalScrollBarVisibility="Auto" 
-                     TextWrapping="Wrap" Width="283" Height="60"></TextBox>
+                         AcceptsReturn="True" 
+                         VerticalScrollBarVisibility="Auto" 
+                         TextWrapping="Wrap" Width="283" Height="60"/>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Contact" Width="112"></Label>
-                <TextBox Text="{Binding Contact}" Width="273"></TextBox>
+                <Label Content="Contact" Width="112"/>
+                <TextBox Text="{Binding ContactNumber}" Width="273"/>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Emergency Contact"></Label>
-                <TextBox Text="{Binding EmergencyContact}" Width="271"></TextBox>
+                <Label Content="Emergency Contact"/>
+                <TextBox Text="{Binding EmergencyContact}" Width="271"/>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Speciality" Width="112"></Label>
-                <ComboBox Width="270">
-                    <ComboBoxItem Content="Dermatology"></ComboBoxItem>
-                    <ComboBoxItem Content="ENT"></ComboBoxItem>
-                    <ComboBoxItem Content="Diet and Nutrition"></ComboBoxItem>
-                    <ComboBoxItem Content="General Medicine"></ComboBoxItem>
-                    <ComboBoxItem Content="Pediatrics"></ComboBoxItem>
-                    <ComboBoxItem Content="Gynecology"></ComboBoxItem>
+                <Label Content="Speciality" Width="112"/>
+                <ComboBox Width="270"
+                          ItemsSource="{Binding DoctorSpecialities}"
+                          SelectedItem="{Binding DoctorSpeciality, Mode=TwoWay}" 
+                          SelectionChanged="OnSpecialitySelectionChanged">
                 </ComboBox>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Date Of Appointment"></Label>
-                <DatePicker Width="192" DisplayDateStart="{x:Static sys:DateTime.Today}"></DatePicker>
+                <Label Content="Date Of Appointment"/>
+                <DatePicker Width="192" DisplayDateStart="{x:Static sys:DateTime.Today}" SelectedDate="{Binding AppointmentDate}"/>
             </WrapPanel>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Margin="10">
             <WrapPanel Margin="10">
-                <Label Content="Gender" Width="126"></Label>
+                <Label Content="Gender" Width="126"/>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <RadioButton Content="Male" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Male}" />
-                    <RadioButton Content="Female" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Female}" />
-                    <RadioButton Content="Other" GroupName="Gender" IsChecked="{Binding Path=Gender, Converter={StaticResource GenderConverter}, ConverterParameter=Other}" />
+                    <RadioButton Content="Male" GroupName="Gender" IsChecked="{Binding Gender, Converter={StaticResource GenderConverter}, ConverterParameter='Male'}"/>
+                    <RadioButton Content="Female" GroupName="Gender" IsChecked="{Binding Gender, Converter={StaticResource GenderConverter}, ConverterParameter='Female'}"/>
+                    <RadioButton Content="Other" GroupName="Gender" IsChecked="{Binding Gender, Converter={StaticResource GenderConverter}, ConverterParameter='Other'}"/>
                 </StackPanel>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Blood Group"></Label>
-                <ComboBox Width="260">
+                <Label Content="Blood Group"/>
+                <ComboBox Width="260" 
+                          SelectedValue="{Binding BloodGroup}"
+                          SelectedValuePath="Content">
                     <ComboBoxItem Content="A+"/>
                     <ComboBoxItem Content="A-"/>
                     <ComboBoxItem Content="B+"/>
@@ -82,28 +85,29 @@
                 </ComboBox>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Age" Width="77"></Label>
-                <TextBox Text="{Binding Age}" Width="265"></TextBox>
+                <Label Content="Age" Width="77"/>
+                <TextBox Text="{Binding Age}" Width="265"/>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Symptoms" Width="85"></Label>
+                <Label Content="Symptoms" Width="85"/>
                 <TextBox AcceptsReturn="True" 
-                     VerticalScrollBarVisibility="Auto" 
-                     TextWrapping="Wrap" 
-                     Text="{Binding Symptoms}" Width="260" Height="60">
-                </TextBox>
+                         VerticalScrollBarVisibility="Auto" 
+                         TextWrapping="Wrap" 
+                         Text="{Binding Symptoms}" Width="260" Height="60"/>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Doctor Name" Width="86"></Label>
-                <ComboBox Width="253">
+                <Label Content="Doctor Name" Width="86"/>
+                <ComboBox Width="253" 
+                          ItemsSource="{Binding DoctorNames}"
+                          SelectedItem="{Binding DoctorName, Mode=TwoWay}">
                 </ComboBox>
             </WrapPanel>
             <WrapPanel Margin="10">
-                <Label Content="Time Slot" Width="88"></Label>
-                <ComboBox x:Name="TimeSlotPicker" Width="253" Height="30"  VerticalAlignment="Center">
+                <Label Content="Time Slot" Width="88"/>
+                <ComboBox x:Name="TimeSlotPicker" Width="253" Height="30" VerticalAlignment="Center" Text="{Binding TimeSlot}">
                     <ComboBoxItem Content="10:00 AM - 11:00 AM"/>
-                    <ComboBoxItem Content="11:00 AM - 12:00 AM"/>
-                    <ComboBoxItem Content="12:00 AM - 01:00 PM"/>
+                    <ComboBoxItem Content="11:00 AM - 12:00 PM"/>
+                    <ComboBoxItem Content="12:00 PM - 01:00 PM"/>
                     <ComboBoxItem Content="02:00 PM - 03:00 PM"/>
                     <ComboBoxItem Content="03:00 PM - 04:00 PM"/>
                     <ComboBoxItem Content="04:00 PM - 05:00 PM"/>
